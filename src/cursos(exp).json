@@ -1,0 +1,77 @@
+{
+  "curso00": {
+    "id": 0,
+    "materia": "Programación de Dispositivos Móviles",
+    "carrera": "Ing. Sistemas Computacionales",
+    "maestro": "José Tadeo Rodriguez Solano",
+    "portada": "https://source.unsplash.com/random",
+    "fotoPerfil": "https://picsum.photos/200",
+    "horario": [
+      {
+        "dia": "Lunes",
+        "hora": "11-13",
+        "salon": "MCA"
+      },
+      {
+        "dia": "Miércoles",
+        "hora": "12-13",
+        "salon": "MCB"
+      },
+      {
+        "dia": "Jueves",
+        "hora": "09-11",
+        "salon": "MCF"
+      }
+    ]
+  },
+  "curso01": {
+    "id": 1,
+    "materia": "Programación Web",
+    "carrera": "Ing. Sistemas Computacionales",
+    "maestro": "José Tadeo Rodriguez Solano",
+    "portada": "https://source.unsplash.com/random",
+    "fotoPerfil": "https://picsum.photos/200",
+    "horario": [
+      {
+        "dia": "Lunes",
+        "hora": "11-13",
+        "salon": "MCA"
+      },
+      {
+        "dia": "Miércoles",
+        "hora": "12-13",
+        "salon": "MCB"
+      },
+      {
+        "dia": "Jueves",
+        "hora": "09-11",
+        "salon": "MCF"
+      }
+    ]
+  },
+  "curso02": {
+    "id": 2,
+    "materia": "Seguridad en las TICS",
+    "carrera": "Ing. Sistemas Computacionales",
+    "maestro": "José Tadeo Rodriguez Solano",
+    "portada": "https://source.unsplash.com/random",
+    "fotoPerfil": "https://picsum.photos/200",
+    "horario": [
+      {
+        "dia": "Lunes",
+        "hora": "11-13",
+        "salon": "MCA"
+      },
+      {
+        "dia": "Miércoles",
+        "hora": "12-13",
+        "salon": "MCB"
+      },
+      {
+        "dia": "Jueves",
+        "hora": "09-11",
+        "salon": "MCF"
+      }
+    ]
+  }
+}
