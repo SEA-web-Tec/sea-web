@@ -13,20 +13,55 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  IconButton,
-  Paper
+  /*IconButton,*/
+  Paper,
 } from "@material-ui/core";
 import MaterialTable from "material-table";
 import {
   ExpandMore as ExpandMoreIcon,
-  Feedback as FeedbackIcon
+  Feedback as FeedbackIcon,
 } from "@material-ui/icons";
 
+/*
+                  <IconButton className={classes.expanderFeedback}>
+                    <FeedbackIcon />
+                  </IconButton>
+*/
+
 import ListItem from "../../UI/ListItem/ListItem";
+//import ListItemEdit from "../../UI/ListItem/ListItemEdit";
 
 function TabPanel(props) {
   const classes = useStyles();
   const { children, value, index, ...other } = props;
+
+  const state = {
+    tabla: [
+      {
+        label: 1,
+        letra: "A",
+        content: "Este es un ejemplo de una actividad",
+      },
+      {
+        label: 2,
+        letra: "B",
+        content: "Este es un ejemplo de una actividad",
+      },
+      {
+        label: 3,
+        letra: "C",
+        content: "Este es un ejemplo de una actividad",
+      },
+    ],
+  };
+
+  const ejemploNumero = state.tabla.map((elemento) => {
+    return <ListItem label={elemento.label} content={elemento.content} />;
+  });
+
+  const ejemploLetra = state.tabla.map((elemento) => {
+    return <ListItem label={elemento.letra} content={elemento.content} />;
+  });
 
   return (
     <div
@@ -73,27 +108,9 @@ function TabPanel(props) {
                   <Typography className={classes.heading}>
                     Actividades de Aprendizaje
                   </Typography>
-                  <IconButton className={classes.expanderFeedback}>
-                    <FeedbackIcon />
-                  </IconButton>
                 </AccordionSummary>
                 <AccordionDetails style={{ flexDirection: "column" }}>
-                  <ListItem
-                    label="1"
-                    content="Este es un ejemplo de una actividad de aprendizaje número 1"
-                  />
-                  <ListItem
-                    label="2"
-                    content="Este es un ejemplo de una actividad de aprendizaje número 2"
-                  />
-                  <ListItem
-                    label="3"
-                    content="Este es un ejemplo de una actividad de aprendizaje número 3"
-                  />
-                  <ListItem
-                    label="4"
-                    content="Este es un ejemplo de una actividad de aprendizaje número 4"
-                  />
+                  {ejemploNumero}
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -103,27 +120,9 @@ function TabPanel(props) {
                   <Typography className={classes.heading}>
                     Actividades de Enseñanza
                   </Typography>
-                  <IconButton className={classes.expanderFeedback}>
-                    <FeedbackIcon />
-                  </IconButton>
                 </AccordionSummary>
                 <AccordionDetails style={{ flexDirection: "column" }}>
-                  <ListItem
-                    label="1"
-                    content="Este es un ejemplo de una actividad de enseñanza número 1"
-                  />
-                  <ListItem
-                    label="2"
-                    content="Este es un ejemplo de una actividad de enseñanza número 2"
-                  />
-                  <ListItem
-                    label="3"
-                    content="Este es un ejemplo de una actividad de enseñanza número 3"
-                  />
-                  <ListItem
-                    label="4"
-                    content="Este es un ejemplo de una actividad de enseñanza número 4"
-                  />
+                  {ejemploNumero}
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -133,27 +132,9 @@ function TabPanel(props) {
                   <Typography className={classes.heading}>
                     Desarrollo de competencias genéricas
                   </Typography>
-                  <IconButton className={classes.expanderFeedback}>
-                    <FeedbackIcon />
-                  </IconButton>
                 </AccordionSummary>
                 <AccordionDetails style={{ flexDirection: "column" }}>
-                  <ListItem
-                    label="1"
-                    content="Este es un ejemplo de desarrollo de competencias número 1"
-                  />
-                  <ListItem
-                    label="2"
-                    content="Este es un ejemplo de desarrollo de competencias número 2"
-                  />
-                  <ListItem
-                    label="3"
-                    content="Este es un ejemplo de desarrollo de competencias número 3"
-                  />
-                  <ListItem
-                    label="4"
-                    content="Este es un ejemplo de desarrollo de competencias número 4"
-                  />
+                  {ejemploNumero}
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -163,27 +144,9 @@ function TabPanel(props) {
                   <Typography className={classes.heading}>
                     Indicadores de alcance
                   </Typography>
-                  <IconButton className={classes.expanderFeedback}>
-                    <FeedbackIcon />
-                  </IconButton>
                 </AccordionSummary>
                 <AccordionDetails style={{ flexDirection: "column" }}>
-                  <ListItem
-                    label="A"
-                    content="Este es un ejemplo de un indicador de alcance número 1"
-                  />
-                  <ListItem
-                    label="B"
-                    content="Este es un ejemplo de un indicador de alcance número 2"
-                  />
-                  <ListItem
-                    label="C"
-                    content="Este es un ejemplo de un indicador de alcance número 3"
-                  />
-                  <ListItem
-                    label="D"
-                    content="Este es un ejemplo de un indicador de alcance número 4"
-                  />
+                  {ejemploLetra}
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -193,9 +156,6 @@ function TabPanel(props) {
                   <Typography className={classes.heading}>
                     Matriz de evaluación
                   </Typography>
-                  <IconButton className={classes.expanderFeedback}>
-                    <FeedbackIcon />
-                  </IconButton>
                 </AccordionSummary>
                 <AccordionDetails>
                   <MaterialTable
@@ -208,39 +168,39 @@ function TabPanel(props) {
                           1: "Ejercicio",
                           2: "Proyecto",
                           3: "Exposición",
-                          4: "Otro"
+                          4: "Otro",
                         },
-                        align: "center"
+                        align: "center",
                       },
                       {
                         title: "%",
                         field: "porcentaje",
                         type: "numeric",
-                        align: "center"
+                        align: "center",
                       },
                       {
                         title: "A",
                         field: "A",
                         type: "numeric",
-                        align: "center"
+                        align: "center",
                       },
                       {
                         title: "B",
                         field: "B",
                         type: "numeric",
-                        align: "center"
+                        align: "center",
                       },
                       {
                         title: "C",
                         field: "C",
                         type: "numeric",
-                        align: "center"
+                        align: "center",
                       },
                       {
                         title: "D",
                         field: "D",
                         type: "numeric",
-                        align: "center"
+                        align: "center",
                       },
                       {
                         title: "Evaluación formativa de la competencia",
@@ -249,10 +209,10 @@ function TabPanel(props) {
                           0: "Cuestionario",
                           1: "Lista de cotejo",
                           2: "Lista de observación",
-                          3: "Rubrica"
+                          3: "Rubrica",
                         },
-                        align: "center"
-                      }
+                        align: "center",
+                      },
                     ]}
                     data={[
                       {
@@ -262,7 +222,7 @@ function TabPanel(props) {
                         B: 40,
                         C: 30,
                         D: 20,
-                        evaluacionFormativa: 1
+                        evaluacionFormativa: 1,
                       },
                       {
                         evidenciaAprendizaje: 3,
@@ -271,7 +231,7 @@ function TabPanel(props) {
                         B: 20,
                         C: 30,
                         D: 40,
-                        evaluacionFormativa: 0
+                        evaluacionFormativa: 0,
                       },
                       {
                         evidenciaAprendizaje: 4,
@@ -280,7 +240,7 @@ function TabPanel(props) {
                         B: 10,
                         C: 5,
                         D: 5,
-                        evaluacionFormativa: 1
+                        evaluacionFormativa: 1,
                       },
                       {
                         evidenciaAprendizaje: 2,
@@ -289,7 +249,7 @@ function TabPanel(props) {
                         B: 25,
                         C: 25,
                         D: 25,
-                        evaluacionFormativa: 0
+                        evaluacionFormativa: 0,
                       },
                       {
                         evidenciaAprendizaje: 2,
@@ -298,8 +258,8 @@ function TabPanel(props) {
                         B: 40,
                         C: 30,
                         D: 20,
-                        evaluacionFormativa: 2
-                      }
+                        evaluacionFormativa: 2,
+                      },
                     ]}
                     components={{
                       Container: (props) => (
@@ -308,19 +268,19 @@ function TabPanel(props) {
                           elevation={0}
                           style={{ width: "100%" }}
                         />
-                      )
+                      ),
                     }}
                     options={{
                       draggable: false,
                       filtering: false,
                       fixedColumns: {
                         left: 1,
-                        right: 1
+                        right: 1,
                       },
                       paging: false,
                       search: false,
                       sorting: false,
-                      toolbar: false
+                      toolbar: false,
                     }}
                   />
                 </AccordionDetails>
@@ -332,9 +292,6 @@ function TabPanel(props) {
                   <Typography className={classes.heading}>
                     Material de apoyo
                   </Typography>
-                  <IconButton className={classes.expanderFeedback}>
-                    <FeedbackIcon />
-                  </IconButton>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Grid container spacing={3}>
@@ -397,31 +354,31 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   paper: {
     padding: theme.spacing(1),
     textAlign: "center",
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   titulo: {
     [theme.breakpoints.down("xs")]: {
       textAlign: "center",
-      marginBottom: theme.spacing(1)
-    }
+      marginBottom: theme.spacing(1),
+    },
   },
   semanas: {
     display: "flex",
@@ -429,27 +386,27 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     [theme.breakpoints.down("xs")]: {
       justifyContent: "center",
-      margin: theme.spacing(1.5, 0)
-    }
+      margin: theme.spacing(1.5, 0),
+    },
   },
   semanasChip: {
     "&:last-child": {
-      marginLeft: theme.spacing(1)
+      marginLeft: theme.spacing(1),
     },
     [theme.breakpoints.down("xs")]: {
-      marginBottom: theme.spacing(1.5)
-    }
+      marginBottom: theme.spacing(1.5),
+    },
   },
   contentGrid: {
     marginTop: theme.spacing(2),
     [theme.breakpoints.down("xs")]: {
-      marginTop: theme.spacing(0)
-    }
+      marginTop: theme.spacing(0),
+    },
   },
   expanderFeedback: {
     marginLeft: "auto",
-    padding: 0
-  }
+    padding: 0,
+  },
 }));
 
 export default function SimpleTabs(props) {
