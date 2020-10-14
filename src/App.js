@@ -8,6 +8,7 @@ import Layout from "./hoc/Layout/Layout";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Login/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
+// import Examenes from "./containers/Examenes/Examenes";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -46,6 +47,7 @@ class App extends Component {
           <Route path="/instrumentacion" component={asyncID} />
           <Route path="/instrumentos" component={asyncMenuInstrumentos} />
           <Route path="/rubrica" component={asyncRubrica} />
+          {/* <Route path="/examenes" component={Examenes} /> */}
           <Route component={asyncNotFound} />
         </Switch>
       );

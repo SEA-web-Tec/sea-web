@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Link as RouterLink, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { updateObject } from "../../shared/utility";
@@ -9,7 +9,6 @@ import {
   Avatar,
   Button,
   Box,
-  ButtonGroup,
   Checkbox,
   Container,
   FormControlLabel,
@@ -75,11 +74,7 @@ class Login extends Component {
           value={this.state.password}
           type={this.state.showPassword ? "text" : "password"}
           error={this.props.error !== null}
-          helperText={
-            this.props.error !== null && this.props.error.code === 400
-              ? "Contraseña Inválida"
-              : ""
-          }
+          helperText={this.props.error !== null && this.props.error.code === 400 ? "Contraseña Inválida" : ""}
           onChange={this.inputChangedHandler("password")}
           InputProps={{
             endAdornment: (
@@ -91,10 +86,7 @@ class Login extends Component {
             )
           }}
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Recuérdame"
-        />
+        <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Recuérdame" />
       </Fragment>
     );
 
@@ -117,20 +109,9 @@ class Login extends Component {
           <Typography component="h1" variant="h5">
             Bienvenido
           </Typography>
-          <form
-            className={classes.form}
-            noValidate
-            onSubmit={this.submitHandler}
-          >
+          <form className={classes.form} noValidate onSubmit={this.submitHandler}>
             {form}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              size="large"
-            >
+            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} size="large">
               Iniciar Sesión
             </Button>
             <Typography align="center">
@@ -170,7 +151,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(useStyles)(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(Login));
