@@ -8,7 +8,6 @@ import Layout from "./hoc/Layout/Layout";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Login/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
-// import Examenes from "./containers/Examenes/Examenes";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -20,6 +19,10 @@ const asyncMenuInstrumentos = asyncComponent(() => {
 
 const asyncRubrica = asyncComponent(() => {
   return import("./containers/Rubrica/Rubrica");
+});
+
+const asyncAsignarExamen = asyncComponent(() => {
+  return import("./containers/Examen/AsignarExamen/AsignarExamen");
 });
 
 const asyncNotFound = asyncComponent(() => {
@@ -47,7 +50,7 @@ class App extends Component {
           <Route path="/instrumentacion" component={asyncID} />
           <Route path="/instrumentos" component={asyncMenuInstrumentos} />
           <Route path="/rubrica" component={asyncRubrica} />
-          {/* <Route path="/examenes" component={Examenes} /> */}
+          <Route path="/examenes/asignar" component={asyncAsignarExamen} />
           <Route component={asyncNotFound} />
         </Switch>
       );

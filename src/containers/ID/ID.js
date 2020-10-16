@@ -11,6 +11,7 @@ export default class ID extends Component {
         maestro="José Tadeo Rodriguez Solano"
         grupo="F"
         periodo="Enero - Junio 2020"
+        hasTabs
       >
         <SimpleTabs />
       </Portada>
