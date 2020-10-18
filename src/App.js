@@ -25,6 +25,10 @@ const asyncDashboardExamenes = asyncComponent(() => {
   return import("./containers/Examen/DashboardExamenes/DashboardExamenes");
 });
 
+const asyncCrearExamen = asyncComponent(() => {
+  return import("./containers/Examen/CrearExamen/CrearExamen");
+});
+
 const asyncAsignarExamen = asyncComponent(() => {
   return import("./containers/Examen/AsignarExamen/AsignarExamen");
 });
@@ -50,11 +54,12 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/logout" exact component={Logout} />
-          <Route path="/grupos" component={Grupos} />
-          <Route path="/instrumentacion" component={asyncID} />
-          <Route path="/instrumentos" component={asyncMenuInstrumentos} />
-          <Route path="/rubrica" component={asyncRubrica} />
-          <Route path="/examenes" component={asyncDashboardExamenes} />
+          <Route path="/grupos" exact component={Grupos} />
+          <Route path="/instrumentacion" exact component={asyncID} />
+          <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
+          <Route path="/rubrica" exact component={asyncRubrica} />
+          <Route path="/examenes" exact component={asyncDashboardExamenes} />
+          <Route path="/examenes/crear" component={asyncCrearExamen} />
           <Route path="/examenes/asignar" component={asyncAsignarExamen} />
           <Route component={asyncNotFound} />
         </Switch>
