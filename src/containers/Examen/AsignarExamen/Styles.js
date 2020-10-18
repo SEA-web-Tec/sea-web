@@ -1,5 +1,3 @@
-import { red } from "@material-ui/core/colors";
-
 export const useStyles = (theme) => ({
   title: {
     [theme.breakpoints.down("xs")]: {
@@ -15,5 +13,5 @@ export const useStyles = (theme) => ({
     minWidth: "240px",
     width: "calc(100% - 32px)"
   },
-  center: { display: "flex", margin: theme.spacing(2, 0, 0, 0), justifyContent: "center" }
+  center: { display: "flex", margin: theme.spacing(4, 0, 1, 0), justifyContent: "center" }
 });

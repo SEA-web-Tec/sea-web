@@ -13,7 +13,6 @@ import {
   MenuItem,
   Grid,
   TextField,
-  FormGroup,
   FormControlLabel,
   Checkbox,
   Box,
@@ -37,7 +36,8 @@ class Examenes extends Component {
         periodo="Enero - Junio 2020"
       >
         <Typography className={classes.title} variant="h6" component="h6" gutterBottom>
-          NOMBRE CUSTOM
+          {/* // Cambiarse a futuro por prop */}
+          Examen U1 PDM
         </Typography>
         <Typography className={classes.required} variant="caption" component="h6" gutterBottom>
           * Campos obligatorios
@@ -49,7 +49,7 @@ class Examenes extends Component {
           <AccordionDetails>
             <div style={{ width: "100%" }}>
               <Grid container alignItems="center">
-                <Grid item xs={5}>
+                <Grid item xs={12} sm={12} md={5}>
                   <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Grupo</InputLabel>
                     <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Grupo">
@@ -62,7 +62,7 @@ class Examenes extends Component {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={12} sm={12} md={5}>
                   <FormControl hidden variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Equipo</InputLabel>
                     <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Equipo">
@@ -75,7 +75,7 @@ class Examenes extends Component {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={12} sm={12} md={2}>
                   <Button variant="contained" color="secondary" style={{ margin: "16px", width: "calc(100% - 32px" }}>
                     Buscar
                   </Button>
@@ -93,7 +93,7 @@ class Examenes extends Component {
             <div style={{ width: "100%" }}>
               <Grid container alignItems="center">
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
+                  <FormControl required variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Evidencia de aprendizaje</InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
@@ -110,7 +110,7 @@ class Examenes extends Component {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
+                  <FormControl required variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Tipo de examen</InputLabel>
                     <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Tipo de examen">
                       <MenuItem value="">
@@ -123,7 +123,7 @@ class Examenes extends Component {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
+                  <FormControl required variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Tipo de oportunidad</InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
@@ -140,9 +140,10 @@ class Examenes extends Component {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl className={classes.formControl}>
+                  <FormControl required className={classes.formControl}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
+                        required
                         disableToolbar
                         inputVariant="outlined"
                         variant="inline"
@@ -154,9 +155,10 @@ class Examenes extends Component {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl className={classes.formControl}>
+                  <FormControl required className={classes.formControl}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
+                        required
                         disableToolbar
                         inputVariant="outlined"
                         variant="inline"
@@ -168,7 +170,7 @@ class Examenes extends Component {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
+                  <FormControl required variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Método de calificación</InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
@@ -196,24 +198,7 @@ class Examenes extends Component {
             <div style={{ width: "100%" }}>
               <Grid container alignItems="center">
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Tiempo limite por intento</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      label="Tiempo limite por intento"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
+                  <FormControl required variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">No. de intentos</InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
@@ -231,8 +216,12 @@ class Examenes extends Component {
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                   <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Navegación</InputLabel>
-                    <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Navegación">
+                    <InputLabel id="demo-simple-select-outlined-label">Tiempo limite por intento</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      label="Tiempo limite por intento"
+                    >
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
@@ -243,7 +232,7 @@ class Examenes extends Component {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
+                  <FormControl required variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Navegación</InputLabel>
                     <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Navegación">
                       <MenuItem value="">
@@ -280,6 +269,19 @@ class Examenes extends Component {
                       id="demo-simple-select-outlined"
                       label="Duración del periodo de gracia"
                     >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                  <FormControl required variant="outlined" className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-outlined-label">Revisión</InputLabel>
+                    <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Revisión">
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>

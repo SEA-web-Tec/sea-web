@@ -1,25 +1,21 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
+import { Grid, List, ListItem, ListItemIcon, ListItemText, Checkbox, Button, Paper, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2, "auto")
   },
   paper: {
-    width: 200,
-    height: 230,
+    width: 300,
+    height: 330,
     overflow: "auto"
   },
   button: {
     margin: theme.spacing(0.5, 0)
+  },
+  title: {
+    margin: theme.spacing(2)
   }
 }));
 
@@ -75,8 +71,11 @@ export default function TransferList() {
     setRight([]);
   };
 
-  const customList = (items) => (
-    <Paper className={classes.paper}>
+  const customList = (items, title) => (
+    <Paper variant="outlined" className={classes.paper}>
+      <Typography className={classes.title} component="p" variant="h6" align="center">
+        {title}
+      </Typography>
       <List dense component="div" role="list">
         {items.map((value) => {
           const labelId = `transfer-list-item-${value}-label`;
@@ -102,7 +101,7 @@ export default function TransferList() {
 
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-      <Grid item>{customList(left)}</Grid>
+      <Grid item>{customList(left, "Lista de alumnos")}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -147,7 +146,7 @@ export default function TransferList() {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(right)}</Grid>
+      <Grid item>{customList(right, "Alumnos asignados")}</Grid>
     </Grid>
   );
 }
