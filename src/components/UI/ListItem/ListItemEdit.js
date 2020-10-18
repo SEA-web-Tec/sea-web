@@ -10,10 +10,10 @@ const ListItemEdit = (props) => {
   var styleSelected = "";
   if (props.icon == true) {
     styleSelected = classes.addCircle;
-    iconSelected = <AddCircleIcon onClick />;
+    iconSelected = <AddCircleIcon onClick = {props.create} />;
   } else {
     styleSelected = classes.addCancel;
-    iconSelected = <CancelIcon onClick />;
+    iconSelected = <CancelIcon onClick={props.delete} />;
   }
   return (
     <div className={classes.ListItem}>
@@ -25,7 +25,7 @@ const ListItemEdit = (props) => {
           type="text"
           multiline={true}
           fullWidth={true}
-          placeholder={"Escribe una "+ props.Actividad}
+          placeholder={props.Actividad}
         />
         <IconButton className={styleSelected}>{iconSelected}</IconButton>
       </div>

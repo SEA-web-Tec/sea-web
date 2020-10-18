@@ -1,10 +1,9 @@
 import React from "react";
 import useStyles from "./Tabs.styles";
-import TabPanel from "./TabPanel/TabPanel"
+import TabPanelEdit from "./TabPanel/TabPanelEdit";
 
 import {
   AppBar,
-  Grid,
   Tabs,
   Tab,
   /*IconButton,*/
@@ -44,12 +43,12 @@ export default function SimpleTabs(props) {
           <Tab label="Unidad 3" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanelEdit value={value} index={0}>
         {props.children}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
+      </TabPanelEdit>
+      <TabPanelEdit value={value} index={1}>
         {props.children}
-      </TabPanel>
+      </TabPanelEdit>
     </div>
   );
 }
