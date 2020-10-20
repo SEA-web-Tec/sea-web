@@ -6,8 +6,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import clsx from "clsx";
 
-const selectedColor = "#3f51b5";
-
 const SideItem = (props) => {
     const useStyles = makeStyles((theme) => {
         return {
@@ -19,14 +17,14 @@ const SideItem = (props) => {
                 },
             },
             SelectedText: {
-                color: selectedColor,
+                color: theme.palette.primary.main,
                 "& span": {
                     fontWeight: "bold",
                 },
             },
             SelectedIconBox: {
                 "& div": {
-                    color: selectedColor,
+                    color: theme.palette.primary.main,
                 },
             },
             IconBox: {},
@@ -38,7 +36,7 @@ const SideItem = (props) => {
     return (
         <ListItem
             selected={props.selected}
-            button={props.button === undefined ? true: props.button}
+            button={props.button === undefined ? true : props.button}
             key={props.text}
             onClick={props.clicked}
         >

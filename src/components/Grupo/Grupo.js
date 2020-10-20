@@ -36,7 +36,7 @@ import {
 import { blue, red, green, amber } from "@material-ui/core/colors";
 import BigTooltip from "../UI/BigTooltip/BigTooltip";
 
-const Curso = (props) => {
+const Grupo = (props) => {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -54,7 +54,7 @@ const Curso = (props) => {
     };
 
     return (
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
             <Card className={classes.card}>
                 <div className={classes.cardHeader}>
                     <CardMedia
@@ -183,4 +183,4 @@ const Curso = (props) => {
     );
 };
 
-export default Curso;
+export default Grupo;

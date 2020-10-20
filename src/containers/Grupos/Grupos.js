@@ -4,7 +4,7 @@ import * as actions from "../../store/actions/index";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
 import { Container, Grid, CircularProgress } from "@material-ui/core";
-import Curso from "../../components/Curso/Curso";
+import Grupo from "../../components/Grupo/Grupo";
 
 class Grupos extends Component {
     componentDidMount() {
@@ -18,7 +18,7 @@ class Grupos extends Component {
         if (!this.props.loading) {
             cursos = this.props.cursos.map((curso) => {
                 return (
-                    <Curso
+                    <Grupo
                         key={curso.id}
                         materia={curso.materia}
                         carrera={curso.carrera}

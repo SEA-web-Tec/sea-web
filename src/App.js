@@ -8,6 +8,7 @@ import Layout from "./hoc/Layout/Layout";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Login/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
+import AppTheme from "./AppTheme"
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -57,10 +58,10 @@ class App extends Component {
     }
 
     return (
-      <Fragment>
+      <AppTheme >
         <CssBaseline />
         <Layout>{routes}</Layout>
-      </Fragment>
+      </AppTheme>
     );
   }
 }
@@ -76,5 +77,10 @@ const mapDispatchToProps = (dispatch) => {
     onAuthCheck: () => dispatch(actions.authCheckState())
   };
 };
+
+// export  const toggleDarkMode = () => {
+//   this.state.darkMode = true;
+//   theme.palette.type = "dark";
+// };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
