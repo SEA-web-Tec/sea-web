@@ -16,18 +16,32 @@ const SideItem = (props) => {
                     textOverflow: "ellipsis",
                 },
             },
+            SelectedItem: {
+                backdropFilter:
+                    theme.palette.type === "light"
+                        ? "brightness(100%)"
+                        : "brightness(130%)",
+            },
             SelectedText: {
-                color: theme.palette.primary.main,
+                color:
+                    theme.palette.type === "light"
+                        ? theme.palette.primary.main
+                        : theme.palette.common.white,
                 "& span": {
-                    fontWeight: "bold",
+                    fontWeight: theme.palette.type === "light"
+                    ? "bold"
+                    : "900",
+                    fontSize: "1.1rem",
+                    letterSpacing: "0.05em",
                 },
             },
             SelectedIconBox: {
                 "& div": {
-                    color: theme.palette.primary.main,
+                    color: theme.palette.type === "light"
+                    ? theme.palette.primary.main
+                    : theme.palette.common.white,
                 },
             },
-            IconBox: {},
         };
     });
 
@@ -35,6 +49,10 @@ const SideItem = (props) => {
 
     return (
         <ListItem
+            className={clsx(
+                classes.IconBox,
+                props.selected ? classes.SelectedItem : null
+            )}
             selected={props.selected}
             button={props.button === undefined ? true : props.button}
             key={props.text}

@@ -7,7 +7,7 @@ const initialState = {
         primary: {
             main: "#3F51B5",
             dark: "#303F9F",
-            light: "C5CAE9",
+            light: "#C5CAE9",
         },
         secondary: {
             main: "#FF5722",

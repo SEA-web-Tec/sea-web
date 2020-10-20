@@ -107,12 +107,13 @@ const Grupo = (props) => {
                 </CardContent>
                 <Divider />
                 <Box className={classes.box}>
-                    <IconButton
+                    {/* <IconButton
+                        color="inherit"
                         disabled
-                        style={{ color: "rgba(0, 0, 0, 0.87)" }}
-                    >
-                        <AlarmIcon />
-                    </IconButton>
+                        style={{ opacity: "1",filter:"brightness(100%)" }}
+                    > */}
+                        <AlarmIcon className={classes.alarma}/>
+                    {/* </IconButton> */}
                     <Typography>Horario</Typography>
                     <IconButton
                         className={clsx(classes.expand, {
