@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 
 // Esto son los estilos que automáticamente Material pone al cambiar "palette.type" a "dark". Por el momento este objeto no es necesario usarse.
 const darkMode = {
@@ -32,7 +32,7 @@ const darkMode = {
 };
 
 const AppTheme = (props) => {
-    const themeObject = useSelector(state => state.appTheme)
+    const themeObject = useSelector((state) => state.appTheme);
     const themeConfig = createMuiTheme(themeObject);
 
     return <ThemeProvider theme={themeConfig}>{props.children}</ThemeProvider>;

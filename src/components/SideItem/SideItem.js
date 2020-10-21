@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useStyles } from "./Styles";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -7,44 +7,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import clsx from "clsx";
 
 const SideItem = (props) => {
-    const useStyles = makeStyles((theme) => {
-        return {
-            Text: {
-                marginLeft: "-4px",
-                "& span": {
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                },
-            },
-            SelectedItem: {
-                backdropFilter:
-                    theme.palette.type === "light"
-                        ? "brightness(100%)"
-                        : "brightness(130%)",
-            },
-            SelectedText: {
-                color:
-                    theme.palette.type === "light"
-                        ? theme.palette.primary.main
-                        : theme.palette.common.white,
-                "& span": {
-                    fontWeight: theme.palette.type === "light"
-                    ? "bold"
-                    : "900",
-                    fontSize: "1.1rem",
-                    letterSpacing: "0.05em",
-                },
-            },
-            SelectedIconBox: {
-                "& div": {
-                    color: theme.palette.type === "light"
-                    ? theme.palette.primary.main
-                    : theme.palette.common.white,
-                },
-            },
-        };
-    });
-
     const classes = useStyles();
 
     return (

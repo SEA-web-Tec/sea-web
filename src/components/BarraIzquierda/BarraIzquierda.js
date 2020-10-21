@@ -1,12 +1,13 @@
 import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
-
 import clsx from "clsx";
 
 import Backdrop from "@material-ui/core/Backdrop";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
+import Avatar from "@material-ui/core/Avatar";
+import * as Colores from "@material-ui/core/colors";
 
 import HomeIcon from "@material-ui/icons/Home";
 import CalendarIcon from "@material-ui/icons/CalendarToday";
@@ -14,9 +15,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import SettingsIcon from "@material-ui/icons/Settings";
 import HelpIcon from "@material-ui/icons/Help";
 
-import Avatar from "@material-ui/core/Avatar";
 import SideItem from "../SideItem/SideItem";
-import * as Colores from "@material-ui/core/colors";
 import { useStyles } from "./Styles";
 
 const BarraIzquierda = (props) => {
@@ -74,7 +73,7 @@ const BarraIzquierda = (props) => {
                     >
                         <HomeIcon />
                     </SideItem>
-                    <SideItem  text="Calendario">
+                    <SideItem text="Calendario">
                         <CalendarIcon />
                     </SideItem>
                     <SideItem text="Notificaciones">
@@ -114,8 +113,13 @@ const BarraIzquierda = (props) => {
                             <SideItem key={texto} text={texto}>
                                 <Avatar
                                     style={{
-                                        backgroundColor: Colores[nombresColores[index+2]][400],
-                                        color: "#FFF"
+                                        backgroundColor:
+                                            Colores[
+                                                nombresColores[
+                                                    (index + 2) % 100
+                                                ]
+                                            ][400],
+                                        color: "#FFF",
                                     }}
                                     className={classes.Avatar}
                                 >
