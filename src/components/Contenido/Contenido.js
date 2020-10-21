@@ -10,6 +10,10 @@ const Contenido = (props) => {
       padding: theme.spacing(3),
       [theme.breakpoints.up("sm")]: {
         marginLeft: "57px"
+      },
+      [theme.breakpoints.down("xs")]: {
+        marginTop: props.marginTop - 8,
+        padding: 0
       }
     }
   }));
