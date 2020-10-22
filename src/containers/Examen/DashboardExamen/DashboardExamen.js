@@ -9,9 +9,11 @@ import {
   GetApp as GetAppIcon,
   Delete as DeleteIcon
 } from "@material-ui/icons";
-import { Grid, Typography, Accordion, AccordionDetails, AccordionSummary, Box, IconButton } from "@material-ui/core";
+import { Typography, Accordion, AccordionDetails, AccordionSummary, Box, IconButton } from "@material-ui/core";
 import Portada from "../../../components/Portada/Portada";
-class DashboardExamenes extends Component {
+import ExamenesList from "../../../components/ExamenesList/ExamenesList";
+
+class DashboardExamen extends Component {
   render(props) {
     const { classes } = this.props;
     return (
@@ -28,7 +30,7 @@ class DashboardExamenes extends Component {
         </Typography>
         <Accordion defaultExpanded>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Box component="div" display="flex" alignItems="center" justifyContent="space-between" width="100%">
+            <Box component="div" className={classes.examenList}>
               <Box component="div">
                 <Typography>
                   {/* // Cambiarse a futuro por prop */}
@@ -55,12 +57,7 @@ class DashboardExamenes extends Component {
             </Box>
           </AccordionSummary>
           <AccordionDetails>
-            <div style={{ width: "100%" }}>
-              <Grid container>
-                <Grid item xs={12} sm={12} md={5}></Grid>
-                <Grid item xs={12} sm={12} md={5}></Grid>
-              </Grid>
-            </div>
+            <ExamenesList />
           </AccordionDetails>
         </Accordion>
       </Portada>
@@ -68,4 +65,4 @@ class DashboardExamenes extends Component {
   }
 }
 
-export default withStyles(useStyles)(DashboardExamenes);
+export default withStyles(useStyles)(DashboardExamen);
