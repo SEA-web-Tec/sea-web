@@ -21,8 +21,8 @@ const asyncRubrica = asyncComponent(() => {
   return import("./containers/Rubrica/Rubrica");
 });
 
-const asyncDashboardExamenes = asyncComponent(() => {
-  return import("./containers/Examen/DashboardExamenes/DashboardExamenes");
+const asyncDashboardExamen = asyncComponent(() => {
+  return import("./containers/Examen/DashboardExamen/DashboardExamen");
 });
 
 const asyncCrearExamen = asyncComponent(() => {
@@ -58,9 +58,9 @@ class App extends Component {
           <Route path="/instrumentacion" exact component={asyncID} />
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
           <Route path="/rubrica" exact component={asyncRubrica} />
-          <Route path="/examenes" exact component={asyncDashboardExamenes} />
-          <Route path="/examenes/crear" component={asyncCrearExamen} />
-          <Route path="/examenes/asignar" component={asyncAsignarExamen} />
+          <Route path="/examen" exact component={asyncDashboardExamen} />
+          <Route path="/examen/crear" component={asyncCrearExamen} />
+          <Route path="/examen/asignar" component={asyncAsignarExamen} />
           <Route component={asyncNotFound} />
         </Switch>
       );
