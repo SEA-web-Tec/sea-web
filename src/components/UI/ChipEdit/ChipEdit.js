@@ -11,7 +11,7 @@ import {
 const ChipEdit = (props) => {
   const classes = useStyles();
   var opciones = props.numeros.map((numero) => {
-  return <option value={numero}>{numero}</option>;
+  return <option value={numero} key={numero}>{numero}</option>;
   });
   return (
     <div

@@ -50,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
   selectSize: {
     display: "flex",
   },
+  addCircle: {
+    color: theme.palette.secondary.main,
+    marginLeft: "auto",
+    padding: 5,
+  },
 }));
 
 export default useStyles;

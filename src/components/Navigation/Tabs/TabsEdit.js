@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useStyles from "./Tabs.styles";
 import TabPanelEdit from "./TabPanel/TabPanelEdit";
 
@@ -26,13 +26,11 @@ function a11yProps(index) {
 
 export default function SimpleTabs(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  //aqui los eventos de Tabs
 
   return (
     <div className={classes.root}>
@@ -43,7 +41,10 @@ export default function SimpleTabs(props) {
           <Tab label="Unidad 3" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanelEdit value={value} index={0}>
+      <TabPanelEdit
+        value={value}
+        index={0}
+      >
         {props.children}
       </TabPanelEdit>
       <TabPanelEdit value={value} index={1}>
