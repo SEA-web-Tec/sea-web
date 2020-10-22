@@ -36,7 +36,7 @@ import {
 import { blue, red, green, amber } from "@material-ui/core/colors";
 import BigTooltip from "../UI/BigTooltip/BigTooltip";
 
-const Curso = (props) => {
+const Grupo = (props) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -77,9 +77,7 @@ const Curso = (props) => {
         </CardContent>
         <Divider />
         <Box className={classes.box}>
-          <IconButton disabled style={{ color: "rgba(0, 0, 0, 0.87)" }}>
-            <AlarmIcon />
-          </IconButton>
+          <AlarmIcon className={classes.alarma} />
           <Typography>Horario</Typography>
           <IconButton
             className={clsx(classes.expand, {
@@ -140,4 +138,4 @@ const Curso = (props) => {
   );
 };
 
-export default Curso;
+export default Grupo;
