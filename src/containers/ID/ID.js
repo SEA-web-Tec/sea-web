@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Portada from "../../components/Portada/Portada";
-import SimpleTabs from "../../components/Navigation/Tabs/TabsEdit";
+import SimpleTabs from "../../components/Navigation/Tabs/Tabs";
 
 export default class ID extends Component {
   render(props) {

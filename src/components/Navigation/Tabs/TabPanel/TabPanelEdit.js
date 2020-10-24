@@ -3,23 +3,15 @@ import PropTypes from "prop-types";
 import useStyles from "../Tabs.styles";
 
 import {
-  AppBar,
   Grid,
-  Tabs,
-  Tab,
   Typography,
-  NativeSelect,
-  Chip,
-  Avatar,
   Box,
   Accordion,
   AccordionSummary,
   AccordionDetails,
   TextField,
   IconButton,
-  Paper,
 } from "@material-ui/core";
-import MaterialTable from "material-table";
 import {
   ExpandMore as ExpandMoreIcon,
   //Feedback as FeedbackIcon,
@@ -30,37 +22,7 @@ import ListItemEdit from "../../../UI/ListItem/ListItemEdit";
 import ChipEdit from "../../../UI/ChipEdit/ChipEdit";
 import MatrizEvaluacion from "../../../UI/MaterialTable/MaterialTableEdit";
 
-function letterValue(str) {
-  var anum = {
-    1: "A",
-    2: "B",
-    3: "C",
-    4: "D",
-    5: "E",
-    6: "F",
-    7: "G",
-    8: "H",
-    9: "I",
-    10: "J",
-    11: "K",
-    12: "L",
-    13: "M",
-    14: "N",
-    15: "O",
-    16: "P",
-    17: "Q",
-    18: "R",
-    19: "S",
-    20: "T",
-    21: "U",
-    22: "V",
-    23: "W",
-    24: "X",
-    25: "Y",
-    26: "Z",
-  };
-  return anum[str];
-}
+import letterValue from "shared/LetterValue";
 
 export default function TabPanel(props) {
   const classes = useStyles();
@@ -73,6 +35,14 @@ export default function TabPanel(props) {
   const [DesCom, setDesCom] = useState([]);
   const [IndAlc, setIndAlc] = useState([]);
   const [MatApo, setMatApo] = useState([]);
+
+  const sumaPorcentaje = (id) => {
+    var sumaTotal = 0;
+    rows.forEach((element) => {
+      if (element.id != id) sumaTotal += element.porcentaje;
+    });
+    return sumaTotal;
+  };
 
   const addRow = () => {
     var fila = {
@@ -87,7 +57,6 @@ export default function TabPanel(props) {
     });
     var arreglo = [...rows];
     arreglo.push(fila);
-    console.log(arreglo);
     setMatriz(arreglo);
   };
 
@@ -99,7 +68,6 @@ export default function TabPanel(props) {
       newFila[letra] = 0;
       arreglo.push(newFila);
     });
-    console.log(arreglo);
     setMatriz(arreglo);
   };
 
@@ -111,12 +79,10 @@ export default function TabPanel(props) {
       delete newFila[letra];
       arreglo.push(newFila);
     });
-    console.log(arreglo);
     setMatriz(arreglo);
   };
 
   const deleteRow = (id) => {
-    console.log(id);
     var arreglo = [...rows];
     arreglo.splice(id, 1);
     var arreglo2 = [];
@@ -133,7 +99,6 @@ export default function TabPanel(props) {
   const changeRowData = (id, campo, dato) => {
     var arreglo = [...rows];
     arreglo[id][campo] = dato;
-    console.log(arreglo);
     setMatriz(arreglo);
   };
 
@@ -399,6 +364,7 @@ export default function TabPanel(props) {
                     columnas={IndAlc}
                     filas={rows}
                     eliminar={deleteRow}
+                    suma={sumaPorcentaje}
                     editar={
                       changeRowData
                     } /*editarNumero="" editarEvidencia=""*/
@@ -425,7 +391,7 @@ export default function TabPanel(props) {
                   <Grid container spacing={2}>
                     {MatApo.map((Act) => {
                       return (
-                        <Grid item xs={6}>
+                        <Grid item xs={6} key={Act.label}>
                           <ListItemEdit
                             key={Act.label}
                             label={Act.label}
