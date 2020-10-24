@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import BarraSuperior, {
-  minHeight as alturaBarraSuperior
-} from "../../components/BarraSuperior/BarraSuperior";
-import BarraIzquierda from "../../components/BarraIzquierda/BarraIzquierda";
-import Contenido from "../../components/Contenido/Contenido";
+import BarraSuperior, { minHeight as alturaBarraSuperior } from "../../components/Layout/BarraSuperior/BarraSuperior";
+import BarraIzquierda from "../../components/Layout/BarraIzquierda/BarraIzquierda";
+import Contenido from "../../components/Layout/Contenido/Contenido";
 
 class Layout extends Component {
   state = {
@@ -26,10 +24,7 @@ class Layout extends Component {
       <Fragment>
         {this.props.isAuthenticated ? (
           <Fragment>
-            <BarraSuperior
-              toggleDrawer={this.sideDrawerToggleHandler}
-              titulo="Inicio"
-            ></BarraSuperior>
+            <BarraSuperior toggleDrawer={this.sideDrawerToggleHandler} titulo="Inicio"></BarraSuperior>
             <BarraIzquierda
               marginTop={alturaBarraSuperior}
               open={this.state.open}
@@ -37,9 +32,7 @@ class Layout extends Component {
             ></BarraIzquierda>
           </Fragment>
         ) : null}
-        <Contenido marginTop={alturaBarraSuperior}>
-          {this.props.children}
-        </Contenido>
+        <Contenido marginTop={alturaBarraSuperior}>{this.props.children}</Contenido>
       </Fragment>
     );
   }

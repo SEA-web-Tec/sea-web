@@ -4,7 +4,7 @@ import * as actions from "../../store/actions/index";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
 import { Container, Grid, CircularProgress } from "@material-ui/core";
-import Grupo from "../../components/Grupo/Grupo";
+import Grupo from "components/Grupo/Grupo";
 
 class Grupos extends Component {
   componentDidMount() {

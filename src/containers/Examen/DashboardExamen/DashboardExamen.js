@@ -11,7 +11,7 @@ import {
 } from "@material-ui/icons";
 import { Typography, Accordion, AccordionDetails, AccordionSummary, Box, IconButton } from "@material-ui/core";
 import Portada from "../../../components/Portada/Portada";
-import ExamenesList from "../../../components/ExamenesList/ExamenesList";
+import ExamenesList from "components/Examenes/ExamenesList/ExamenesList";
 
 class DashboardExamen extends Component {
   render(props) {
