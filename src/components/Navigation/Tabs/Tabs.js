@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import useStyles from "./Tabs.styles";
-import TabPanel from "./TabPanel/TabPanel"
+import TabPanel from "./TabPanel/TabPanel";
 
 import {
   AppBar,
-  Grid,
   Tabs,
   Tab,
   /*IconButton,*/
@@ -15,8 +14,6 @@ import {
                     <FeedbackIcon />
                   </IconButton>
 */
-
-//import ListItemEdit from "../../UI/ListItem/ListItemEdit";
 
 function a11yProps(index) {
   return {

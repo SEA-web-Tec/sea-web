@@ -1,21 +1,25 @@
 import React, { Component } from "react";
 import Portada from "../../components/Portada/Portada";
 import SimpleTabs from "../../components/Navigation/Tabs/Tabs";
+import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
 
 export default class ID extends Component {
   render(props) {
     return (
-      <Portada
-        materia="Programación de Dispositivos Móviles"
-        carrera="Ing. Sistemas Computacionales"
-        maestro="José Tadeo Rodriguez Solano"
-        grupo="F"
-        periodo="Enero - Junio 2020"
-        isID
-        status="Aprobado"
-      >
-        <SimpleTabs />
-      </Portada>
+      <div>
+        <CardEvaluacion />
+        <Portada
+          materia="Programación de Dispositivos Móviles"
+          carrera="Ing. Sistemas Computacionales"
+          maestro="José Tadeo Rodriguez Solano"
+          grupo="F"
+          periodo="Enero - Junio 2020"
+          isID
+          status="Aprobado"
+        >
+          <SimpleTabs />
+        </Portada>
+      </div>
     );
   }
 }
