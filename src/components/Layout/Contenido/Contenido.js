@@ -12,7 +12,6 @@ const Contenido = (props) => {
         marginLeft: "57px"
       },
       [theme.breakpoints.down("xs")]: {
-        marginTop: props.marginTop - 8,
         padding: 0
       }
     }

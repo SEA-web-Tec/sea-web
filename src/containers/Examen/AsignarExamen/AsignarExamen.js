@@ -21,7 +21,8 @@ import {
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import Portada from "../../../components/Portada/Portada";
-import TransferList from "../../../components/UI/TransferList/TransferList";
+import AsignarTransferList from "components/Examenes/AsignarTransferList/AsignarTransferList";
+// import TransferList from "../../../components/UI/TransferList/TransferList";
 
 class Examenes extends Component {
   render(props) {
@@ -81,7 +82,7 @@ class Examenes extends Component {
                   </Button>
                 </Grid>
               </Grid>
-              <TransferList />
+              <AsignarTransferList />
             </div>
           </AccordionDetails>
         </Accordion>

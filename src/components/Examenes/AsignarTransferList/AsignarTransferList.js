@@ -27,11 +27,12 @@ function intersection(a, b) {
   return a.filter((value) => b.indexOf(value) !== -1);
 }
 
-export default function TransferList() {
+export default function AsignarTransferList() {
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([0, 1, 2, 3]);
-  const [right, setRight] = React.useState([4, 5, 6, 7]);
+  // Cargar desde props
+  const [left, setLeft] = React.useState([]);
+  const [right, setRight] = React.useState([]);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -101,7 +102,7 @@ export default function TransferList() {
 
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-      <Grid item>{customList(left, "Lista de alumnos")}</Grid>
+      <Grid item>{customList(left, "Reactivos")}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -146,7 +147,7 @@ export default function TransferList() {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(right, "Alumnos asignados")}</Grid>
+      <Grid item>{customList(right, "Reactivos seleccionados")}</Grid>
     </Grid>
   );
 }

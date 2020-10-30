@@ -1,21 +1,14 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
-import {
-  ExpandMore as ExpandMoreIcon,
-  Visibility as VisibilityIcon,
-  Create as CreateIcon,
-  GroupAdd as GroupAddIcon,
-  GetApp as GetAppIcon,
-  Delete as DeleteIcon
-} from "@material-ui/icons";
 import { Typography, Accordion, AccordionDetails, AccordionSummary, Box, IconButton } from "@material-ui/core";
-import Portada from "../../../components/Portada/Portada";
-import ExamenesList from "components/Examenes/ExamenesList/ExamenesList";
+import Portada from "components/Portada/Portada";
+import ExamenesAccordion from "components/Examenes/ExamenesAccordion/ExamenesAccordion";
 
 class DashboardExamen extends Component {
   render(props) {
     const { classes } = this.props;
+
     return (
       <Portada
         materia="Programación de Dispositivos Móviles"
@@ -25,41 +18,12 @@ class DashboardExamen extends Component {
         periodo="Enero - Junio 2020"
         // hasTabs
       >
-        <Typography className={classes.titulo} variant="h6" component="h6">
+        <Typography className={classes.Titulo} variant="h6" component="h6" gutterBottom>
           Introducción a la programación de dispositivos móviles
         </Typography>
-        <Accordion defaultExpanded>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Box component="div" className={classes.examenList}>
-              <Box component="div">
-                <Typography>
-                  {/* // Cambiarse a futuro por prop */}
-                  Examen U1 PDM
-                </Typography>
-              </Box>
-              <Box component="div">
-                <IconButton color="secondary">
-                  <VisibilityIcon />
-                </IconButton>
-                <IconButton color="secondary">
-                  <CreateIcon />
-                </IconButton>
-                <IconButton color="secondary">
-                  <GroupAddIcon />
-                </IconButton>
-                <IconButton color="secondary">
-                  <GetAppIcon />
-                </IconButton>
-                <IconButton color="secondary">
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <ExamenesList />
-          </AccordionDetails>
-        </Accordion>
+        <ExamenesAccordion nombreExamen="Examen U1 PDM" />
+        <ExamenesAccordion nombreExamen="Examen U2 PDM" />
+        <ExamenesAccordion nombreExamen="Examen U3 PDM" />
       </Portada>
     );
   }

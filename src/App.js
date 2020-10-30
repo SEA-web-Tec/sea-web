@@ -8,7 +8,7 @@ import Layout from "./hoc/Layout/Layout";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Login/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
-import AppTheme from "./AppTheme"
+import AppTheme from "./AppTheme";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -30,8 +30,16 @@ const asyncCrearExamen = asyncComponent(() => {
   return import("./containers/Examen/CrearExamen/CrearExamen");
 });
 
+const asyncEditarExamen = asyncComponent(() => {
+  return import("./containers/Examen/EditarExamen/EditarExamen");
+});
+
 const asyncAsignarExamen = asyncComponent(() => {
   return import("./containers/Examen/AsignarExamen/AsignarExamen");
+});
+
+const asyncContenedorExamen = asyncComponent(() => {
+  return import("./containers/Examen/ContenedorExamen/ContenedorExamen");
 });
 
 const asyncNotFound = asyncComponent(() => {
@@ -59,16 +67,18 @@ class App extends Component {
           <Route path="/instrumentacion" exact component={asyncID} />
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
           <Route path="/rubrica" exact component={asyncRubrica} />
-          <Route path="/examen" exact component={asyncDashboardExamen} />
+          <Route path="/examen/" exact component={asyncDashboardExamen} />
           <Route path="/examen/crear" component={asyncCrearExamen} />
+          <Route path="/examen/editar" component={asyncEditarExamen} />
           <Route path="/examen/asignar" component={asyncAsignarExamen} />
+          <Route path="/examen/id" component={asyncContenedorExamen} />
           <Route component={asyncNotFound} />
         </Switch>
       );
     }
 
     return (
-      <AppTheme >
+      <AppTheme>
         <CssBaseline />
         <Layout>{routes}</Layout>
       </AppTheme>
