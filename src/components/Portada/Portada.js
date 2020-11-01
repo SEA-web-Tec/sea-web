@@ -61,7 +61,7 @@ class Portada extends Component {
             </Grid>
           </Grid>
         </div>
-        <CardContent style={{ padding: 0 }}>{this.props.children}</CardContent>
+        <CardContent className={clsx(this.props.hasTabs && classes.hasTabs)}>{this.props.children}</CardContent>
       </Card>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Portada from "../../components/Portada/Portada";
-import SimpleTabs from "../../components/Navigation/Tabs/Tabs";
+import SimpleTabs from "../../components/Navigation/Tabs/TabsEdit";
 import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
 
 export default class ID extends Component {
@@ -16,6 +16,7 @@ export default class ID extends Component {
           periodo="Enero - Junio 2020"
           isID
           status="Aprobado"
+          hasTabs
         >
           <SimpleTabs />
         </Portada>

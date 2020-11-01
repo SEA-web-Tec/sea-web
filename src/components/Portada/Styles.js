@@ -66,5 +66,8 @@ export const useStyles = (theme) => ({
   checkIcon: {
     color: green[600],
     margin: theme.spacing(0, 0, 0, 1)
+  },
+  hasTabs: {
+    padding: 0
   }
 });

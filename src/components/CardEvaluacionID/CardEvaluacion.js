@@ -3,24 +3,19 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import useStyles from "./CardEvaluacion.styles";
 
-import { Grid } from "@material-ui/core";
+import {
+  Grid,
+  Chip,
+  ListItemText,
+  Typography,
+  Drawer,
+} from "@material-ui/core";
 
 export default function CardEvaluacion() {
   const classes = useStyles();
   const [intrumentaciones, setIntrumentaciones] = useState([]);
-  const bull = <span className={classes.bullet}>•</span>;
-
-  /*
-  {id:0,
-    carrera:,
-    materia:,
-    nombreP:,
-    fecha:
-  }
-  */
 
   if (intrumentaciones.length == 0) {
     var arreglo = [...intrumentaciones];
@@ -34,7 +29,7 @@ export default function CardEvaluacion() {
     arreglo.push({
       id: 1,
       carrera: "ISC",
-      materia: "Ejemplo de materia computacional 2",
+      materia: "Segunda Materia",
       nombreP: "Juan de Ejemplo Carreras Prisa 2",
       fecha: "29/10/2020",
     });
@@ -43,18 +38,51 @@ export default function CardEvaluacion() {
   return (
     <Card className={classes.root}>
       <CardContent>
-        {intrumentaciones.map((intrumentacion) => {
-          return (
-            <div className={classes.ListItem} key={intrumentacion.id}>
-              <div className={classes.Content}>
-                <Typography>{intrumentacion.carrera}</Typography>
-                <Typography>{intrumentacion.fecha}</Typography>
-                <Typography>{intrumentacion.materia}</Typography>
-                <Typography>{intrumentacion.nombreP}</Typography>
-              </div>
-            </div>
-          );
-        })}
+        <Grid container spacing={1}>
+          {intrumentaciones.map((intrumentacion) => {
+            return (
+              <Grid item xs={12} sm={6}>
+                <div className={classes.ListItem} key={intrumentacion.id}>
+                  <div className={classes.Content}>
+                    <ListItemText
+                      key={intrumentacion.id}
+                      primary={
+                        <Typography gutterBottom>
+                          {intrumentacion.materia}
+                        </Typography>
+                      }
+                      secondary={
+                        <Grid container spacing={1} xs={6}>
+                          <Grid item>
+                            <Chip
+                              size="small"
+                              variant="outlined"
+                              label={`Carrera: ${intrumentacion.carrera}`}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <Chip
+                              size="small"
+                              variant="outlined"
+                              label={`Nombre: ${intrumentacion.nombreP}`}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <Chip
+                              size="small"
+                              variant="outlined"
+                              label={`Fecha: ${intrumentacion.fecha}`}
+                            />
+                          </Grid>
+                        </Grid>
+                      }
+                    />
+                  </div>
+                </div>
+              </Grid>
+            );
+          })}
+        </Grid>
       </CardContent>
     </Card>
   );
