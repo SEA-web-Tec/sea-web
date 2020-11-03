@@ -33,7 +33,10 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return "¿Cuál no pertenece al Marco Conceptual de Procesos según Pressman?";
+      return {
+        pregunta: "¿Cuál no pertenece al Marco Conceptual de Procesos según Pressman?",
+        respuestas: ["Modelado", "Planificacion", "Pruebas", "Despliegue"]
+      };
     default:
       return "Pregunta desconocida";
   }
@@ -71,10 +74,6 @@ export default function ExamenesStepper() {
     setActiveStep(newActiveStep);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
@@ -87,8 +86,7 @@ export default function ExamenesStepper() {
   };
 
   const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
+    // Redirect o cerrar ventana
   };
 
   return (
@@ -114,7 +112,8 @@ export default function ExamenesStepper() {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <Typography className={classes.instructions}>{getStepContent(activeStep).pregunta}</Typography>
+
             <div>
               {activeStep !== steps.length &&
                 (completed[activeStep] ? (
@@ -122,7 +121,12 @@ export default function ExamenesStepper() {
                     Respuesta confirmada
                   </Typography>
                 ) : (
-                  <Button variant="contained" color="primary" onClick={handleComplete} style={{ margin: "auto" }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleComplete}
+                    style={{ display: "block", margin: "auto" }}
+                  >
                     {completedSteps() === totalSteps() - 1 ? "Finalizar intento" : "Confirmar respuesta"}
                   </Button>
                 ))}
