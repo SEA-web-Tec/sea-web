@@ -30,27 +30,28 @@ class Rubrica extends Component {
       { id: 2, criterio: "Criterio 2", num_renglon: 2, id_instrumento: 1 },
       { id: 3, criterio: "Criterio 3", num_renglon: 3, id_instrumento: 1 },
     ],
+    renglones: [{ id: 1, criterio: "Excelente", num_renglon: 1, id_instrumento: 1 }],
     celdas: [
       {
         id: 11,
         texto: "Cumplió con los requisitos 11",
         id_renglon: 1,
         id_columna: 1,
-        puntos_max: 50,
+        puntos_max: 50
       },
       {
         id: 21,
         texto: "Cumplió con los requisitos 21",
         id_renglon: 2,
         id_columna: 1,
-        puntos_max: 50,
+        puntos_max: 50
       },
       {
         id: 31,
         texto: "Cumplió con los requisitos 31",
         id_renglon: 3,
         id_columna: 1,
-        puntos_max: 50,
+        puntos_max: 50
       },
       {
         id: 12,
@@ -64,14 +65,14 @@ class Rubrica extends Component {
         texto: "Cumplió con los requisitos 13",
         id_renglon: 1,
         id_columna: 3,
-        puntos_max: 50,
+        puntos_max: 50
       },
       {
         id: 14,
         texto: "Cumplió con los requisitos 14",
         id_renglon: 1,
         id_columna: 4,
-        puntos_max: 50,
+        puntos_max: 50
       },
       {
         id: 15,
@@ -140,14 +141,12 @@ class Rubrica extends Component {
   };
 
   celdaModificadaHandler = (event, id) => {
-    const celdaModificadaIndex = this.state.celdas.findIndex(
-      (celda) => celda.id === id
-    );
+    const celdaModificadaIndex = this.state.celdas.findIndex((celda) => celda.id === id);
     let celdasActualizadas = [...this.state.celdas];
 
     celdasActualizadas[celdaModificadaIndex] = {
       ...celdasActualizadas[celdaModificadaIndex],
-      texto: event.target.value,
+      texto: event.target.value
     };
 
     this.setState({ celdas: celdasActualizadas });
