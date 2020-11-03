@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import Instrumento from "../../components/IDE/Instrumentos/Instrumento";
 import { MenuItem, Divider } from "@material-ui/core";
 
@@ -58,6 +57,5 @@ class ListaInstrumentos extends Component {
   }
 }
 
-ListaInstrumentos.propTypes = {};
 
 export default ListaInstrumentos;

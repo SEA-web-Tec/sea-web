@@ -1,18 +1,42 @@
 import React from "react";
-import { Box, TextField } from "@material-ui/core";
+import { Box,InputBase } from "@material-ui/core";
 
 const tituloColumnaInstrumento = (props) => {
+  let color = ""
+  switch (props.titulo) {
+    case "Excelente":
+      color = "#00F"
+      break;
+    case "Bueno":
+      color = "#0F0"
+      break;
+    case "Regular":
+      color = "#FF0"
+      break;
+    case "Suficiente":
+      color = "#FF8000"
+      break;
+    case "Insuficiente":
+      color = "#F00"
+      break;
+    default:
+      color = "primary.main"
+      break;
+  }
+  console.log(props.titulo);
   return (
     <Box
       borderRadius="borderRadius"
-      bgcolor="primary.main"
+      bgcolor={color}
       pt={2}
       p={1}
       boxShadow={2}
     >
-      <TextField
-        fullWidth
+      <InputBase
+        //fullWidth
+        //variant="standard"
         value={props.titulo}
+        onChange={props.cambioTitulo}
       />
     </Box>
   );

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import PanelExpansible from "../PanelExpansible/PanelExpnasible";
 import { List, ListItem, ListItemText,ListItemIcon } from "@material-ui/core";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -42,6 +41,5 @@ class EventosPanel extends Component {
   }
 }
 
-EventosPanel.propTypes = {};
 
 export default EventosPanel;
