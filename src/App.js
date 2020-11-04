@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
@@ -80,7 +80,7 @@ class App extends Component {
     return (
       <AppTheme>
         <CssBaseline />
-        <Layout>{routes}</Layout>
+        <Layout mostrarDerecha>{routes}</Layout>
       </AppTheme>
     );
   }
@@ -97,10 +97,5 @@ const mapDispatchToProps = (dispatch) => {
     onAuthCheck: () => dispatch(actions.authCheckState())
   };
 };
-
-// export  const toggleDarkMode = () => {
-//   this.state.darkMode = true;
-//   theme.palette.type = "dark";
-// };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
