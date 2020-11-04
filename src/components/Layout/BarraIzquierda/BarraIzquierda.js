@@ -40,8 +40,6 @@ const BarraIzquierda = (props) => {
 
   const nombresColores = Object.keys(Colores);
 
-  console.log();
-
   return (
     <Fragment>
       <Backdrop className={clsx(classes.backdrop)} open={props.open} onClick={props.closed} />

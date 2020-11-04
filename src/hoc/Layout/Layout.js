@@ -4,6 +4,7 @@ import BarraSuperior, {
     minHeight as alturaBarraSuperior,
 } from "components/Layout/BarraSuperior/BarraSuperior";
 import BarraIzquierda from "components/Layout/BarraIzquierda/BarraIzquierda";
+import BarraIzquierda from "components/Layout/Barr/B";
 import Contenido from "components/Layout/Contenido/Contenido";
 
 class Layout extends Component {
@@ -39,7 +40,6 @@ class Layout extends Component {
                 ) : null}
                 <Contenido marginTop={alturaBarraSuperior}>
                     {this.props.children}
-					{this.props.mostrarDerecha}
                 </Contenido>
             </Fragment>
         );
