@@ -30,7 +30,6 @@ class Rubrica extends Component {
       { id: 2, criterio: "Criterio 2", num_renglon: 2, id_instrumento: 1 },
       { id: 3, criterio: "Criterio 3", num_renglon: 3, id_instrumento: 1 },
     ],
-    renglones: [{ id: 1, criterio: "Excelente", num_renglon: 1, id_instrumento: 1 }],
     celdas: [
       {
         id: 11,

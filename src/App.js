@@ -26,6 +26,10 @@ const asyncNotFound = asyncComponent(() => {
   return import("./containers/NotFound/NotFound");
 });
 
+const asyncListaCotejo = asyncComponent(() => {
+  return import("./containers/ListaCotejo/ListaCotejo");
+});
+
 class App extends Component {
   componentDidMount() {
     this.props.onAuthCheck();
@@ -47,6 +51,7 @@ class App extends Component {
           <Route path="/instrumentacion" component={asyncID} />
           <Route path="/instrumentos" component={asyncMenuInstrumentos} />
           <Route path="/rubrica" component={asyncRubrica} />
+          <Route path="/listacotejo" component={asyncListaCotejo} />
           {/* <Route path="/examenes" component={Examenes} /> */}
           <Route component={asyncNotFound} />
         </Switch>
