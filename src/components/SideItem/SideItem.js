@@ -1,44 +1,22 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useStyles } from "./Styles";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import clsx from "clsx";
 
-const selectedColor = "#3f51b5";
-
 const SideItem = (props) => {
-    const useStyles = makeStyles((theme) => {
-        return {
-            Text: {
-                marginLeft: "-4px",
-                "& span": {
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                },
-            },
-            SelectedText: {
-                color: selectedColor,
-                "& span": {
-                    fontWeight: "bold",
-                },
-            },
-            SelectedIconBox: {
-                "& div": {
-                    color: selectedColor,
-                },
-            },
-            IconBox: {},
-        };
-    });
-
     const classes = useStyles();
 
     return (
         <ListItem
+            className={clsx(
+                classes.IconBox,
+                props.selected ? classes.SelectedItem : null
+            )}
             selected={props.selected}
-            button={props.button === undefined ? true: props.button}
+            button={props.button === undefined ? true : props.button}
             key={props.text}
             onClick={props.clicked}
         >

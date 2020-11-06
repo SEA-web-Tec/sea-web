@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
@@ -8,7 +8,7 @@ import Layout from "./hoc/Layout/Layout";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Login/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
-// import Examenes from "./containers/Examenes/Examenes";
+import AppTheme from "./AppTheme";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -20,6 +20,26 @@ const asyncMenuInstrumentos = asyncComponent(() => {
 
 const asyncRubrica = asyncComponent(() => {
   return import("./containers/Rubrica/Rubrica");
+});
+
+const asyncDashboardExamen = asyncComponent(() => {
+  return import("./containers/Examen/DashboardExamen/DashboardExamen");
+});
+
+const asyncCrearExamen = asyncComponent(() => {
+  return import("./containers/Examen/CrearExamen/CrearExamen");
+});
+
+const asyncEditarExamen = asyncComponent(() => {
+  return import("./containers/Examen/EditarExamen/EditarExamen");
+});
+
+const asyncAsignarExamen = asyncComponent(() => {
+  return import("./containers/Examen/AsignarExamen/AsignarExamen");
+});
+
+const asyncContenedorExamen = asyncComponent(() => {
+  return import("./containers/Examen/ContenedorExamen/ContenedorExamen");
 });
 
 const asyncNotFound = asyncComponent(() => {
@@ -47,22 +67,26 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/logout" exact component={Logout} />
-          <Route path="/grupos" component={Grupos} />
-          <Route path="/instrumentacion" component={asyncID} />
-          <Route path="/instrumentos" component={asyncMenuInstrumentos} />
-          <Route path="/rubrica" component={asyncRubrica} />
+          <Route path="/grupos" exact component={Grupos} />
+          <Route path="/instrumentacion" exact component={asyncID} />
+          <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
+          <Route path="/rubrica" exact component={asyncRubrica} />
           <Route path="/listacotejo" component={asyncListaCotejo} />
-          {/* <Route path="/examenes" component={Examenes} /> */}
+          <Route path="/examen/" exact component={asyncDashboardExamen} />
+          <Route path="/examen/crear" component={asyncCrearExamen} />
+          <Route path="/examen/editar" component={asyncEditarExamen} />
+          <Route path="/examen/asignar" component={asyncAsignarExamen} />
+          <Route path="/examen/id" component={asyncContenedorExamen} />
           <Route component={asyncNotFound} />
         </Switch>
       );
     }
 
     return (
-      <Fragment>
+      <AppTheme>
         <CssBaseline />
-        <Layout>{routes}</Layout>
-      </Fragment>
+        <Layout mostrarDerecha>{routes}</Layout>
+      </AppTheme>
     );
   }
 }

@@ -1,0 +1,37 @@
+.semanasRadius {
+  border: 1px solid #3f51b5;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  margin-left: 8px;
+  margin-bottom: 12px;
+  display: inline-flex;
+  vertical-align: middle;
+  justify-content: center;
+}
+
+.avatarSize2 {
+  border: 1px solid #3f51b5;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  margin: 2px;
+}
+
+.fuente {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 0.825rem;
+  padding: 0px 12px;
+  padding-top: 7px;
+  text-align: center;
+}
+
+.selectSize {
+  transform: scale(0.75) !important;
+  padding: none !important;
+  padding-left: 20%;
+  color: white;
+  cursor: pointer;
+}
