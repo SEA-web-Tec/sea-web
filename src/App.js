@@ -1,12 +1,13 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import { CssBaseline } from "@material-ui/core";
 import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 import Layout from "./hoc/Layout/Layout";
-import Login from "./containers/Login/Login";
-import Logout from "./containers/Login/Logout/Logout";
+import Login from "./containers/Autenticacion/Login/Login";
+import Registro from "./containers/Autenticacion/Registro/Registro";
+import Logout from "./containers/Autenticacion/Login/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
 import AppTheme from "./AppTheme";
 
@@ -54,7 +55,8 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
-        <Route path="/" component={Login} />
+        <Route path="/" exact component={Login} />
+        <Route path="/registro" exact component={Registro} />
       </Switch>
     );
 
