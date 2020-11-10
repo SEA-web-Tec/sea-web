@@ -32,7 +32,9 @@ class Layout extends Component {
             ></BarraIzquierda>
           </Fragment>
         ) : null}
-        <Contenido marginTop={alturaBarraSuperior}>{this.props.children}</Contenido>
+        <Contenido marginTop={alturaBarraSuperior} isLogin={!this.props.isAuthenticated}>
+          {this.props.children}
+        </Contenido>
       </Fragment>
     );
   }
