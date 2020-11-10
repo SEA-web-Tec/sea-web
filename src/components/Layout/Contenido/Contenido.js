@@ -8,7 +8,7 @@ const Contenido = (props) => {
       marginLeft: 0,
       marginTop: props.marginTop,
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: theme.spacing(5),
       [theme.breakpoints.up("sm")]: {
         marginLeft: "57px"
       },

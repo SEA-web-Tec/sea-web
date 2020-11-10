@@ -29,7 +29,7 @@ const ChipEdit = (props) => {
           {opciones}
         </Select>
       </div>
-      <Typography className={clsx(classes.titulo, "fuente")} color="primary">
+      <Typography className={clsx(classes.titulo, "fuente")} >
         {props.label}
       </Typography>
     </div>

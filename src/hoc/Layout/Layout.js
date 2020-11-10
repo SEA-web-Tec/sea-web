@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import BarraSuperior, { minHeight as alturaBarraSuperior } from "../../components/Layout/BarraSuperior/BarraSuperior";
-import BarraIzquierda from "../../components/Layout/BarraIzquierda/BarraIzquierda";
-import Contenido from "../../components/Layout/Contenido/Contenido";
+import BarraSuperior, { minHeight as alturaBarraSuperior } from "components/Layout/BarraSuperior/BarraSuperior";
+import BarraIzquierda from "components/Layout/BarraIzquierda/BarraIzquierda";
+import Contenido from "components/Layout/Contenido/Contenido";
 
 class Layout extends Component {
   state = {
@@ -34,6 +34,7 @@ class Layout extends Component {
         ) : null}
         <Contenido marginTop={alturaBarraSuperior} isLogin={!this.props.isAuthenticated}>
           {this.props.children}
+          {this.props.mostrarDerecha}
         </Contenido>
       </Fragment>
     );

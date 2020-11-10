@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import clsx from "clsx";
 
-import { makeStyles } from "@material-ui/core/styles";
+import { useStyles } from "./Styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,41 +17,22 @@ import * as actions from "store/actions/index";
 export const minHeight = 56;
 
 const BarraSuperior = (props) => {
-    const useStyles = makeStyles((theme) => ({
-        appBar: {
-            zIndex: theme.zIndex.drawer + 1,
-        },
-        titulo: {
-            marginLeft: 36,
-        },
-        toolbar: {
-            paddingRight: "0px",
-        },
-        opciones: {
-            width: "fit-content",
-            flex: 1,
-            textAlign: "right",
-            marginRight: "16px",
-        },
-    }));
+    const classes = useStyles();
 
     const auth = useSelector((state) => state.auth);
     const grupos = useSelector((state) => state.curso.cursos);
+
     let token, userId;
+
     token = auth.token;
     userId = auth.userId;
+
     const fotoPerfil =
         grupos === undefined || grupos.length === 0
             ? null
             : grupos[0].fotoPerfil;
 
-    //ComponentDidMount
-    useEffect(() => {
-        onFetchGrupos(token, userId);
-    }, []);
-
     const dispatch = useDispatch();
-    const classes = useStyles();
 
     // UseCallback() es recomendado para evitar renderizado innecesario
     const toggleDarkMode = useCallback(
@@ -62,6 +43,13 @@ const BarraSuperior = (props) => {
         (token, userId) => dispatch(actions.fetchCursos(token, userId)),
         [dispatch]
     );
+
+    const fetchGrupos = () => {
+        onFetchGrupos(token, userId);
+    };
+    
+    //ComponentDidMount
+    useEffect(fetchGrupos, [onFetchGrupos, token, userId]);
 
     return (
         <AppBar position="fixed" className={clsx(classes.appBar)}>

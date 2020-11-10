@@ -1,37 +1,36 @@
 import React from "react";
-import { Box,InputBase } from "@material-ui/core";
+import { Box, InputBase } from "@material-ui/core";
 
 const tituloColumnaInstrumento = (props) => {
-  let color = ""
+  let color = "";
   switch (props.titulo) {
     case "Excelente":
-      color = "#00F"
+      color = "#00F";
+      break;
+    case "Si":
+      color = "#0F0";
       break;
     case "Bueno":
-      color = "#0F0"
+      color = "#0F0";
       break;
     case "Regular":
-      color = "#FF0"
+      color = "#FF0";
       break;
     case "Suficiente":
-      color = "#FF8000"
+      color = "#FF8000";
       break;
     case "Insuficiente":
-      color = "#F00"
+      color = "#F00";
+      break;
+    case "No":
+      color = "#F00";
       break;
     default:
-      color = "primary.main"
+      color = "primary.main";
       break;
   }
-  console.log(props.titulo);
   return (
-    <Box
-      borderRadius="borderRadius"
-      bgcolor={color}
-      pt={2}
-      p={1}
-      boxShadow={2}
-    >
+    <Box borderRadius="borderRadius" bgcolor={color} pt={2} p={1} boxShadow={2}>
       <InputBase
         //fullWidth
         //variant="standard"

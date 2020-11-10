@@ -47,6 +47,10 @@ const asyncNotFound = asyncComponent(() => {
   return import("./containers/NotFound/NotFound");
 });
 
+const asyncListaCotejo = asyncComponent(() => {
+  return import("./containers/ListaCotejo/ListaCotejo");
+});
+
 class App extends Component {
   componentDidMount() {
     this.props.onAuthCheck();
@@ -69,6 +73,7 @@ class App extends Component {
           <Route path="/instrumentacion" exact component={asyncID} />
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
           <Route path="/rubrica" exact component={asyncRubrica} />
+          <Route path="/listacotejo" component={asyncListaCotejo} />
           <Route path="/examen/" exact component={asyncDashboardExamen} />
           <Route path="/examen/crear" component={asyncCrearExamen} />
           <Route path="/examen/editar" component={asyncEditarExamen} />
@@ -82,7 +87,7 @@ class App extends Component {
     return (
       <AppTheme>
         <CssBaseline />
-        <Layout>{routes}</Layout>
+        <Layout mostrarDerecha>{routes}</Layout>
       </AppTheme>
     );
   }
@@ -99,10 +104,5 @@ const mapDispatchToProps = (dispatch) => {
     onAuthCheck: () => dispatch(actions.authCheckState())
   };
 };
-
-// export  const toggleDarkMode = () => {
-//   this.state.darkMode = true;
-//   theme.palette.type = "dark";
-// };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
