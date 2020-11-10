@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Portada from "../../components/Portada/Portada";
-import SimpleTabs from "../../components/Navigation/Tabs/TabsEdit";
+import TabsID from "../../components/Navigation/Tabs/Tabs";
 import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
 
 export default class ID extends Component {
   render(props) {
+    var instDicID = "";
     return (
       <div>
         <CardEvaluacion />
@@ -18,7 +19,7 @@ export default class ID extends Component {
           status="Aprobado"
           hasTabs
         >
-          <SimpleTabs />
+          <TabsID evaluar={true} />
         </Portada>
       </div>
     );

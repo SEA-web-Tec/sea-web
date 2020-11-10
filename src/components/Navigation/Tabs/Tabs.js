@@ -9,12 +9,6 @@ import {
   /*IconButton,*/
 } from "@material-ui/core";
 
-/*
-                  <IconButton className={classes.expanderFeedback}>
-                    <FeedbackIcon />
-                  </IconButton>
-*/
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -41,10 +35,10 @@ export default function SimpleTabs(props) {
           <Tab label="Unidad 3" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} evaluar={props.evaluar}>
         {props.children}
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={1} evaluar={props.evaluar}>
         {props.children}
       </TabPanel>
     </div>

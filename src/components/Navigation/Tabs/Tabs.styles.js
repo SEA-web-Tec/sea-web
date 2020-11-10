@@ -42,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
   },
   expanderFeedback: {
     marginLeft: "auto",
-    padding: 0,
+    padding: 5,
+    marginRight: 5,
   },
   avatarSize: {
     width: theme.spacing(10),

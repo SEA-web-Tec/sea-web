@@ -14,13 +14,13 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  /*IconButton,*/
+  IconButton,
   Paper,
 } from "@material-ui/core";
 import MaterialTable from "material-table";
 import {
   ExpandMore as ExpandMoreIcon,
-  //Feedback as FeedbackIcon,
+  Feedback as FeedbackIcon,
 } from "@material-ui/icons";
 
 import ListItem from "../../../UI/ListItem/ListItem";
@@ -45,7 +45,7 @@ export default function TabPanel(props) {
       evidencia: "Examen",
       evaluacion: "Lista de cotejo",
       porcentaje: 0,
-      B:0
+      B: 0,
     };
     IndAlc.forEach((element) => {
       var letra = letterValue(element.label);
@@ -128,6 +128,14 @@ export default function TabPanel(props) {
   if (MatApo.length <= 3) {
     addElement("Material de Apoyo", "Material de Apoyo", MatApo, 4);
   }
+  var feedback = "";
+  if (props.evaluar) {
+    var feedback = (
+      <IconButton className={classes.expanderFeedback}>
+        <FeedbackIcon />
+      </IconButton>
+    );
+  }
 
   return (
     <div
@@ -150,6 +158,7 @@ export default function TabPanel(props) {
             </Grid>
             <Grid item xs={12} sm={7} md={6} lg={6}>
               <Box className={classes.semanas}>
+                {feedback}
                 <Chip
                   className={classes.semanasChip}
                   avatar={<Avatar>4</Avatar>}
