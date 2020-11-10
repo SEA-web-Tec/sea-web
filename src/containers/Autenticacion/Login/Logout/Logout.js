@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import * as actions from "../../../store/actions/index";
-
+import * as actions from "../../../../store/actions/index";
 
 class Logout extends Component {
   componentDidMount() {
@@ -16,7 +15,7 @@ class Logout extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogout: () => dispatch(actions.logout()),
+    onLogout: () => dispatch(actions.logout())
   };
 };
 
