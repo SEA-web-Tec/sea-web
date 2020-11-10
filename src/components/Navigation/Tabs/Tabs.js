@@ -1,22 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import useStyles from "./Tabs.styles";
-import TabPanel from "./TabPanel/TabPanel"
+import TabPanel from "./TabPanel/TabPanel";
 
 import {
   AppBar,
-  Grid,
   Tabs,
   Tab,
   /*IconButton,*/
 } from "@material-ui/core";
-
-/*
-                  <IconButton className={classes.expanderFeedback}>
-                    <FeedbackIcon />
-                  </IconButton>
-*/
-
-//import ListItemEdit from "../../UI/ListItem/ListItemEdit";
 
 function a11yProps(index) {
   return {
@@ -27,7 +18,7 @@ function a11yProps(index) {
 
 export default function SimpleTabs(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -44,10 +35,10 @@ export default function SimpleTabs(props) {
           <Tab label="Unidad 3" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} evaluar={props.evaluar}>
         {props.children}
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={1} evaluar={props.evaluar}>
         {props.children}
       </TabPanel>
     </div>

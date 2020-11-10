@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    //marginBottom: 100,
   },
   paper: {
     padding: theme.spacing(1),
@@ -41,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
   },
   expanderFeedback: {
     marginLeft: "auto",
-    padding: 0,
+    padding: 5,
+    marginRight: 5,
   },
   avatarSize: {
     width: theme.spacing(10),
@@ -49,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
   },
   selectSize: {
     display: "flex",
+  },
+  addCircle: {
+    color: theme.palette.secondary.main,
+    marginLeft: "auto",
+    padding: 5,
   },
 }));
 
