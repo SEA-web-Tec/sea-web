@@ -3,33 +3,26 @@ import PropTypes from "prop-types";
 import useStyles from "../Tabs.styles";
 
 import {
-  AppBar,
-  Grid,
-  Tabs,
-  Tab,
-  Typography,
-  Chip,
-  Avatar,
-  Box,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  IconButton,
-  Paper,
+    Grid,
+    Typography,
+    Chip,
+    Avatar,
+    Box,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    Paper,
 } from "@material-ui/core";
 import MaterialTable from "material-table";
-import {
-  ExpandMore as ExpandMoreIcon,
-  Feedback as FeedbackIcon,
-} from "@material-ui/icons";
+import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 
 import ListItem from "../../../UI/ListItem/ListItem";
 import letterValue from "shared/LetterValue";
 import MatrizEvaluacion from "../../../UI/MaterialTable/MaterialTable";
 
 export default function TabPanel(props) {
-  const classes = useStyles();
-  const { children, value, index, ...other } = props;
+    const classes = useStyles();
+    const { children, value, index, ...other } = props;
 
   const [rows, setMatriz] = useState([]);
 
@@ -301,7 +294,7 @@ export default function TabPanel(props) {
 }
 
 TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
 };

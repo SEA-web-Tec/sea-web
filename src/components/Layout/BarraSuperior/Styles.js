@@ -14,6 +14,6 @@ export const useStyles = makeStyles((theme) => ({
         width: "fit-content",
         flex: 1,
         textAlign: "right",
-        marginRight: "16px",
+        marginRight: "5px",
     },
 }));

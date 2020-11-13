@@ -14,8 +14,6 @@ import Brightness2Icon from "@material-ui/icons/Brightness2";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "store/actions/index";
 
-export const minHeight = 56;
-
 const BarraSuperior = (props) => {
     const classes = useStyles();
 

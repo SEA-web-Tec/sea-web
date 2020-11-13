@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 
-const width = 286;
-const marginTop = 64;
+const expandedWidth = 286; // valor albitrario. Solo jugué con los tamaños y ese gustó.
+const marginTop = 64; // es igual a la altura del Appbar superior, definida en el estándar de Material-UI.
 
 export const useStyles = makeStyles((theme) => {
     return {
@@ -11,25 +11,22 @@ export const useStyles = makeStyles((theme) => {
         },
         drawer: {
             zIndex: theme.zIndex.drawer,
-            width: width,
-            marginRight: 0,
-            flexShrink: 0,
             whiteSpace: "nowrap",
         },
         drawerOpen: {
             top: marginTop,
-            width: width,
+            width: expandedWidth,
             position: "fixed",
             transition: theme.transitions.create("width", {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
             [theme.breakpoints.up("sm")]: {
-                top: 64,
+                top: marginTop,
             },
         },
         drawerClose: {
-            top: 64,
+            top: marginTop,
             transition: theme.transitions.create("width", {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
@@ -39,7 +36,6 @@ export const useStyles = makeStyles((theme) => {
             width: theme.spacing(7) + 1,
             [theme.breakpoints.down("xs")]: {
                 display: "none",
-                top: marginTop,
             },
         },
         Avatar: {

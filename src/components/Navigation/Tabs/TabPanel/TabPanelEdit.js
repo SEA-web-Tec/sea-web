@@ -25,8 +25,8 @@ import MatrizEvaluacion from "../../../UI/MaterialTable/MaterialTableEdit";
 import letterValue from "shared/LetterValue";
 
 export default function TabPanel(props) {
-  const classes = useStyles();
-  const { children, value, index, ...other } = props;
+    const classes = useStyles();
+    const { children, value, index, ...other } = props;
 
   const [rows, setMatriz] = useState([]);
 
@@ -436,7 +436,7 @@ export default function TabPanel(props) {
 }
 
 TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
 };

@@ -57,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     padding: 5,
   },
+  unidades: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+},
 }));
 
 export default useStyles;
