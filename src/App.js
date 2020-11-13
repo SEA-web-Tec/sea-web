@@ -9,6 +9,10 @@ import Login from "./containers/Login/Login";
 import Logout from "./containers/Login/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
 import AppTheme from "./AppTheme"
+// reactivos
+import CrearReactivoAbierto from "./containers/Examen/CrearReactivo/CrearReactivoAbierto.js";
+import CrearReactivoFV from "./containers/Examen/CrearReactivo/CrearReactivoFV.js";
+import CrearReactivoMultiple from "./containers/Examen/CrearReactivo/CrearReactivoMultiple.js";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -62,6 +66,11 @@ class App extends Component {
           <Route path="/examen" exact component={asyncDashboardExamen} />
           <Route path="/examen/crear" component={asyncCrearExamen} />
           <Route path="/examen/asignar" component={asyncAsignarExamen} />
+          
+          <Route path="/examen/reactivo/abierto" component={CrearReactivoAbierto} />
+          <Route path="/examen/reactivo/fv" component={CrearReactivoFV} />
+          <Route path="/examen/reactivo/multiple" component={CrearReactivoMultiple} />
+          
           <Route component={asyncNotFound} />
         </Switch>
       );
