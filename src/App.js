@@ -49,6 +49,9 @@ const asyncNotFound = asyncComponent(() => {
 const asyncListaCotejo = asyncComponent(() => {
   return import("./containers/ListaCotejo/ListaCotejo");
 });
+const asyncListaObservacion = asyncComponent(() => {
+  return import("./containers/ListaObservacion/ListaObservacion");
+});
 
 class App extends Component {
   componentDidMount() {
@@ -72,6 +75,7 @@ class App extends Component {
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
           <Route path="/rubrica" exact component={asyncRubrica} />
           <Route path="/listacotejo" component={asyncListaCotejo} />
+          <Route path="/listaobservacion" component={asyncListaObservacion} />
           <Route path="/examen/" exact component={asyncDashboardExamen} />
           <Route path="/examen/crear" component={asyncCrearExamen} />
           <Route path="/examen/editar" component={asyncEditarExamen} />
