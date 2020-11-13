@@ -10,8 +10,6 @@ class Grupos extends Component {
     }
 
     render() {
-        // const { classes } = this.props;
-
         let cursos = <CircularProgress />;
         if (!this.props.loading) {
             cursos = this.props.cursos.map((curso) => {

@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import BarraSuperior, {
-    minHeight as alturaBarraSuperior,
-} from "components/Layout/BarraSuperior/BarraSuperior";
+import BarraSuperior from "components/Layout/BarraSuperior/BarraSuperior";
 import BarraIzquierda from "components/Layout/BarraIzquierda/BarraIzquierda";
-import BarraIzquierda from "components/Layout/Barr/B";
+import BarraUtilidades from "components/Layout/BarraUtilidades/BarraUtilidades";
 import Contenido from "components/Layout/Contenido/Contenido";
 
 class Layout extends Component {
@@ -24,7 +22,7 @@ class Layout extends Component {
 
     render() {
         return (
-            <Fragment>
+            <Fragment >
                 {this.props.isAuthenticated ? (
                     <Fragment>
                         <BarraSuperior
@@ -32,15 +30,13 @@ class Layout extends Component {
                             titulo="Inicio"
                         ></BarraSuperior>
                         <BarraIzquierda
-                            marginTop={alturaBarraSuperior}
                             open={this.state.open}
                             closed={this.sideDrawerCloseHandler}
                         ></BarraIzquierda>
+                        <BarraUtilidades></BarraUtilidades>
                     </Fragment>
                 ) : null}
-                <Contenido marginTop={alturaBarraSuperior}>
-                    {this.props.children}
-                </Contenido>
+                <Contenido>{this.props.children}</Contenido>
             </Fragment>
         );
     }
@@ -51,5 +47,4 @@ const mapStateToProps = (state) => {
         isAuthenticated: state.auth.token !== null,
     };
 };
-
 export default connect(mapStateToProps)(Layout);
