@@ -13,6 +13,7 @@ import AppTheme from "./AppTheme"
 import CrearReactivoAbierto from "./containers/Examen/CrearReactivo/CrearReactivoAbierto.js";
 import CrearReactivoFV from "./containers/Examen/CrearReactivo/CrearReactivoFV.js";
 import CrearReactivoMultiple from "./containers/Examen/CrearReactivo/CrearReactivoMultiple.js";
+import BancoReactivos from "./containers/Examen/BancoReactivos/BancoReactivos.js";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -70,6 +71,7 @@ class App extends Component {
           <Route path="/examen/reactivo/abierto" component={CrearReactivoAbierto} />
           <Route path="/examen/reactivo/fv" component={CrearReactivoFV} />
           <Route path="/examen/reactivo/multiple" component={CrearReactivoMultiple} />
+          <Route path="/examen/reactivos" component={BancoReactivos} />
           
           <Route component={asyncNotFound} />
         </Switch>
