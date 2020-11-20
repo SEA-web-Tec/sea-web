@@ -50,6 +50,9 @@ const asyncNotFound = asyncComponent(() => {
 const asyncListaCotejo = asyncComponent(() => {
   return import("./containers/ListaCotejo/ListaCotejo");
 });
+const asyncListaObservacion = asyncComponent(() => {
+  return import("./containers/ListaObservacion/ListaObservacion");
+});
 
 const asyncExposiciones = asyncComponent(() => {
     return import("./components/TrabajoIndividual/TrabajoIndividual");
@@ -80,6 +83,7 @@ class App extends Component {
                         component={asyncMenuInstrumentos}
                     />
                     <Route path="/rubrica" exact component={asyncRubrica} />
+                    <Route path="/listaobservacion" component={asyncListaObservacion} />
                     <Route
                         path="/examen/"
                         exact
