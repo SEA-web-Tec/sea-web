@@ -84,6 +84,7 @@ class App extends Component {
                     />
                     <Route path="/rubrica" exact component={asyncRubrica} />
                     <Route path="/listaobservacion" component={asyncListaObservacion} />
+                    <Route path="/listacotejo" component={asyncListaCotejo} />
                     <Route
                         path="/examen/"
                         exact
