@@ -1,6 +1,8 @@
+// Auth
 export { auth, logout, authCheckState } from "./auth";
 
-export { fetchCursos } from "./curso";
+// Grupos
+export { fetchGrupos, gruposDismissError } from "./grupos";
 
+// App Theme
 export { toggleDarkMode } from "./app-theme";
-
