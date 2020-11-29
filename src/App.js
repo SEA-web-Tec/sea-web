@@ -7,8 +7,10 @@ import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 import Layout from "./hoc/Layout/Layout";
 import Login from "./containers/Autenticacion/Login/Login";
 import Registro from "./containers/Autenticacion/Registro/Registro";
-import Logout from "./containers/Autenticacion/Login/Logout/Logout";
+import Logout from "./containers/Autenticacion/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
+import MaestroGeneral from "containers/Perfil/Maestro/General/MaestroGeneral";
+import MaestroEditar from "containers/Perfil/Maestro/Editar/MaestroEditar";
 import AppTheme from "./AppTheme";
 
 const asyncID = asyncComponent(() => {
@@ -59,25 +61,38 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
+        {/* AUTH */}
         <Route path="/" exact component={Login} />
         <Route path="/registro" exact component={Registro} />
+        <Route component={asyncNotFound} />
       </Switch>
     );
 
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
+          {/* AUTH */}
           <Route path="/" exact component={Login} />
           <Route path="/logout" exact component={Logout} />
           <Route path="/grupos" exact component={Grupos} />
+
+          {/* PERFIL MAESTRO */}
+          <Route path="/usuario/:id" exact component={MaestroGeneral} />
+          <Route path="/usuario/:id/editar" component={MaestroEditar} />
+
+          {/* INSTRUMENTACION DIDACTICA */}
           <Route path="/instrumentacion" exact component={asyncID} />
+
+          {/* LO DEL JULIO */}
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
           <Route path="/rubrica" exact component={asyncRubrica} />
-          <Route path="/listacotejo" component={asyncListaCotejo} />
-          <Route path="/examen/" exact component={asyncDashboardExamen} />
-          <Route path="/examen/crear" component={asyncCrearExamen} />
-          <Route path="/examen/editar" component={asyncEditarExamen} />
-          <Route path="/examen/asignar" component={asyncAsignarExamen} />
+          <Route path="/listacotejo" exact component={asyncListaCotejo} />
+
+          {/* EXAMEN */}
+          <Route path="/examen" exact component={asyncDashboardExamen} />
+          <Route path="/examen/crear" exact component={asyncCrearExamen} />
+          <Route path="/examen/editar" exact component={asyncEditarExamen} />
+          <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
           <Route path="/examen/id" component={asyncContenedorExamen} />
           <Route component={asyncNotFound} />
         </Switch>
