@@ -1,6 +1,8 @@
 export const useStyles = (theme) => ({
-    cardGrid: {
-        paddingTop: theme.spacing(8),
-        paddingBottom: theme.spacing(8),
-    },
+  spinner: {
+    display: "block",
+    margin: "60px auto",
+    width: "60px !important",
+    height: "60px !important"
+  }
 });

@@ -25,6 +25,9 @@ const tituloColumnaInstrumento = (props) => {
     case "No":
       color = "#F00";
       break;
+    case "Observaciones":
+      color = "#0F0";
+      break;
     default:
       color = "primary.main";
       break;
