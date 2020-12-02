@@ -22,6 +22,12 @@ export const authFail = (error) => {
   };
 };
 
+export const authDismissError = () => {
+  return {
+    type: actionTypes.AUTH_DISMISS_ERROR
+  };
+};
+
 export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
@@ -65,6 +71,54 @@ export const auth = (correo, contrasenia) => {
       })
       .catch((error) => {
         dispatch(authFail(error.response ? error.response.data.message : "Ha ocurrido un error, intenta nuevamente"));
+      });
+  };
+};
+
+export const fetchPerfilStart = () => {
+  return {
+    type: actionTypes.FETCH_PERFIL_START
+  };
+};
+
+export const fetchPerfilSuccess = (user) => {
+  return {
+    type: actionTypes.FETCH_PERFIL_SUCCESS,
+    user: user
+  };
+};
+
+export const fetchPerfilFail = (error) => {
+  return {
+    type: actionTypes.FETCH_PERFIL_FAIL,
+    error: error
+  };
+};
+
+export const perfilDismissError = () => {
+  return {
+    type: actionTypes.PERFIL_DISMISS_ERROR
+  };
+};
+
+export const fetchPerfil = (token, userId) => {
+  return (dispatch) => {
+    dispatch(fetchPerfilStart());
+
+    let url = "/usuarios/";
+    const authData = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+
+    http
+      .get(url + userId, authData)
+      .then((response) => {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+
+        dispatch(fetchPerfilSuccess(response.data.user));
+      })
+      .catch((error) => {
+        dispatch(fetchPerfilFail(error.response ? error.response.data.message : "Ha ocurrido un error, intenta nuevamente"));
       });
   };
 };

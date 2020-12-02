@@ -27,16 +27,9 @@ class Login extends Component {
     correo: "",
     contrasenia: "",
     showPassword: false,
-    captchaDone: true,
+    captchaDone: false,
     error: false
   };
-
-  componentDidMount() {
-    if (this.props.authRedirectPath == "/") {
-      this.props.onSetAuthRedirectPath();
-      console.log(this.props.authRedirectPath);
-    }
-  }
 
   inputChangedHandler = (prop) => (event) => {
     var updatedObject = updateObject(this.state, {
@@ -51,11 +44,13 @@ class Login extends Component {
     }
   };
 
-  submitHandler = (event) => {
+  submitHandler = async (event) => {
     event.preventDefault();
     if (this.state.captchaDone) {
-      this.props.onAuth(this.state.correo, this.state.contrasenia);
-      this.props.history.push("/grupos");
+      const allDone = await this.props.onAuth(this.state.correo, this.state.contrasenia);
+      if (allDone) {
+        this.props.history.push("/grupos");
+      }
     } else {
       this.setState({ error: true });
     }
@@ -138,17 +133,19 @@ class Login extends Component {
           vertical: "top",
           horizontal: "right"
         }}
-        open={this.state.error || this.props.error}
+        open={this.state.error || this.props.hasError}
         onClose={() => {
           this.setState({ error: false });
+          this.props.onAuthDismissError();
         }}
-        autoHideDuration={6000}
+        autoHideDuration={4000}
       >
         <Alert variant="filled" severity="error">
-          {this.props.error ? this.props.error : "Favor de realizar el CAPTCHA antes de iniciar sesión!"}
+          {this.props.error || "Favor de realizar el CAPTCHA antes de iniciar sesión!"}
         </Alert>
       </Snackbar>
     );
+
     return (
       <Container maxWidth="xs">
         {error}
@@ -174,14 +171,16 @@ class Login extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
+    hasError: state.auth.hasError,
+    loading: state.auth.loading
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (correo, contrasenia) => dispatch(actions.auth(correo, contrasenia))
+    onAuth: (correo, contrasenia) => dispatch(actions.auth(correo, contrasenia)),
+    onAuthDismissError: () => dispatch(actions.authDismissError())
   };
 };
 

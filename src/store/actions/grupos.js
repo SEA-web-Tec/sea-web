@@ -31,7 +31,7 @@ export const fetchGrupos = (token, userId) => {
   return (dispatch) => {
     dispatch(fetchGruposStart());
 
-    let url = "/grupos";
+    let url = "/grupos/";
     const authData = {
       headers: {
         token: token
@@ -39,7 +39,7 @@ export const fetchGrupos = (token, userId) => {
     };
 
     http
-      .get(`url/${userId}`, authData)
+      .get(url + userId, authData)
       .then((response) => {
         const fetchedGrupos = [];
         for (const key in response.data) {
