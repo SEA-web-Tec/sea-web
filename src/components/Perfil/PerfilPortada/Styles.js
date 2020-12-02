@@ -1,5 +1,3 @@
-import { green } from "@material-ui/core/colors";
-
 export const useStyles = (theme) => ({
   card: {
     [theme.breakpoints.down("xs")]: {

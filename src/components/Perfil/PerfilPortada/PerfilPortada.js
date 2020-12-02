@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
-import { Typography, CardMedia, Card, Box, Avatar, CardContent } from "@material-ui/core";
+import { Typography, CardMedia, Card, Avatar, CardContent } from "@material-ui/core";
 import { Person as PersonIcon } from "@material-ui/icons";
 
 class PerfilPortada extends Component {
@@ -13,18 +13,23 @@ class PerfilPortada extends Component {
         <div className={classes.cardHeader}>
           <CardMedia
             className={clsx(classes.cardHeaderBG, this.props.fotoPortada && classes.withImage)}
-            image={this.props.fotoPortada}
+            component="img"
+            image={`data:image/jpeg;base64,${this.props.fotoPortada}`}
           />
           <div className={classes.cardHeaderContent}>
-            <Avatar src={this.props.fotoPerfil} alt={this.props.nombre} className={classes.fotoPerfil}>
+            <Avatar
+              src={`data:image/jpeg;base64,${this.props.fotoPerfil}`}
+              alt={this.props.nombre}
+              className={classes.fotoPerfil}
+            >
               <PersonIcon fontSize="large" />
             </Avatar>
             <div>
+              <Typography component="h5" variant="h5" noWrap gutterBottom>
+                {`${this.props.nombres} ${this.props.apellidoPaterno} ${this.props.apellidoMaterno}`}
+              </Typography>
               <Typography component="p" variant="overline" style={{ lineHeight: "16px" }}>
                 {this.props.departamentoAcademico}
-              </Typography>
-              <Typography component="h5" variant="h5" noWrap>
-                {`${this.props.nombre} ${this.props.apellidoPaterno} ${this.props.apellidoMaterno}`}
               </Typography>
             </div>
           </div>
