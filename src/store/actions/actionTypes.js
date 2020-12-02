@@ -17,3 +17,9 @@ export const GRUPOS_DISMISS_ERROR = "GRUPOS_DISMISS_ERROR";
 
 // App Theme
 export const TOGGLE_DARK_MODE = "TOGGLE_DARK_MODE";
+
+// Auth
+export const ID_START = "ID_START";
+export const ID_SETINICIAL = "ID_SETINICIAL";
+export const ID_SETALL = "ID_SETALL";
+export const ID_FAIL = "ID_FAIL";

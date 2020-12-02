@@ -3,7 +3,7 @@ import Portada from "../../components/Portada/Portada";
 import TabsID from "../../components/Navigation/Tabs/Tabs";
 import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
 
-export default class ID extends Component {
+class ID extends Component {
   render(props) {
     return (
       <Fragment>
@@ -24,3 +24,21 @@ export default class ID extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+    loading: state.auth.loading,
+    error: state.auth.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (correo, contrasenia) =>
+      dispatch(actions.auth(correo, contrasenia)),
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ID);
