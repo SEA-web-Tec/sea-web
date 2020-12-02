@@ -81,7 +81,7 @@ class App extends Component {
           <Route path="/usuario/:id/editar" component={MaestroEditar} />
 
           {/* INSTRUMENTACION DIDACTICA */}
-          <Route path="/instrumentacion" exact component={asyncID} />
+          <Route path="/instrumentacion/:id" exact component={asyncID} />
 
           {/* LO DEL JULIO */}
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
