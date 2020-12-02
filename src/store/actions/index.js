@@ -6,3 +6,8 @@ export { fetchGrupos, gruposDismissError } from "./grupos";
 
 // App Theme
 export { toggleDarkMode } from "./app-theme";
+
+//Instrumentacion Didactica ID
+
+export { idBusqueda, idIngresar } from "./id";
+
