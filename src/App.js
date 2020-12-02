@@ -17,6 +17,10 @@ const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
 });
 
+const asyncIDEditar = asyncComponent(() => {
+  return import("./containers/ID/IDeditar");
+});
+
 const asyncMenuInstrumentos = asyncComponent(() => {
   return import("./containers/MenuInstrumentos/MenuInstrumentos");
 });
@@ -89,6 +93,11 @@ class App extends Component {
 
           {/* INSTRUMENTACION DIDACTICA */}
           <Route path="/instrumentacion/:id" exact component={asyncID} />
+          <Route
+            path="/instrumentacion/editar/:id"
+            exact
+            component={asyncIDEditar}
+          />
 
           {/* LO DEL JULIO */}
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />

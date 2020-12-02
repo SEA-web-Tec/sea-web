@@ -28,7 +28,7 @@ class ID extends Component {
           isID
           status="Aprobado"
         >
-          <TabsID evaluar={true} id_grupo={1} />
+          <TabsIDEditar evaluar={true} id_grupo={1} />
         </Portada>
       </div>
     );
