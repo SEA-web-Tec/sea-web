@@ -1,33 +1,9 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import clsx from "clsx";
+
 import { useStyles } from "./Styles";
-import {
-  Card,
-  CardContent,
-  CardActions,
-  CardMedia,
-  Grid,
-  IconButton,
-  Typography,
-  Divider,
-  Avatar,
-  Collapse,
-  Box,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Menu,
-  MenuItem
-} from "@material-ui/core";
-import {
-  Alarm as AlarmIcon,
-  MoreVert as MoreVertIcon,
-  FormatListBulletedOutlined as FormatListBulleted,
-  ExpandMore as ExpandMoreIcon
-} from "@material-ui/icons";
+import { Card, CardContent, CardActions, CardMedia, Grid, IconButton, Typography, Divider, Avatar } from "@material-ui/core";
+import { FormatListBulletedOutlined as FormatListBulleted } from "@material-ui/icons";
 import {
   CalificacionesOutlined as CalificacionesIcon,
   InstrumentacionOutlined as InstrumentacionIcon,
@@ -38,21 +14,6 @@ import BigTooltip from "../UI/BigTooltip/BigTooltip";
 
 const Grupo = (props) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const horarioToggleHandler = () => {
-    setExpanded(!expanded);
-  };
-
-  const optionsOpenHandler = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const optionsCloseHandler = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <Card className={classes.card}>
@@ -85,7 +46,7 @@ const Grupo = (props) => {
             </IconButton>
           </BigTooltip>
           <BigTooltip title="Instrumentación Didáctica">
-            <IconButton style={{ color: amber[600] }} component={RouterLink} to="/instrumentacion">
+            <IconButton style={{ color: amber[600] }} component={RouterLink} to={`/instrumentacion/${props.id}`}>
               <InstrumentacionIcon />
             </IconButton>
           </BigTooltip>

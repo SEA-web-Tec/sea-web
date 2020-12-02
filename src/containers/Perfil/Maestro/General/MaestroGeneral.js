@@ -1,7 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "store/actions/index";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
-import { Avatar, Box, Grid, Typography } from "@material-ui/core";
+import { Avatar, Button, CircularProgress, Grid, Typography } from "@material-ui/core";
 import {
   AttachMoney as AttachMoneyIcon,
   PermContactCalendar as PermContactCalendarIcon,
@@ -13,124 +16,152 @@ import {
 import PerfilPortada from "components/Perfil/PerfilPortada/PerfilPortada";
 
 class MaestroGeneral extends Component {
-  state = {
-    numEconomico: 154233432,
-    correo: "tadeo@lapaz.tecnm.mx",
-    rfc: "GAFJ810702NA0",
-    curp: "GAFJ810702HOCRRS05",
-    cedulaProfesional: "57209534",
-    estudios: "Especialidad",
-    sexo: "Masculino"
-  };
+  componentDidMount() {
+    this.props.onFetchPerfil(this.props.token, this.props.user.id);
+  }
 
   render(props) {
     const { classes } = this.props;
 
-    return (
-      <PerfilPortada
-        fotoPerfil="https://source.unsplash.com/random"
-        fotoPortada="https://source.unsplash.com/random"
-        departamentoAcademico="ISC"
-        nombre="José Tadeo"
-        apellidoPaterno="Rodriguez"
-        apellidoMaterno="Solano"
-      >
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
-            <Avatar className={classes.infoItemsIcon}>
-              <EmailIcon style={{ color: "white" }} />
-            </Avatar>
-            <div>
-              <Typography component="h6" variant="h6">
-                Correo Electrónico
-              </Typography>
-              <Typography component="p" variant="body2">
-                {this.state.correo}
-              </Typography>
-            </div>
+    let perfil = <CircularProgress className={classes.spinner} />;
+
+    if (!this.props.loading) {
+      perfil = (
+        <PerfilPortada
+          fotoPerfil={this.props.user.fotoPerfil}
+          fotoPortada={this.props.user.fotoPortada}
+          departamentoAcademico={this.props.user.departamentoAcademico}
+          nombres={this.props.user.nombres}
+          apellidoPaterno={this.props.user.apellidoPaterno}
+          apellidoMaterno={this.props.user.apellidoMaterno}
+        >
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
+              <Avatar className={classes.infoItemsIcon}>
+                <EmailIcon style={{ color: "white" }} />
+              </Avatar>
+              <div>
+                <Typography component="h6" variant="h6">
+                  Correo Electrónico
+                </Typography>
+                <Typography component="p" variant="body2">
+                  {this.props.user.correo}
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
+              <Avatar className={classes.infoItemsIcon}>
+                <AttachMoneyIcon style={{ color: "white" }} />
+              </Avatar>
+              <div>
+                <Typography component="h6" variant="h6">
+                  Número Económico
+                </Typography>
+                <Typography component="p" variant="body2">
+                  {this.props.user.numeroEconomico}
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
+              <Avatar className={classes.infoItemsIcon}>
+                <PermContactCalendarIcon style={{ color: "white" }} />
+              </Avatar>
+              <div>
+                <Typography component="h6" variant="h6">
+                  RFC
+                </Typography>
+                <Typography component="p" variant="body2">
+                  {this.props.user.rfc}
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
+              <Avatar className={classes.infoItemsIcon}>
+                <PermContactCalendarIcon style={{ color: "white" }} />
+              </Avatar>
+              <div>
+                <Typography component="h6" variant="h6">
+                  CURP
+                </Typography>
+                <Typography component="p" variant="body2">
+                  {this.props.user.curp}
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
+              <Avatar className={classes.infoItemsIcon}>
+                <GradeIcon style={{ color: "white" }} />
+              </Avatar>
+              <div>
+                <Typography component="h6" variant="h6">
+                  Cédula Profesional
+                </Typography>
+                <Typography component="p" variant="body2">
+                  {this.props.user.cedulaProfesional}
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
+              <Avatar className={classes.infoItemsIcon}>
+                <SchoolIcon style={{ color: "white" }} />
+              </Avatar>
+              <div>
+                <Typography component="h6" variant="h6">
+                  Estudios
+                </Typography>
+                <Typography component="p" variant="body2">
+                  {this.props.user.estudios.replace(/^\w/, (c) => c.toUpperCase())}
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
+              <Avatar className={classes.infoItemsIcon}>
+                <WcIcon style={{ color: "white" }} />
+              </Avatar>
+              <div>
+                <Typography component="h6" variant="h6">
+                  Sexo
+                </Typography>
+                <Typography component="p" variant="body2">
+                  {this.props.user.sexo.replace(/^\w/, (c) => c.toUpperCase())}
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} className={classes.infoItem}>
+              <Button
+                color="primary"
+                variant="contained"
+                fullWidth
+                component={RouterLink}
+                to={`${this.props.history.location.pathname}/editar`}
+              >
+                Editar perfil
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
-            <Avatar className={classes.infoItemsIcon}>
-              <AttachMoneyIcon style={{ color: "white" }} />
-            </Avatar>
-            <div>
-              <Typography component="h6" variant="h6">
-                Número Económico
-              </Typography>
-              <Typography component="p" variant="body2">
-                {this.state.numEconomico}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
-            <Avatar className={classes.infoItemsIcon}>
-              <PermContactCalendarIcon style={{ color: "white" }} />
-            </Avatar>
-            <div>
-              <Typography component="h6" variant="h6">
-                RFC
-              </Typography>
-              <Typography component="p" variant="body2">
-                {this.state.rfc}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
-            <Avatar className={classes.infoItemsIcon}>
-              <PermContactCalendarIcon style={{ color: "white" }} />
-            </Avatar>
-            <div>
-              <Typography component="h6" variant="h6">
-                CURP
-              </Typography>
-              <Typography component="p" variant="body2">
-                {this.state.curp}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
-            <Avatar className={classes.infoItemsIcon}>
-              <GradeIcon style={{ color: "white" }} />
-            </Avatar>
-            <div>
-              <Typography component="h6" variant="h6">
-                Cédula Profesional
-              </Typography>
-              <Typography component="p" variant="body2">
-                {this.state.cedulaProfesional}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
-            <Avatar className={classes.infoItemsIcon}>
-              <SchoolIcon style={{ color: "white" }} />
-            </Avatar>
-            <div>
-              <Typography component="h6" variant="h6">
-                Estudios
-              </Typography>
-              <Typography component="p" variant="body2">
-                {this.state.estudios}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} className={classes.infoItem}>
-            <Avatar className={classes.infoItemsIcon}>
-              <WcIcon style={{ color: "white" }} />
-            </Avatar>
-            <div>
-              <Typography component="h6" variant="h6">
-                Sexo
-              </Typography>
-              <Typography component="p" variant="body2">
-                {this.state.sexo}
-              </Typography>
-            </div>
-          </Grid>
-        </Grid>
-      </PerfilPortada>
-    );
+        </PerfilPortada>
+      );
+    }
+
+    return <Fragment>{perfil}</Fragment>;
   }
 }
 
-export default withStyles(useStyles)(MaestroGeneral);
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    error: state.auth.error,
+    hasError: state.auth.hasError,
+    loading: state.auth.loading
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchPerfil: (token, userId) => dispatch(actions.fetchPerfil(token, userId)),
+    onPerfilDismissError: () => dispatch(actions.perfilDismissError())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(MaestroGeneral));

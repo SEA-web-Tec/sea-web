@@ -10,7 +10,7 @@ import Grupo from "components/Grupo/Grupo";
 
 class Grupos extends Component {
   componentDidMount() {
-    this.props.onFetchGrupos(this.props.token, this.props.userId);
+    // this.props.onFetchGrupos(this.props.token, this.props.userId);
   }
 
   render() {
@@ -51,11 +51,38 @@ class Grupos extends Component {
 
     return (
       <Grid container spacing={4}>
-        {error}
-        {grupos}
-        <Button component={RouterLink} to={`/usuario/${this.props.userId}`}>
+        {/* {error} */}
+        {/* {grupos} */}
+        <Grupo
+          key={1}
+          id={1}
+          materia="Programación Web"
+          carrera="Ing. Sistemas Computacionales"
+          maestro="Ing. José Tadeo Rodriguez Solano"
+          portada="https://picsum.photos/300/150"
+          fotoPerfil="https://picsum.photos/100/100"
+        />
+        <Grupo
+          key={2}
+          id={2}
+          materia="Programación de dispositivos móviles"
+          carrera="Ing. Sistemas Computacionales"
+          maestro="Ing. José Tadeo Rodriguez Solano"
+          portada="https://picsum.photos/400/200"
+          fotoPerfil="https://picsum.photos/200/200"
+        />
+        <Grupo
+          key={3}
+          id={3}
+          materia="Interfaces web"
+          carrera="Ing. Sistemas Computacionales"
+          maestro="Ing. David Higuera Balderrama"
+          portada="https://picsum.photos/100/50"
+          fotoPerfil="https://picsum.photos/300/300"
+        />
+        {/* <Button component={RouterLink} to={`/usuario/${this.props.userId}`}>
           Perfil del maestro: {this.props.userId}
-        </Button>
+        </Button> */}
       </Grid>
     );
   }
