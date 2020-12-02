@@ -30,7 +30,7 @@ import { EditOutlined, Visibility, VisibilityOff } from "@material-ui/icons/";
 class Registro extends Component {
   state = {
     numeroEconomico: "",
-    nombre: "",
+    nombres: "",
     apellidoPaterno: "",
     apellidoMaterno: "",
     rfc: "",
@@ -52,7 +52,7 @@ class Registro extends Component {
 
   inputChangedHandler = (prop) => (event) => {
     let value = event.target.value;
-    if (prop == "rfc" || prop == "curp") {
+    if (prop === "rfc" || prop === "curp") {
       value = value.toUpperCase();
     }
     const updatedObject = updateObject(this.state, {
@@ -73,16 +73,17 @@ class Registro extends Component {
       http
         .post("/auth/registrar", {
           numeroEconomico: this.state.numeroEconomico,
-          nombre: this.state.nombre,
+          nombres: this.state.nombres,
           apellidoPaterno: this.state.apellidoPaterno,
           apellidoMaterno: this.state.apellidoMaterno,
           rfc: this.state.rfc,
           curp: this.state.curp,
           correo: this.state.correo.toLowerCase(),
           cedulaProfesional: this.state.cedulaProfesional,
+          departamentoAcademico: this.state.departamentoAcademico,
           fotoPerfil: null,
           fotoPortada: null,
-          departamentoAcademico: this.state.departamentoAcademico,
+          userType: this.state.userType,
           sexo: this.state.sexo,
           estudios: this.state.estudios,
           contrasenia: this.state.contrasenia
@@ -94,7 +95,7 @@ class Registro extends Component {
           }, 2000);
         })
         .catch((error) => {
-          if (error.response == undefined) {
+          if (error.response === undefined) {
             this.setState({
               error: true,
               errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
@@ -147,18 +148,18 @@ class Registro extends Component {
           margin="normal"
           required
           fullWidth
-          id="nombre"
-          name="nombre"
+          id="nombres"
+          name="nombres"
           label="Nombre(s)"
           value={this.state.nombre}
-          onChange={this.inputChangedHandler("nombre")}
+          onChange={this.inputChangedHandler("nombres")}
           error={
-            !this.state.nombre.match(/^(([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s{1}([a-zA-ZÀ-ÿ\u00f1\u00d1])+)*))$/) &&
-            this.state.nombre.length > 0
+            !this.state.nombres.match(/^(([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s{1}([a-zA-ZÀ-ÿ\u00f1\u00d1])+)*))$/) &&
+            this.state.nombres.length > 0
           }
           helperText={
-            !this.state.nombre.match(/^(([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s{1}([a-zA-ZÀ-ÿ\u00f1\u00d1])+)*))$/) &&
-            this.state.nombre.length > 0 &&
+            !this.state.nombres.match(/^(([a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s{1}([a-zA-ZÀ-ÿ\u00f1\u00d1])+)*))$/) &&
+            this.state.nombres.length > 0 &&
             "El nombre  es incorrecto."
           }
         />
@@ -404,7 +405,7 @@ class Registro extends Component {
         }}
         autoHideDuration={6000}
       >
-        <Alert variant="filled" severity={this.state.errorStatus == 201 ? "success" : "warning"}>
+        <Alert variant="filled" severity={this.state.errorStatus === 201 ? "success" : "warning"}>
           {this.state.errorMessage !== "" ? this.state.errorMessage : "Favor de realizar el CAPTCHA antes de registrarte!"}
         </Alert>
       </Snackbar>
