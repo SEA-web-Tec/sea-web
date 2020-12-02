@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect, Link as RouterLink } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "store/actions/index";
+import ReCAPTCHA from "react-google-recaptcha";
 import { updateObject } from "shared/utility";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
@@ -14,27 +15,45 @@ import {
   Typography,
   InputAdornment,
   IconButton,
-  CircularProgress
+  CircularProgress,
+  Box,
+  Snackbar
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { EditOutlined, Visibility, VisibilityOff } from "@material-ui/icons/";
 
 class Login extends Component {
   state = {
     correo: "",
     contrasenia: "",
-    showPassword: false
+    showPassword: false,
+    captchaDone: false,
+    error: false
   };
 
   inputChangedHandler = (prop) => (event) => {
-    const updatedObject = updateObject(this.state, {
+    var updatedObject = updateObject(this.state, {
       [prop]: event.target.value
     });
     this.setState(updatedObject);
   };
 
-  submitHandler = (event) => {
+  captchaHandler = (value) => {
+    if (value) {
+      this.setState({ captchaDone: true });
+    }
+  };
+
+  submitHandler = async (event) => {
     event.preventDefault();
-    this.props.onAuth(this.state.correo, this.state.contrasenia);
+    if (this.state.captchaDone) {
+      const allDone = await this.props.onAuth(this.state.correo, this.state.contrasenia);
+      if (allDone) {
+        this.props.history.push("/grupos");
+      }
+    } else {
+      this.setState({ error: true });
+    }
   };
 
   showPasswordHandler = (event) => {
@@ -48,7 +67,7 @@ class Login extends Component {
     const { classes } = this.props;
 
     let form = (
-      <form className={classes.form} noValidate onSubmit={this.submitHandler}>
+      <form className={classes.form} onSubmit={this.submitHandler}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -60,6 +79,7 @@ class Login extends Component {
           value={this.state.correo}
           onChange={this.inputChangedHandler("correo")}
           type="email"
+          error={this.props.error !== null}
         />
         <TextField
           variant="outlined"
@@ -73,7 +93,6 @@ class Login extends Component {
           onChange={this.inputChangedHandler("contrasenia")}
           type={this.state.showPassword ? "text" : "password"}
           error={this.props.error !== null}
-          helperText={this.props.error !== null && this.props.error.code === 400 ? "Contraseña Inválida" : ""}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -84,6 +103,15 @@ class Login extends Component {
             )
           }}
         />
+        <Box display="flex" justifyContent="center" width="100%" marginTop={1}>
+          <ReCAPTCHA
+            sitekey="6LfPFbwUAAAAAMsWQOIRm8KuF4dGIZRs6vHN_2c6"
+            onChange={this.captchaHandler}
+            onExpired={() => {
+              this.setState({ captchaDone: false, errorMessage: "" });
+            }}
+          />
+        </Box>
         <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} size="large">
           Iniciar Sesión
         </Button>
@@ -96,23 +124,44 @@ class Login extends Component {
 
     let authRedirect = null;
     if (this.props.isAuthenticated) {
-      authRedirect = <Redirect to="/grupos" />;
+      authRedirect = <Redirect to={"/grupos"} />;
     }
+
+    let error = (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        open={this.state.error || this.props.hasError}
+        onClose={() => {
+          this.setState({ error: false });
+          this.props.onAuthDismissError();
+        }}
+        autoHideDuration={4000}
+      >
+        <Alert variant="filled" severity="error">
+          {this.props.error || "Favor de realizar el CAPTCHA antes de iniciar sesión!"}
+        </Alert>
+      </Snackbar>
+    );
 
     return (
       <Container maxWidth="xs">
+        {error}
         {authRedirect}
         <div className={classes.formContainer}>
           <Avatar className={classes.logo}>
             <EditOutlined />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Bienvenido a SEA
-          </Typography>
+          <Typography variant="h5">Bienvenido a SEA</Typography>
           {form}
-          <Link color="textSecondary" variant="subtitle2" component={RouterLink} to="/registro">
-            No tienes una cuenta? da click aquí!
-          </Link>
+          <Typography color="textSecondary" component="span" variant="subtitle2">
+            ¿Aún no te has registrado?{" "}
+            <Link variant="subtitle2" component={RouterLink} to="/registro">
+              Registrarse
+            </Link>
+          </Typography>
         </div>
       </Container>
     );
@@ -122,14 +171,16 @@ class Login extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
+    hasError: state.auth.hasError,
+    loading: state.auth.loading
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (email, password) => dispatch(actions.auth(email, password))
+    onAuth: (correo, contrasenia) => dispatch(actions.auth(correo, contrasenia)),
+    onAuthDismissError: () => dispatch(actions.authDismissError())
   };
 };
 
