@@ -41,7 +41,7 @@ export default function CardEvaluacion() {
         <Grid container spacing={1}>
           {intrumentaciones.map((intrumentacion) => {
             return (
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} key ={intrumentacion.id}>
                 <div className={classes.ListItem} key={intrumentacion.id}>
                   <div className={classes.Content}>
                     <ListItemText
@@ -52,7 +52,7 @@ export default function CardEvaluacion() {
                         </Typography>
                       }
                       secondary={
-                        <Grid container spacing={1} xs={6}>
+                        <Grid container spacing={1} >
                           <Grid item>
                             <Chip
                               size="small"

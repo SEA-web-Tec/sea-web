@@ -51,8 +51,6 @@ export default function TabPanel(props) {
         var arreglo = [...rows];
         arreglo.push(fila);
         setMatriz(arreglo);
-        console.log(rows);
-        console.log("entre");
     };
 
     const addElement = (actividad2, texto, arrg, caso) => {

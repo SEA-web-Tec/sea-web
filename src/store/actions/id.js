@@ -39,18 +39,7 @@ export const idFail = (error) => {
     type: actionTypes.ID_FAIL,
     error: error,
   };
-};
-
-/*export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-
-  return {
-    type: actionTypes.ID_LOGOUT,
-  };
-};*/ //Guardar
-
-export const idCheckState = () => {
+}; /*export const idCheckState = () => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
 
@@ -62,35 +51,51 @@ export const idCheckState = () => {
       dispatch(idSuccess(token, user));
     }
   };
-};
+};*/ //Guardar
 
-export const idBusqueda = (usuario_id, grupo_id) => {
+/*export const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+
+  return {
+    type: actionTypes.ID_LOGOUT,
+  };
+};*/ export const idBusqueda = (
+  usuario_id,
+  grupo_id
+) => {
   return (dispatch) => {
     dispatch(idStart());
 
     let url = "/instrumentaciondidactica/crear";
     const idData = {
-      usuario_id: usuario_id,
       grupo_id: grupo_id,
+      usuario_id: usuario_id,
     };
+    console.log("antes");
 
     http
       .post(url, idData)
       .then((response) => {
         url = "/evidenciasaprendizaje/consulta";
-        idData = { id_ins: response.data.id };
-        if (response.data.unidades == []) {
+        const idData = { id_ins: response.data.intrumentacion.id };
+        if (response.data.unidades.length == "0") {
+          console.log("opcion 1");
           dispatch(
-            idSetInicial(response.data.id_ins, response.data.no_unidades)
+            idSetInicial(
+              response.data.intrumentacion.id,
+              response.data.no_unidades
+            )
           );
         } else {
+          console.log("opcion 2");
           http.get(url, idData).then((response1) => {
             dispatch(
               idSetAll(
-                response.data.id_ins,
+                response.data.intrumentacion.id,
                 response.data.no_unidades,
                 response1.data.indicadoresalcance,
-                response1.data.unidades,
+                response.data.unidades,
                 response1.data.evidencias,
                 response1.data.indicadoresponderacion
               )
@@ -104,6 +109,7 @@ export const idBusqueda = (usuario_id, grupo_id) => {
         //dispatch(idSuccess(response.data.token, response.data.user));
       })
       .catch((error) => {
+        console.log("error?");
         dispatch(
           idFail(
             error.response
@@ -114,7 +120,7 @@ export const idBusqueda = (usuario_id, grupo_id) => {
       });
   };
 };
-
+/*
 export const idIngresar = (
   id_ins,
   no_unidades,
@@ -172,3 +178,4 @@ export const idIngresar = (
       });
   };
 };
+*/
