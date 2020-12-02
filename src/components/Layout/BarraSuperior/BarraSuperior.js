@@ -17,68 +17,58 @@ import * as actions from "store/actions/index";
 export const minHeight = 56;
 
 const BarraSuperior = (props) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const auth = useSelector((state) => state.auth);
-    const grupos = useSelector((state) => state.curso.cursos);
+  // const auth = useSelector((state) => state.auth);
+  // const grupos = useSelector((state) => state.curso.cursos);
 
-    let token, userId;
+  // let token, userId;
 
-    token = auth.token;
-    userId = auth.userId;
+  // token = auth.token;
+  // userId = auth.userId;
 
-    const fotoPerfil =
-        grupos === undefined || grupos.length === 0
-            ? null
-            : grupos[0].fotoPerfil;
+  // const fotoPerfil = grupos === undefined || grupos.length === 0 ? null : grupos[0].fotoPerfil;
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    // UseCallback() es recomendado para evitar renderizado innecesario
-    const toggleDarkMode = useCallback(
-        () => dispatch(actions.toggleDarkMode()),
-        [dispatch]
-    );
-    const onFetchGrupos = useCallback(
-        (token, userId) => dispatch(actions.fetchCursos(token, userId)),
-        [dispatch]
-    );
+  // UseCallback() es recomendado para evitar renderizado innecesario
+  const toggleDarkMode = useCallback(() => dispatch(actions.toggleDarkMode()), [dispatch]);
+  // const onFetchGrupos = useCallback(
+  //     (token, userId) => dispatch(actions.fetchCursos(token, userId)),
+  //     [dispatch]
+  // );
 
-    const fetchGrupos = () => {
-        onFetchGrupos(token, userId);
-    };
-    
-    //ComponentDidMount
-    useEffect(fetchGrupos, [onFetchGrupos, token, userId]);
+  // const fetchGrupos = () => {
+  //     onFetchGrupos(token, userId);
+  // };
 
-    return (
-        <AppBar position="fixed" className={clsx(classes.appBar)}>
-            <Toolbar className={classes.toolbar}>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={props.toggleDrawer}
-                    edge="start"
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap className={classes.titulo}>
-                    {props.titulo}
-                </Typography>
-                <div className={classes.opciones}>
-                    <IconButton>
-                        <Avatar src={fotoPerfil} />
-                    </IconButton>
-                    <IconButton color="inherit" onClick={toggleDarkMode}>
-                        <Brightness2Icon />
-                    </IconButton>
-                    <IconButton color="inherit">
-                        <MoreVert />
-                    </IconButton>
-                </div>
-            </Toolbar>
-        </AppBar>
-    );
+  // //ComponentDidMount
+  // useEffect(fetchGrupos, [onFetchGrupos, token, userId]);
+
+  return (
+    <AppBar position="fixed" className={clsx(classes.appBar)}>
+      <Toolbar className={classes.toolbar}>
+        <IconButton color="inherit" aria-label="open drawer" onClick={props.toggleDrawer} edge="start">
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" noWrap className={classes.titulo}>
+          {props.titulo}
+        </Typography>
+        <div className={classes.opciones}>
+          <IconButton>
+            <Avatar src={""} />
+          </IconButton>
+          <IconButton color="inherit" onClick={toggleDarkMode}>
+            <Brightness2Icon />
+          </IconButton>
+          <IconButton color="inherit">
+            <MoreVert />
+          </IconButton>
+        </div>
+      </Toolbar>
+    </AppBar>
+  );
+  return null;
 };
 
 export default BarraSuperior;
