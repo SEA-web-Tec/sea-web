@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import clsx from "clsx";
+import { Link as RouterLink } from "react-router-dom";
 
 import { useStyles } from "./Styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -59,7 +60,7 @@ const BarraSuperior = (props) => {
           <IconButton color="inherit" onClick={toggleDarkMode}>
             <Brightness2Icon />
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" component={RouterLink} to="/logout">
             <MoreVert />
           </IconButton>
         </div>
