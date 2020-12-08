@@ -10,10 +10,11 @@ import Logout from "./containers/Login/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
 import AppTheme from "./AppTheme"
 // reactivos
-import CrearReactivoAbierto from "./containers/Examen/CrearReactivo/CrearReactivoAbierto.js";
-import CrearReactivoFV from "./containers/Examen/CrearReactivo/CrearReactivoFV.js";
-import CrearReactivoMultiple from "./containers/Examen/CrearReactivo/CrearReactivoMultiple.js";
-import BancoReactivos from "./containers/Examen/BancoReactivos/BancoReactivos.js";
+import asyncCrearReactivoAbierto from "./containers/Examen/CrearReactivo/CrearReactivoAbierto.js";
+import asyncCrearReactivoFV from "./containers/Examen/CrearReactivo/CrearReactivoFV.js";
+import asyncCrearReactivoMultiple from "./containers/Examen/CrearReactivo/CrearReactivoMultiple.js";
+import asyncBancoReactivos from "./containers/Examen/BancoReactivos/BancoReactivos.js";
+import asyncResultados from "./containers/Examen/VisualizarRespuestas/Resultados.js";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -68,10 +69,11 @@ class App extends Component {
           <Route path="/examen/crear" component={asyncCrearExamen} />
           <Route path="/examen/asignar" component={asyncAsignarExamen} />
           
-          <Route path="/examen/reactivo/abierto" component={CrearReactivoAbierto} />
-          <Route path="/examen/reactivo/fv" component={CrearReactivoFV} />
-          <Route path="/examen/reactivo/multiple" component={CrearReactivoMultiple} />
-          <Route path="/examen/reactivos" component={BancoReactivos} />
+          <Route path="/examen/reactivo/abierto" component={asyncCrearReactivoAbierto} />
+          <Route path="/examen/reactivo/fv" component={asyncCrearReactivoFV} />
+          <Route path="/examen/reactivo/multiple" component={asyncCrearReactivoMultiple} />
+          <Route path="/examen/reactivos" component={asyncBancoReactivos} />
+          <Route path="/examen/resultados" component={asyncResultados} />
           
           <Route component={asyncNotFound} />
         </Switch>
