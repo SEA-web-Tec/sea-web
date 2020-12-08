@@ -6,7 +6,6 @@ import {
   Visibility as VisibilityIcon,
   Create as CreateIcon,
   GroupAdd as GroupAddIcon,
-  GetApp as GetAppIcon,
   Delete as DeleteIcon
 } from "@material-ui/icons";
 import { Typography, Accordion, AccordionDetails, AccordionSummary, Box, IconButton } from "@material-ui/core";
@@ -46,9 +45,6 @@ class DashboardExamen extends Component {
                 </IconButton>
                 <IconButton color="secondary">
                   <GroupAddIcon />
-                </IconButton>
-                <IconButton color="secondary">
-                  <GetAppIcon />
                 </IconButton>
                 <IconButton color="secondary">
                   <DeleteIcon />
