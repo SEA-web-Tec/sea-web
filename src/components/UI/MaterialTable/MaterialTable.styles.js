@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 650,
   },
   selectSize: {
-    width: 100,
+    width: 55,
   },
   addCancel: {
     color: red[600],

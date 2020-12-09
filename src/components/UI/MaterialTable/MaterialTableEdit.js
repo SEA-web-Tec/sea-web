@@ -47,12 +47,14 @@ const MaterialTableEdit = (props) => {
                 <Select
                   disableUnderline
                   key={"EvidenciaAprendizaje" + row.id}
-                  value={row.evidencia}
+                  value={row.evidencia.nombre}
                   onChange={(e) => {
-                    props.editar(row.id, "evidencia", e.target.value);
+                    props.editar(row.id, "nombre", e.target.value);
                   }}
                 >
-                  <option value="Examen">Examen</option>
+                  <option value="Examen" defaultValue>
+                    Examen
+                  </option>
                   <option value="Ejercicio">Ejercicio</option>
                   <option value="Proyecto">Proyecto</option>
                   <option value="Exposición">Exposición</option>
@@ -65,9 +67,9 @@ const MaterialTableEdit = (props) => {
                   key={"%" + row.id}
                   min={0}
                   max={100 - props.suma(row.id)}
-                  value={row.porcentaje}
+                  value={row.evidencia.ponderacion}
                   onChange={(e) => {
-                    props.editar(row.id, "porcentaje", e);
+                    props.editar(row.id, "ponderacion", e);
                   }}
                 />
               </TableCell>
@@ -78,10 +80,19 @@ const MaterialTableEdit = (props) => {
                       className={classes.selectSize}
                       key={letra.label}
                       min={0}
-                      max={row.porcentaje}
-                      value={row[LetterValue(letra.label)]}
+                      max={
+                        row.evidencia.ponderacion -
+                        props.sumaFila(row.id, LetterValue(letra.label))
+                      }
+                      value={
+                        row.indicadoresponderacion[LetterValue(letra.label)]
+                      }
                       onChange={(e) => {
-                        props.editar(row.id, LetterValue(letra.label), e);
+                        props.editarPonderacion(
+                          row.id,
+                          LetterValue(letra.label),
+                          e
+                        );
                       }}
                     />
                   </TableCell>
@@ -91,12 +102,18 @@ const MaterialTableEdit = (props) => {
                 <Select
                   disableUnderline
                   key={"EvaluacionFormativaCompetencia" + row.id}
-                  value={row.evaluacion}
+                  value={row.evidencia.evaluacion_formativa}
                   onChange={(e) => {
-                    props.editar(row.id, "evaluacion", e.target.value);
+                    props.editar(
+                      row.id,
+                      "evaluacion_formativa",
+                      e.target.value
+                    );
                   }}
                 >
-                  <option value="Lista de cotejo">Lista de cotejo</option>
+                  <option value="Lista de cotejo" defaultValue>
+                    Lista de cotejo
+                  </option>
                   <option value="Lista de observación">
                     Lista de observación
                   </option>

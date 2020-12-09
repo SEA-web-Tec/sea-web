@@ -12,6 +12,10 @@ export const idSetInicial = (id_ins, no_unidades) => {
     type: actionTypes.ID_SETINICIAL,
     id_ins: id_ins,
     no_unidades: no_unidades,
+    indicadoresalcance: [],
+    unidades: [],
+    evidencias: [],
+    indicadoresponderacion: [],
   };
 };
 
@@ -77,8 +81,7 @@ export const idFail = (error) => {
     http
       .post(url, idData)
       .then((response) => {
-        url = "/evidenciasaprendizaje/consulta";
-        const idData = { id_ins: response.data.intrumentacion.id };
+        console.log(response.data.unidades);
         if (response.data.unidades.length == "0") {
           console.log("opcion 1");
           dispatch(
@@ -88,15 +91,22 @@ export const idFail = (error) => {
             )
           );
         } else {
-          console.log("opcion 2");
-          http.get(url, idData).then((response1) => {
+          const url =
+            "/evidenciasaprendizaje/consulta/" +
+            response.data.intrumentacion.id;
+          const idData2 = { id_ins: response.data.intrumentacion.id };
+          console.log(idData2);
+          http.get(url, idData2).then((response1) => {
+            console.log(response1.data);
+            console.log("el2");
+
             dispatch(
               idSetAll(
                 response.data.intrumentacion.id,
                 response.data.no_unidades,
                 response1.data.indicadoresalcance,
                 response.data.unidades,
-                response1.data.evidencias,
+                response1.data.evidencia,
                 response1.data.indicadoresponderacion
               )
             );
@@ -120,10 +130,8 @@ export const idFail = (error) => {
       });
   };
 };
-/*
 export const idIngresar = (
   id_ins,
-  no_unidades,
   indicadoresalcance,
   unidades,
   evidencias,
@@ -132,40 +140,39 @@ export const idIngresar = (
   return (dispatch) => {
     dispatch(idStart());
 
-    let url = "/instrumentaciondidactica/crear";
+    let url = "/instrumentaciondidacticaunidad/crear";
     const idData = {
-      usuario_id: usuario_id,
-      grupo_id: grupo_id,
+      unidades: unidades,
     };
 
+    //unidades
     http
       .post(url, idData)
       .then((response) => {
-        url = "/evidenciasaprendizaje/consulta";
-        idData = { id_ins: response.data.id };
-        if (response.data.unidades == []) {
-          dispatch(
-            idSetInicial(response.data.id_ins, response.data.no_unidades)
-          );
-        } else {
-          http.get(url, idData).then((response1) => {
-            dispatch(
-              idSetAll(
-                response.data.id_ins,
-                response.data.no_unidades,
-                response1.data.indicadoresalcance,
-                response1.data.unidades,
-                response1.data.evidencias,
-                response1.data.indicadoresponderacion
-              )
-            );
+        //indicadores alcance
+        console.log("1");
+        const idData = {
+          //revisar si tiene unidad
+          id_ins: id_ins,
+          indicadoresalcance: indicadoresalcance,
+        };
+        console.log(idData);
+        url = "/indicadoresalcance/crear";
+        http.post(url, idData).then((response) => {
+          //matriz ponderacion evidencias
+          console.log("2");
+          const idData = {
+            //revisar si tiene unidad
+            evidencias: evidencias,
+            indicadorponderacion: ponderacion,
+          };
+          console.log(idData);
+          url = "/evidenciasaprendizaje/crear";
+          http.post(url, idData).then((response) => {
+            console.log("3");
+            console.log("Ta okey");
           });
-        }
-
-        //localStorage.setItem("token", response.data.token);
-        //localStorage.setItem("user", JSON.stringify(response.data.user));
-
-        //dispatch(idSuccess(response.data.token, response.data.user));
+        });
       })
       .catch((error) => {
         dispatch(
@@ -178,4 +185,3 @@ export const idIngresar = (
       });
   };
 };
-*/

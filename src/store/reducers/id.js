@@ -20,6 +20,10 @@ const idSetInicial = (state, action) => {
   return updateObject(state, {
     id_ins: action.id_ins,
     no_unidades: action.no_unidades,
+    indicadoresalcance: action.indicadoresalcance,
+    unidades: action.unidades,
+    evidencias: action.evidencias,
+    indicadoresponderacion: action.indicadoresponderacion,
     error: null,
     loading: false,
   });

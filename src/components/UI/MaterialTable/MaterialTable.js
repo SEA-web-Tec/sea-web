@@ -48,7 +48,9 @@ const MaterialTableEdit = (props) => {
               {props.columnas.map((letra) => {
                 return (
                   <TableCell align="right" key={row.id + letra.label}>
-                    <Typography>{row[LetterValue(letra.label)]}</Typography>
+                    <Typography>
+                      {row.indicadores[LetterValue(letra.label)]}
+                    </Typography>
                   </TableCell>
                 );
               })}

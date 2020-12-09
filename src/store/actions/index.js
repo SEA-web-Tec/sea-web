@@ -9,5 +9,5 @@ export { toggleDarkMode } from "./app-theme";
 
 //Instrumentacion Didactica ID
 
-export { idBusqueda/*, idIngresar*/ } from "./id";
+export { idBusqueda, idIngresar } from "./id";
 
