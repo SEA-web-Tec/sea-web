@@ -86,9 +86,11 @@ const useStyles2 = makeStyles({
 function ExamenesTable(props) {
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
-    const lengthAnswers = props.answers.respuestas.length;
+    const lengthAnswers = (props.type == "resultados") ? props.data.respuestas.length : props.data.length;
     const iniRowsPerPage = (lengthAnswers < 5) ? lengthAnswers : 5;
     const [rowsPerPage, setRowsPerPage] = React.useState(iniRowsPerPage);
+    let band = true;
+    let total = 0;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -108,42 +110,64 @@ function ExamenesTable(props) {
             <Table className={classes.table} aria-label="custom pagination table" >
                 <TableHead>
                     <TableRow>
-                        <TableCell>Nombre del alumno</TableCell>
-                        <TableCell align="center">Respuesta</TableCell>
-                        <TableCell align="center">Calificación</TableCell>
-                        <TableCell align="center">Vista</TableCell>
+                        {props.headers.map((header) => {
+                            if (band) {
+                                band = false;
+                                return (<TableCell>{header}</TableCell>);
+                            } else return (<TableCell align="center">{header}</TableCell>);
+                        })}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(rowsPerPage > 0
-                        ? props.answers.respuestas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : props.answers.respuestas
-                    ).map((answer) => (
-                        <TableRow key={answer.key} onClick={handleClickRow}>
-                            <TableCell component="th" scope="row">
-                                { answer.nombre }
-                            </TableCell>
-                            <TableCell style={{ widthMax: 160 }} align="center">
-                                { answer.respuesta_alumno }
-                            </TableCell>
-                            <TableCell style={{ widthMax: 160 }} align="center">
-                                { (props.answers.respuesta_correcta != null) ?
-                                    (answer.respuesta_alumno == props.answers.respuesta_correcta)
-                                    ? <CheckIcon className={classes.iconCorrect}/> 
-                                    : <CloseIcon className={classes.iconIncorrect}/> 
-                                : (answer.puntaje != null) ? 
-                                    (answer.puntaje > 0)
-                                    ? <CheckIcon className={classes.iconCorrect}/> 
-                                    : <CloseIcon className={classes.iconIncorrect}/> 
-                                :"-"}
-                            </TableCell>
-                            <TableCell style={{ widthMax: 160 }} align="center">
-                                <IconButton>
-                                    <VisibilityIcon className={classes.iconSaw}/>
-                                </IconButton>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                    {props.type == "resultados" ?
+                        (rowsPerPage > 0
+                            ? props.data.respuestas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            : props.data.respuestas
+                        ).map((answer) => (
+                            <TableRow key={answer.key} onClick={handleClickRow}>
+                                <TableCell component="th" scope="row">
+                                    { answer.nombre }
+                                </TableCell>
+                                <TableCell style={{ widthMax: 160 }} align="center">
+                                    { answer.respuesta_alumno }
+                                </TableCell>
+                                <TableCell style={{ widthMax: 160 }} align="center">
+                                    { (props.data.respuesta_correcta != null) ?
+                                        (answer.respuesta_alumno == props.data.respuesta_correcta)
+                                        ? <CheckIcon className={classes.iconCorrect}/> 
+                                        : <CloseIcon className={classes.iconIncorrect}/> 
+                                    : (answer.puntaje != null) ? 
+                                        (answer.puntaje > 0)
+                                        ? <CheckIcon className={classes.iconCorrect}/> 
+                                        : <CloseIcon className={classes.iconIncorrect}/> 
+                                    :"-"}
+                                </TableCell>
+                                <TableCell style={{ widthMax: 160 }} align="center">
+                                    <IconButton>
+                                        <VisibilityIcon className={classes.iconSaw}/>
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        )) 
+                    : (rowsPerPage > 0
+                            ? props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            : props.data
+                        ).map((answer) => {
+                            total += answer.puntaje;
+                            return (
+                                <TableRow key={answer.key}>
+                                    <TableCell component="th" scope="row">
+                                        { answer.texto_reactivo }
+                                    </TableCell>
+                                    <TableCell style={{ widthMax: 160 }} align="center">
+                                        { answer.respuesta_alumno }
+                                    </TableCell>
+                                    <TableCell style={{ widthMax: 160 }} align="center">
+                                        { answer.puntaje }
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
                 </TableBody>
                 <TableFooter>
                     <TableRow>

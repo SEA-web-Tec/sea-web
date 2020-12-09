@@ -14,7 +14,8 @@ import CrearReactivoAbierto from "./containers/Examen/CrearReactivo/CrearReactiv
 import CrearReactivoFV from "./containers/Examen/CrearReactivo/CrearReactivoFV.js";
 import CrearReactivoMultiple from "./containers/Examen/CrearReactivo/CrearReactivoMultiple.js";
 import BancoReactivos from "./containers/Examen/BancoReactivos/BancoReactivos.js";
-import Resultados from "./containers/Examen/VisualizarRespuestas/Resultados.js";
+import Resultados from "./containers/Examen/ResultadosExamen/Resultados.js";
+import Respuestas from "./containers/Examen/ResultadosExamen/Respuestas.js";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -73,6 +74,7 @@ class App extends Component {
           <Route path="/examen/reactivo/fv" component={CrearReactivoFV} />
           <Route path="/examen/reactivo/multiple" component={CrearReactivoMultiple} />
           <Route path="/examen/reactivos" component={BancoReactivos} />
+          <Route path="/examen/resultados/respuestas" component={Respuestas} />
           <Route path="/examen/resultados" component={Resultados} />
           
           <Route component={asyncNotFound} />

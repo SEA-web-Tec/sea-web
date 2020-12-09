@@ -25,13 +25,14 @@ class Resultados extends Component {
     render(props) {
         const { classes } = this.props;
         let n = 0; // Reactivos: 0-Abierto 1-f/v 2-múltiple
+        const encabezados = ["Nombre del alumno","Respuesta","Calificación","Vista"];
         const resultados = [{
             texto_reactivo: "¿En qué sistema está basado Android?",
                 tipo: "abierto",
                 respuesta_correcta: null,
                 respuestas: [ {
                     key: 1,
-                    nombre:"Silvia Patricia Pérez Escoedo",
+                    nombre:"Silvia Patricia Pérez Escobedo",
                     respuesta_alumno: "Chocolate",
                     puntaje: 78
                 }, {
@@ -41,7 +42,7 @@ class Resultados extends Component {
                     puntaje: null
                 }, {
                     key: 3,
-                    nombre:"Edson David Guerrero Puente",
+                    nombre:"Edson David Puente Guerrero",
                     respuesta_alumno: "-",
                     puntaje: null
                 }, {
@@ -204,7 +205,7 @@ class Resultados extends Component {
                         <Divider/>
                         <AccordionDetails>
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                                <ExamenesTable answers={resultados[n]}/>
+                                <ExamenesTable data={resultados[n]} headers={encabezados} type="resultados"/>
                             </Grid>
                         </AccordionDetails>
                     </Accordion>
