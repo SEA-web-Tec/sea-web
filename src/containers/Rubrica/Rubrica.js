@@ -14,7 +14,7 @@ class Rubrica extends Component {
   state = {
     rubrica: [],
     id: 1,
-    nombre: "Rúbrica para exposición",
+    nombre: "",
     descripcion: "Esta es una descripción de la rúbrica",
     id_personal: 1,
     /*Las columnas deben de estar ordenas por num_columna */
@@ -27,8 +27,8 @@ class Rubrica extends Component {
     ],
     renglones: [
       { id: 1, criterio: "Criterio 1", num_renglon: 1, id_instrumento: 1 },
-      { id: 2, criterio: "Criterio 2", num_renglon: 2, id_instrumento: 1 },
-      { id: 3, criterio: "Criterio 3", num_renglon: 3, id_instrumento: 1 },
+      /*{ id: 2, criterio: "Criterio 2", num_renglon: 2, id_instrumento: 1 },
+      { id: 3, criterio: "Criterio 3", num_renglon: 3, id_instrumento: 1 },*/
     ],
     celdas: [
       {
@@ -38,7 +38,7 @@ class Rubrica extends Component {
         id_columna: 1,
         puntos_max: 50
       },
-      {
+      /*{
         id: 21,
         texto: "Cumplió con los requisitos 21",
         id_renglon: 2,
@@ -51,7 +51,7 @@ class Rubrica extends Component {
         id_renglon: 3,
         id_columna: 1,
         puntos_max: 50
-      },
+      },*/
       {
         id: 12,
         texto: "Cumplió con los requisitos 12",
@@ -80,7 +80,7 @@ class Rubrica extends Component {
         id_columna: 5,
         puntos_max: 50,
       },
-      {
+      /*{
         id: 22,
         texto: "Cumplió con los requisitos 22",
         id_renglon: 2,
@@ -135,7 +135,7 @@ class Rubrica extends Component {
         id_renglon: 3,
         id_columna: 5,
         puntos_max: 50,
-      },
+      },*/
     ],
   };
 

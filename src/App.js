@@ -64,6 +64,10 @@ const asyncExposiciones = asyncComponent(() => {
   return import("./components/TrabajoIndividual/TrabajoIndividual");
 });
 
+const asyncRubricaPDF = asyncComponent(() => {
+  return import("./components/IDE/RubricaPDF/RubricaPDF");
+});
+
 class App extends Component {
   componentDidMount() {
     this.props.onAuthCheck();
@@ -104,6 +108,7 @@ class App extends Component {
           <Route path="/rubrica" exact component={asyncRubrica} />
           <Route path="/listacotejo" exact component={asyncListaCotejo} />
           <Route path="/listaobservacion" component={asyncListaObservacion} />
+          <Route path="/rubricaPDF" component={asyncRubricaPDF} />
 
           {/* EXAMEN */}
           <Route path="/examen" exact component={asyncDashboardExamen} />
