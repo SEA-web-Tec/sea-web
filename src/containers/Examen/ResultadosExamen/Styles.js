@@ -1,14 +1,8 @@
 export const useStyles = (theme) => ({
     title: {
-        [theme.breakpoints.down("xs")]: {
-            textAlign: "center",
-            marginBottom: theme.spacing(1)
-        },
         width: "calc(100% - 500px)"
     },
-    root: {
-        width: '100%',
-    },
+    root: {  width: '100%' },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
@@ -16,10 +10,9 @@ export const useStyles = (theme) => ({
     ask: {
         fontSize: theme.typography.pxToRem(17),
         fontWeight: theme.typography.fontWeightRegular,
-        marginBotton: "200px"
+        marginTop: "7px"
     },
     conteiner: {
-        margin: theme.spacing(2),
         minWidth: "240px",
         width: "calc(100% - 32px)"
     },
@@ -42,5 +35,10 @@ export const useStyles = (theme) => ({
     iconEdit: { color: "#3D978D" },
     iconIncorrect: { color: "#DF042F" },
     iconCorrect: { color: "#04B528" },
-    navigation: { display: "flex", alignItems: "left", widhtMin: "100px" },
+    navigation: { 
+        widhtMin: "100px",
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center"
+    }
 });
