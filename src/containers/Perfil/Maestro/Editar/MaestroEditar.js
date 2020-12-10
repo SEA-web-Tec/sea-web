@@ -25,6 +25,7 @@ import {
 import PerfilPortada from "components/Perfil/PerfilPortada/PerfilPortada";
 import { Alert } from "@material-ui/lab";
 import { http } from "shared/http";
+import { Redirect } from "react-router-dom";
 
 class MaestroEditar extends Component {
   state = {
@@ -75,7 +76,7 @@ class MaestroEditar extends Component {
   handleFileSelected = (event, prop) => {
     if (event.target.files.length > 0) {
       getBase64(event.target.files[0]).then((data) => {
-        this.setState({ [prop]: data.slice(23).toString() });
+        this.setState({ [prop]: data.toString() });
       });
     }
   };
@@ -100,6 +101,11 @@ class MaestroEditar extends Component {
         </Alert>
       </Snackbar>
     );
+
+    let authRedirect = null;
+    if (this.props.user.id != this.props.match.params.id) {
+      authRedirect = <Redirect to={"/404"} />;
+    }
 
     let perfil = <CircularProgress className={classes.spinner} />;
 
@@ -144,7 +150,7 @@ class MaestroEditar extends Component {
                   className={classes.center}
                 >
                   <Avatar
-                    src={`data:image/jpeg;base64,${this.state.fotoPerfil ? this.state.fotoPerfil : this.props.user.fotoPerfil}`}
+                    src={this.state.fotoPerfil ? this.state.fotoPerfil : this.props.user.fotoPerfil}
                     alt="Foto de perfil"
                     style={{ width: "200px", height: "200px" }}
                   />
@@ -178,14 +184,11 @@ class MaestroEditar extends Component {
                   }
                   className={classes.center}
                 >
-                  <img
-                    src={`data:image/jpeg;base64,${
-                      this.state.fotoPortada ? this.state.fotoPortada : this.props.user.fotoPortada
-                    }`}
+                  <Avatar
+                    src={this.state.fotoPortada ? this.state.fotoPortada : this.props.user.fotoPortada}
                     alt="Foto de portada"
-                    width="300px"
-                    height="100px"
-                    style={{ objectFit: "cover" }}
+                    style={{ width: "300px", height: "100px", objectFit: "cover" }}
+                    variant="rounded"
                   />
                 </Badge>
               </Grid>
@@ -251,6 +254,7 @@ class MaestroEditar extends Component {
     }
     return (
       <Fragment>
+        {authRedirect}
         {error}
         {perfil}
       </Fragment>

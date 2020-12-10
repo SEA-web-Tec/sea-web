@@ -15,7 +15,7 @@ import BigTooltip from "../UI/BigTooltip/BigTooltip";
 const Grupo = (props) => {
   const classes = useStyles();
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Grid item xs={12} sm={6} md={6} lg={4}>
       <Card className={classes.card}>
         <div className={classes.cardHeader}>
           <CardMedia className={classes.cardMedia} image={props.portada} title={props.materia} />
@@ -25,7 +25,9 @@ const Grupo = (props) => {
           <Typography component="h2" variant="h5" gutterBottom noWrap style={{ fontWeight: "500" }}>
             {props.materia}
           </Typography>
-          <Typography gutterBottom>{props.carrera}</Typography>
+          <Typography gutterBottom noWrap>
+            {props.carrera}
+          </Typography>
           <Typography color="textSecondary">{props.maestro}</Typography>
         </CardContent>
         <Divider />

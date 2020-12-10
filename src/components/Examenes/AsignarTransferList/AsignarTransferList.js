@@ -102,7 +102,7 @@ export default function AsignarTransferList() {
 
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-      <Grid item>{customList(left, "Reactivos")}</Grid>
+      <Grid item>{customList(left, "Alumnos")}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -147,7 +147,7 @@ export default function AsignarTransferList() {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(right, "Reactivos seleccionados")}</Grid>
+      <Grid item>{customList(right, "Alumnos seleccionados")}</Grid>
     </Grid>
   );
 }
