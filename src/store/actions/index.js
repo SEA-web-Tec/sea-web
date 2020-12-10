@@ -7,7 +7,11 @@ export { fetchGrupos, gruposDismissError } from "./grupos";
 // App Theme
 export { toggleDarkMode } from "./app-theme";
 
-//Instrumentacion Didactica ID
+// Instrumentacion Didactica ID
+export { idBusqueda /*, idIngresar*/ } from "./id";
 
-export { idBusqueda/*, idIngresar*/ } from "./id";
+// Temarios
+export { fetchTemarios } from "./temarios";
 
+// Materias
+export { fetchMaterias } from "./materias";

@@ -7,10 +7,10 @@ export const fetchGruposStart = () => {
   };
 };
 
-export const fetchGruposSuccess = (cursos) => {
+export const fetchGruposSuccess = (grupos) => {
   return {
     type: actionTypes.FETCH_GRUPOS_SUCCESS,
-    cursos: cursos
+    grupos: grupos
   };
 };
 
@@ -33,19 +33,13 @@ export const fetchGrupos = (token, userId) => {
 
     let url = "/grupos/";
     const authData = {
-      headers: {
-        token: token
-      }
+      headers: { Authorization: `Bearer ${token}` }
     };
 
     http
       .get(url + userId, authData)
       .then((response) => {
-        const fetchedGrupos = [];
-        for (const key in response.data) {
-          fetchedGrupos.push({ ...response.data[key], id: key });
-        }
-        dispatch(fetchGruposSuccess(fetchedGrupos));
+        dispatch(fetchGruposSuccess(response.data));
       })
       .catch((error) => {
         dispatch(fetchGruposFail(error.message));

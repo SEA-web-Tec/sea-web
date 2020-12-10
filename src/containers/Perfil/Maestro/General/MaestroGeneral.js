@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "store/actions/index";
 import { withStyles } from "@material-ui/core/styles";
@@ -22,6 +22,12 @@ class MaestroGeneral extends Component {
 
   render(props) {
     const { classes } = this.props;
+
+    let authRedirect = null;
+
+    if (this.props.user.id != this.props.match.params.id) {
+      authRedirect = <Redirect to={"/404"} />;
+    }
 
     let perfil = <CircularProgress className={classes.spinner} />;
 
@@ -110,7 +116,7 @@ class MaestroGeneral extends Component {
                   Estudios
                 </Typography>
                 <Typography component="p" variant="body2">
-                  {this.props.user.estudios.replace(/^\w/, (c) => c.toUpperCase())}
+                  {this.props.user.estudios}
                 </Typography>
               </div>
             </Grid>
@@ -123,7 +129,7 @@ class MaestroGeneral extends Component {
                   Sexo
                 </Typography>
                 <Typography component="p" variant="body2">
-                  {this.props.user.sexo.replace(/^\w/, (c) => c.toUpperCase())}
+                  {this.props.user.sexo}
                 </Typography>
               </div>
             </Grid>
@@ -143,7 +149,12 @@ class MaestroGeneral extends Component {
       );
     }
 
-    return <Fragment>{perfil}</Fragment>;
+    return (
+      <Fragment>
+        {authRedirect}
+        {perfil}
+      </Fragment>
+    );
   }
 }
 

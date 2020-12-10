@@ -23,3 +23,9 @@ export const ID_START = "ID_START";
 export const ID_SETINICIAL = "ID_SETINICIAL";
 export const ID_SETALL = "ID_SETALL";
 export const ID_FAIL = "ID_FAIL";
+
+// Temarios
+export const FETCH_TEMARIOS_SUCCESS = "FETCH_TEMARIOS_SUCCESS";
+
+// Materias
+export const FETCH_MATERIAS_SUCCESS = "FETCH_MATERIAS_SUCCESS";
