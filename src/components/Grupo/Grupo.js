@@ -25,7 +25,9 @@ const Grupo = (props) => {
           <Typography component="h2" variant="h5" gutterBottom noWrap style={{ fontWeight: "500" }}>
             {props.materia}
           </Typography>
-          <Typography gutterBottom>{props.carrera}</Typography>
+          <Typography gutterBottom noWrap>
+            {props.carrera}
+          </Typography>
           <Typography color="textSecondary">{props.maestro}</Typography>
         </CardContent>
         <Divider />
