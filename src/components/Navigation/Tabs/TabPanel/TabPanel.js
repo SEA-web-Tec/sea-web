@@ -158,14 +158,12 @@ export default function TabPanel(props) {
                                     className={classes.semanasChip}
                                     avatar={<Avatar>4</Avatar>}
                                     label="Semanas de clase"
-                                    color="primary"
                                     variant="outlined"
                                 />
                                 <Chip
                                     className={classes.semanasChip}
                                     avatar={<Avatar>2</Avatar>}
                                     label="Semanas de evaluación"
-                                    color="primary"
                                     variant="outlined"
                                 />
                             </Box>

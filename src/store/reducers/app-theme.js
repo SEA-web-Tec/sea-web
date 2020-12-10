@@ -6,60 +6,67 @@ const newPrimaryMain = "#3F51B5";
 const newSecondaryMain = "#FF5722";
 
 const initialState = {
-  overrides: {
-    // MuiPickersToolbar: {
-    //     toolbar: {
-    //         backgroundColor: newSecondaryMain,
-    //     },
-    // },
-    MuiPickersCalendar: {
-      week: {
-        justifyContent: "inherit",
-        width: right,
-      },
+    overrides: {
+        // MuiPickersToolbar: {
+        //     toolbar: {
+        //         backgroundColor: newSecondaryMain,
+        //     },
+        // },
+        MuiPickersCalendar: {
+            week: {
+                justifyContent: "inherit",
+                width: right,
+            },
+            transitionContainer: {
+                marginTop: 4,
+                minHeight: "initial",
+            },
+        },
+        MuiPickersBasePicker: {
+            pickerView: {
+                minWidth: "initial",
+                maxWidth: "initial",
+                minHeight: "initial",
+                height: 270,
+                justifyContent: "inherit",
+            },
+        },
+        MuiPickersDay: {
+            day: {
+                width: "32px",
+            },
+        },
     },
-    MuiPickersBasePicker: {
-      pickerView: {
-        width: right,
-        minWidth: "inherit",
-      },
+    palette: {
+        type: "light",
+        primary: {
+            main: newPrimaryMain,
+            dark: "#303F9F",
+            light: "#C5CAE9",
+        },
+        secondary: {
+            main: newSecondaryMain,
+            dark: "#FF5722",
+        },
     },
-    MuiPickersDay: {
-      day: {
-        width: "32px",
-      },
-    },
-  },
-  palette: {
-    type: "light",
-    primary: {
-      main: newPrimaryMain,
-      dark: "#303F9F",
-      light: "#C5CAE9",
-    },
-    secondary: {
-      main: newSecondaryMain,
-      dark: "#FF5722",
-    },
-  }
 };
 
 const toggleDarkMode = (state, action) => {
-  return updateObject(state, {
-    palette: {
-      ...state.palette,
-      type: state.palette.type === "light" ? "dark" : "light",
-    },
-  });
+    return updateObject(state, {
+        palette: {
+            ...state.palette,
+            type: state.palette.type === "light" ? "dark" : "light",
+        },
+    });
 };
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case actionTypes.TOGGLE_DARK_MODE:
-      return toggleDarkMode(state, action);
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case actionTypes.TOGGLE_DARK_MODE:
+            return toggleDarkMode(state, action);
+        default:
+            return state;
+    }
 };
 
 export default reducer;
