@@ -10,7 +10,6 @@ export const useStyles = (theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    borderBottom: "1px solid rgba(0, 0, 0, .125)",
     marginBottom: -1,
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column"

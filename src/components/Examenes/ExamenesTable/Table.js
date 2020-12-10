@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Table, TableHead, TableBody, TableCell, TableContainer, TableFooter, TablePagination, 
-        TableRow, Paper, IconButton } from '@material-ui/core';
+        TableRow, Paper, IconButton, Avatar, ListItemAvatar, } from '@material-ui/core';
 import { FirstPage as FirstPageIcon,
         KeyboardArrowLeft as ArrowLeftIcon, 
         KeyboardArrowRight as ArrowRightIcon, 
         Visibility as VisibilityIcon,
         LastPage as LastPageIcon, 
         Check as CheckIcon,
-        Close as CloseIcon } from '@material-ui/icons';
+        Close as CloseIcon,
+        AssignmentTurnedIn as AssignmentTurnedInIcon } from '@material-ui/icons';
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
@@ -76,12 +77,14 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-const useStyles2 = makeStyles({
+const useStyles2 = makeStyles((theme) => ({
     table: { minWidth: 300 },
     iconSaw: { color: "#5685ED" },
     iconIncorrect: { color: "#DF042F" },
     iconCorrect: { color: "#04B528" },
-});
+    success: {  backgroundColor: theme.palette.success.main },
+    pending: { backgroundColor: theme.palette.warning.main }
+}));
 
 function ExamenesTable(props) {
     const classes = useStyles2();
@@ -90,7 +93,6 @@ function ExamenesTable(props) {
     const iniRowsPerPage = (lengthAnswers < 5) ? lengthAnswers : 5;
     const [rowsPerPage, setRowsPerPage] = React.useState(iniRowsPerPage);
     let band = true;
-    let total = 0;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -111,7 +113,7 @@ function ExamenesTable(props) {
                 <TableHead>
                     <TableRow>
                         {props.headers.map((header) => {
-                            if (band) {
+                            if (band && props.type != "examenes") {
                                 band = false;
                                 return (<TableCell>{header}</TableCell>);
                             } else return (<TableCell align="center">{header}</TableCell>);
@@ -119,7 +121,7 @@ function ExamenesTable(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.type == "resultados" ?
+                    { props.type == "resultados" ?
                         (rowsPerPage > 0
                             ? props.data.respuestas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : props.data.respuestas
@@ -128,10 +130,10 @@ function ExamenesTable(props) {
                                 <TableCell component="th" scope="row">
                                     { answer.nombre }
                                 </TableCell>
-                                <TableCell style={{ widthMax: 160 }} align="center">
+                                <TableCell align="center">
                                     { answer.respuesta_alumno }
                                 </TableCell>
-                                <TableCell style={{ widthMax: 160 }} align="center">
+                                <TableCell align="center">
                                     { (props.data.respuesta_correcta != null) ?
                                         (answer.respuesta_alumno == props.data.respuesta_correcta)
                                         ? <CheckIcon className={classes.iconCorrect}/> 
@@ -149,11 +151,11 @@ function ExamenesTable(props) {
                                 </TableCell>
                             </TableRow>
                         )) 
-                    : (rowsPerPage > 0
+                    : (props.type == "respuesta" ? 
+                        (rowsPerPage > 0
                             ? props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : props.data
                         ).map((answer) => {
-                            total += answer.puntaje;
                             return (
                                 <TableRow key={answer.key}>
                                     <TableCell component="th" scope="row">
@@ -167,7 +169,31 @@ function ExamenesTable(props) {
                                     </TableCell>
                                 </TableRow>
                             );
-                        })}
+                        }) : (rowsPerPage > 0
+                            ? props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            : props.data
+                        ).map((quiz) => {
+                            return (
+                                <TableRow key={quiz.key}>
+                                    <TableCell align="center">
+                                        { quiz.grupo }
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        { quiz.fin }
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        { quiz.estado }
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <ListItemAvatar>
+                                            <IconButton className={props.done ? classes.success : classes.pending}>
+                                                <AssignmentTurnedInIcon />
+                                            </IconButton>
+                                        </ListItemAvatar>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        }))}
                 </TableBody>
                 <TableFooter>
                     <TableRow>

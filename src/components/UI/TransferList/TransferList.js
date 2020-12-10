@@ -1,14 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, List, ListItem, ListItemIcon, ListItemText, Checkbox, Button, Paper, Typography } from "@material-ui/core";
+import { Grid, List, ListItem, ListItemIcon, ListItemText, Checkbox, 
+  Button, Paper, Typography, FormControl, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(2, "auto")
+    margin: theme.spacing(2, "auto"),
   },
   paper: {
-    width: 300,
-    height: 330,
+    maxWidth: 550,
+    height: 350,
     overflow: "auto"
   },
   button: {
@@ -16,6 +17,16 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     margin: theme.spacing(2)
+  },
+  formControl: {
+    margin: theme.spacing(0, 0, 0, 2),
+    width: 75
+  },
+  ItemsList: {
+    margin: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   }
 }));
 
@@ -71,7 +82,21 @@ export default function TransferList() {
     setRight([]);
   };
 
-  const customList = (items, title) => (
+  const ListItems = (value, labelId) => (
+    <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
+      <ListItemIcon>
+        <Checkbox
+          checked={checked.indexOf(value) !== -1}
+          tabIndex={-1}
+          disableRipple
+          inputProps={{ "aria-labelledby": labelId }}
+        />
+      </ListItemIcon>
+      <ListItemText id={labelId} primary={`List item miau miau miau miau miau miau miau miau miau miau miau miau ${value + 1}`} />
+    </ListItem>
+  );
+
+  const customList = (items, title, add) => (
     <Paper variant="outlined" className={classes.paper}>
       <Typography className={classes.title} component="p" variant="h6" align="center">
         {title}
@@ -79,19 +104,22 @@ export default function TransferList() {
       <List dense component="div" role="list">
         {items.map((value) => {
           const labelId = `transfer-list-item-${value}-label`;
-
           return (
-            <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
-              <ListItemIcon>
-                <Checkbox
-                  checked={checked.indexOf(value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
-            </ListItem>
+            <Grid container >
+              { add ?
+                <Grid className={classes.ItemsList}>
+                  <Grid item xs={4} sm={2} md={2} lg={2} xl={2}>
+                    <FormControl required variant="outlined" className={classes.formControl}>
+                      <TextField id="outlined-basic" type="number" variant="outlined" />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={8} sm={10} md={10} lg={10} xl={10}>
+                    { ListItems(value, labelId) }
+                  </Grid>
+                </Grid>
+                : <> { ListItems(value, labelId) } </>
+              }
+            </Grid>
           );
         })}
         <ListItem />
@@ -101,7 +129,7 @@ export default function TransferList() {
 
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-      <Grid item>{customList(left, "Lista de alumnos")}</Grid>
+      <Grid item>{customList(left, "Lista de alumnos", true)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -146,7 +174,7 @@ export default function TransferList() {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(right, "Alumnos asignados")}</Grid>
+      <Grid item>{customList(right, "Alumnos asignados", false)}</Grid>
     </Grid>
   );
 }

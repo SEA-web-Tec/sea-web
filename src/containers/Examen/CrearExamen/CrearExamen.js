@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
-import { Grid, FormControl, InputLabel, Select, MenuItem, Typography, TextField, Box, Button } from "@material-ui/core";
+import { Grid, FormControl, InputLabel, Select, MenuItem, TextField, Box, Button } from "@material-ui/core";
 import TransferList from "../../../components/UI/TransferList/TransferList";
 import Portada from "../../../components/Portada/Portada";
 
@@ -24,7 +24,7 @@ class CrearExamen extends Component {
                 <TextField id="outlined-basic" label="Titulo del examen" variant="outlined" />
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <FormControl required variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">Materia</InputLabel>
                 <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Materia">
@@ -37,7 +37,7 @@ class CrearExamen extends Component {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <FormControl required variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">Unidad</InputLabel>
                 <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Unidad">

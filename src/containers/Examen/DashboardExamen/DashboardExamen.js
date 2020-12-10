@@ -3,18 +3,48 @@ import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
 import {
   ExpandMore as ExpandMoreIcon,
-  Visibility as VisibilityIcon,
   Create as CreateIcon,
   GroupAdd as GroupAddIcon,
-  Delete as DeleteIcon
-} from "@material-ui/icons";
-import { Typography, Accordion, AccordionDetails, AccordionSummary, Box, IconButton } from "@material-ui/core";
+  Delete as DeleteIcon } from "@material-ui/icons";
+import { Typography, Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Divider} from "@material-ui/core";
 import Portada from "../../../components/Portada/Portada";
-import ExamenesList from "components/Examenes/ExamenesList/ExamenesList";
+import ExamenesTable from "../../../components/Examenes/ExamenesTable/Table";
 
 class DashboardExamen extends Component {
   render(props) {
     const { classes } = this.props;
+    const encabezados = ["Grupo","Fecha","Estado","Calificaciones"];
+    const examenes = [{
+      key:1,
+      grupo: "F", // no se almacena D:
+      fin: "10/04/2021",
+      estado: "Abierto"
+    }, {
+      key:2,
+      grupo: "G", 
+      fin: "12/04/2021",
+      estado: "Abierto"
+    }, {
+      key:3,
+      grupo: "H", 
+      fin: "12/12/2020",
+      estado: "Cerrado"
+    }, {
+      key:4,
+      grupo: "G", 
+      fin: "03/10/2020",
+      estado: "Cerrado"
+    }, {
+      key:5,
+      grupo: "E", 
+      fin: "09/07/2020",
+      estado: "Cerrado"
+    }, {
+      key:6,
+      grupo: "E", 
+      fin: "22/07/2019",
+      estado: "Cerrado"
+    }];
     return (
       <Portada
         materia="Programación de Dispositivos Móviles"
@@ -38,9 +68,6 @@ class DashboardExamen extends Component {
               </Box>
               <Box component="div">
                 <IconButton color="secondary">
-                  <VisibilityIcon />
-                </IconButton>
-                <IconButton color="secondary">
                   <CreateIcon />
                 </IconButton>
                 <IconButton color="secondary">
@@ -52,8 +79,9 @@ class DashboardExamen extends Component {
               </Box>
             </Box>
           </AccordionSummary>
+          <Divider/>
           <AccordionDetails>
-            <ExamenesList />
+            <ExamenesTable data={examenes} headers={encabezados} type="examenes"/>
           </AccordionDetails>
         </Accordion>
       </Portada>
