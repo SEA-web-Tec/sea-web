@@ -2,7 +2,7 @@
 export { auth, logout, authCheckState, authDismissError, fetchPerfil, perfilDismissError } from "./auth";
 
 // Grupos
-export { fetchGrupos, gruposDismissError } from "./grupos";
+export { fetchGrupos, fetchAllGrupos, gruposDismissError } from "./grupos";
 
 // App Theme
 export { toggleDarkMode } from "./app-theme";
@@ -15,3 +15,6 @@ export { fetchTemarios } from "./temarios";
 
 // Materias
 export { fetchMaterias } from "./materias";
+
+// Users
+export { fetchUsers } from "./users";

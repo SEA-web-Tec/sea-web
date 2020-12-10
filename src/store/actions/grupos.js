@@ -27,6 +27,26 @@ export const gruposDismissError = () => {
   };
 };
 
+export const fetchAllGruposSuccess = (grupos) => {
+  return {
+    type: actionTypes.FETCH_ALL_GRUPOS_SUCCESS,
+    grupos: grupos
+  };
+};
+
+export const fetchAllGrupos = (token) => {
+  return (dispatch) => {
+    let url = "/grupos";
+    const authData = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+
+    http.get(url, authData).then((response) => {
+      dispatch(fetchAllGruposSuccess(response.data));
+    });
+  };
+};
+
 export const fetchGrupos = (token, userId) => {
   return (dispatch) => {
     dispatch(fetchGruposStart());
