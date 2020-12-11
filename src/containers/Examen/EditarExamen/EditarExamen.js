@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
 import { Grid, FormControl, InputLabel, Select, MenuItem, TextField, Box, Button } from "@material-ui/core";
 //import EditarTransferList from "components/Examenes/EditarTransferList/EditarTransferList";
-import TransferList from "../../../components/UI/TransferList/TransferList";
+import TransferList from "../../../components/Examenes/ExamenTransferList/ExamenTransferList";
 import Portada from "../../../components/Portada/Portada";
 
 

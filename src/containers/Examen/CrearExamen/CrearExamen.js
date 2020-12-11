@@ -1,11 +1,27 @@
 import React, { Component } from "react";
+import { updateObject } from "shared/utility";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
 import { Grid, FormControl, Typography, InputLabel, Select, MenuItem, TextField, Box, Button } from "@material-ui/core";
-import TransferList from "../../../components/UI/TransferList/TransferList";
+import TransferList from "../../../components/Examenes/ExamenTransferList/ExamenTransferList";
 import Portada from "../../../components/Portada/Portada";
 
 class CrearExamen extends Component {
+
+  state = {
+    nombre: "",
+    unidad: "",
+    id_materia: 0,
+    descripcion: ""
+  };
+
+  inputChangedHandler = (prop) => (event) => {
+    const updatedObject = updateObject(this.state, {
+      [prop]: event.target.value
+    });
+    this.setState(updatedObject);
+  };
+
   render(props) {
     const { classes } = this.props;
     return (
@@ -24,7 +40,16 @@ class CrearExamen extends Component {
           <Grid container>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <FormControl required variant="outlined" className={classes.formControl}>
-                <TextField id="outlined-basic" label="Titulo del examen" variant="outlined" />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="nombre"
+                  name="nombre"
+                  label="Título del examen"
+                  value={this.state.nombre}
+                  onChange={this.inputChangedHandler("nombre")} />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -55,7 +80,18 @@ class CrearExamen extends Component {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <FormControl required variant="outlined" className={classes.formControl}>
-                <TextField id="outlined-basic" label="Descripción" variant="outlined" multiline rows={5} />
+                <TextField 
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  multiline
+                  fullWidth
+                  rows={5}
+                  id="descripcion"
+                  name="descripcion"
+                  label="Descripción"
+                  value={this.state.descripcion}
+                  onChange={this.inputChangedHandler("descripcion")}/>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
