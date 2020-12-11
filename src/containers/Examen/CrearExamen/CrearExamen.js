@@ -10,7 +10,7 @@ class CrearExamen extends Component {
 
   state = {
     nombre: "",
-    unidad: "",
+    unidad: 1,
     id_materia: 0,
     descripcion: ""
   };
