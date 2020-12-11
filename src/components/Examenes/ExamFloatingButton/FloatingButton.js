@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fab, Tooltip } from '@material-ui/core';
+import { Fab, Tooltip, Grid } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import { Add as AddIcon,  
     Close as CloseIcon,
@@ -9,15 +9,9 @@ import { Add as AddIcon,
     FormatListNumbered as FormatListNumberedIcon,
     StorageOutlined as StorageOutlinedIcon,
     LibraryBooksSharp as LibraryBooksSharpIcon
-
 } from '@material-ui/icons';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1)
-        },
-    },
+const useStyles = makeStyles(() => ({
     mainIcon: {
         position: "fixed",
         top: "calc(100% - 80px)",
@@ -42,7 +36,7 @@ function FloatingButton(props) {
     };
 
     return (
-        <div className={classes.root} >
+        <Grid container>
             { values.showIcons ? 
             <>
                 <Tooltip title="Cerrar" placement="left">
@@ -78,7 +72,7 @@ function FloatingButton(props) {
                     </Fab>
                 </Tooltip> 
             }
-        </div>
+        </Grid> 
     );
 }
 
