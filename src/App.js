@@ -19,7 +19,6 @@ import Resultados from "./containers/Examen/ResultadosExamen/Resultados.js";
 import Respuestas from "./containers/Examen/ResultadosExamen/Respuestas.js";
 import MaestroGeneral from "containers/Perfil/Maestro/General/MaestroGeneral";
 import MaestroEditar from "containers/Perfil/Maestro/Editar/MaestroEditar";
-import AppTheme from "./AppTheme";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
