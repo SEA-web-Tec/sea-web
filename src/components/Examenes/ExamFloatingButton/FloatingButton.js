@@ -32,7 +32,6 @@ function FloatingButton(props) {
 
     const handleClickShow = () => { 
         setValues({ ...values, showIcons: !values.showIcons });
-        console.log(props.reactivos);
     };
 
     return (
