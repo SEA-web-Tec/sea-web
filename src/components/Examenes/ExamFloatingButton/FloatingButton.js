@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Fab, Tooltip } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
 import { Add as AddIcon,  
     Close as CloseIcon,
     Subject as SubjectIcon,
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function FloatingButton(props) {
     const classes = useStyles();
+    const history = useHistory();
     const [values, setValues] = React.useState({
         showIcons: false
     });
@@ -50,18 +52,22 @@ function FloatingButton(props) {
                 </Tooltip>
                 <Tooltip title={props.reactivos ? "Abierto" : "Crear examen"} placement="left">
                     <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 130px)"}}>
-                    { props.reactivos ? <SubjectIcon/> : <LibraryBooksSharpIcon/> }
+                    { props.reactivos ? 
+                        <SubjectIcon onClick={()=>{ history.push("/examen/reactivo/abierto")}}/> 
+                        : <LibraryBooksSharpIcon onClick={()=>{ history.push("/examen/crear")}}/> }
                     </Fab>
                 </Tooltip>
                 <Tooltip title={props.reactivos ? "Falso/verdadero" : "Banco de reactivos"} placement="left">
                     <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 180px)"}}>
-                        { props.reactivos ? <FormatListBulletedIcon/> : <StorageOutlinedIcon/> }
+                        { props.reactivos ? 
+                        <FormatListBulletedIcon onClick={()=>{ history.push("/examen/reactivo/fv")}}/> 
+                        : <StorageOutlinedIcon onClick={()=>{ history.push("/examen/reactivos")}}/> }
                     </Fab>
                 </Tooltip>
                 { props.reactivos &&
                     <Tooltip title="Opción múltiple" placement="left">
                         <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 230px)"}}>
-                            <FormatListNumberedIcon/>
+                            <FormatListNumberedIcon onClick={()=>{ history.push("/examen/reactivo/multiple")}}/>
                         </Fab>
                     </Tooltip>
                 }
