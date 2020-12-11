@@ -50,7 +50,7 @@ class Portada extends Component {
                   <Grid item xs={4} sm={12} md={12} lg={12}>
                     <Box className={clsx(classes.box, classes.statusBox)}>
                       <Typography component="p" variant="subtitle2">
-                        {this.props.statusID}
+                        {this.props.status}
                       </Typography>
 
                       <CheckCircleIcon className={classes.checkIcon} fontSize="small" />

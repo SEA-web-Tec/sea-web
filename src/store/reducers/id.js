@@ -3,11 +3,15 @@ import { updateObject } from "../../shared/utility";
 
 const initialState = {
   id_ins: null,
-  no_unidades:null,
-  indicadoresalcance:null,
-  unidades:null,
+  intrumentaciones: null,
+  no_unidades: null,
+  indicadoresalcance: null,
+  unidades: null,
   evidencias: null,
+  ponderacion: null,
   indicadoresponderacion: null,
+  estado: null,
+  comentario: null,
   error: null,
   loading: false,
 };
@@ -24,6 +28,8 @@ const idSetInicial = (state, action) => {
     unidades: action.unidades,
     evidencias: action.evidencias,
     indicadoresponderacion: action.indicadoresponderacion,
+    estado: action.estado,
+    comentario: action.comentario,
     error: null,
     loading: false,
   });
@@ -37,6 +43,16 @@ const idSetAll = (state, action) => {
     unidades: action.unidades,
     evidencias: action.evidencias,
     ponderacion: action.ponderacion,
+    estado: action.estado,
+    comentario: action.comentario,
+    error: null,
+    loading: false,
+  });
+};
+
+const idSetIntrumentaciones = (state, action) => {
+  return updateObject(state, {
+    intrumentaciones: action.intrumentaciones,
     error: null,
     loading: false,
   });
@@ -60,6 +76,8 @@ const reducer = (state = initialState, action) => {
       return idSetAll(state, action);
     case actionTypes.ID_FAIL:
       return idFail(state, action);
+    case actionTypes.ID_SETINSTRUMENTACIONES:
+      return idSetIntrumentaciones(state, action);
     /*case actionTypes.ID_LOGOUT:
       return idLogout(state, action);*/
     default:

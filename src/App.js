@@ -21,6 +21,10 @@ const asyncIDEditar = asyncComponent(() => {
   return import("./containers/ID/IDeditar");
 });
 
+const asyncIDEvaluar = asyncComponent(() => {
+  return import("./containers/ID/IDEvaluar");
+});
+
 const asyncMenuInstrumentos = asyncComponent(() => {
   return import("./containers/MenuInstrumentos/MenuInstrumentos");
 });
@@ -86,25 +90,26 @@ class App extends Component {
           <Route path="/" exact component={Login} />
           <Route path="/logout" exact component={Logout} />
           <Route path="/grupos" exact component={Grupos} />
-
           {/* PERFIL MAESTRO */}
           <Route path="/usuario/:id" exact component={MaestroGeneral} />
           <Route path="/usuario/:id/editar" component={MaestroEditar} />
-
           {/* INSTRUMENTACION DIDACTICA */}
+          <Route
+            path="/instrumentacion/evaluar/"
+            exact
+            component={asyncIDEvaluar}
+          />
           <Route path="/instrumentacion/:id" exact component={asyncID} />
           <Route
-            path="/instrumentacion/editar/:id"
+            path="/instrumentacion/:id/editar"
             exact
             component={asyncIDEditar}
           />
-
           {/* LO DEL JULIO */}
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
           <Route path="/rubrica" exact component={asyncRubrica} />
           <Route path="/listacotejo" exact component={asyncListaCotejo} />
           <Route path="/listaobservacion" component={asyncListaObservacion} />
-
           {/* EXAMEN */}
           <Route path="/examen" exact component={asyncDashboardExamen} />
           <Route path="/examen/crear" exact component={asyncCrearExamen} />
@@ -112,7 +117,6 @@ class App extends Component {
           <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
           <Route path="/examen/id" component={asyncContenedorExamen} />
           <Route component={asyncNotFound} />
-
           {/* LO DEL CARLOS */}
           <Route path="/trabajo-individual" component={asyncExposiciones} />
         </Switch>
@@ -130,13 +134,13 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuthCheck: () => dispatch(actions.authCheckState())
+    onAuthCheck: () => dispatch(actions.authCheckState()),
   };
 };
 

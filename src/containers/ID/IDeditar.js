@@ -17,20 +17,10 @@ class ID extends Component {
   render(props) {
     //        <CardEvaluacion />
     let info = (
-      <div>
-        <Portada
-          materia="Programación de Dispositivos Móviles"
-          carrera="Ing. Sistemas Computacionales"
-          maestro="José Tadeo Rodriguez Solano"
-          grupo="F"
-          periodo="Enero - Junio 2020"
-          hasTabs
-          isID
-          status="Aprobado"
-        >
-          <TabsIDEditar evaluar={true} id_grupo={1} />
-        </Portada>
-      </div>
+      <TabsIDEditar
+        evaluar={true}
+        grupo={this.props.match.params.id}
+      />
     );
 
     console.log(this.props.id_user);
@@ -43,7 +33,24 @@ class ID extends Component {
       info = <CircularProgress /*className={classes.spinner}*/ />;
     }
 
-    return <Fragment>{info}</Fragment>;
+    console.log(this.props.estado);
+
+    return (
+      <Fragment>
+        <Portada
+          materia="Programación de Dispositivos Móviles"
+          carrera="Ing. Sistemas Computacionales"
+          maestro="José Tadeo Rodriguez Solano"
+          grupo="F"
+          periodo="Enero - Junio 2020"
+          hasTabs
+          isID
+          status={this.props.estado}
+        >
+          {info}
+        </Portada>
+      </Fragment>
+    );
   }
 }
 
@@ -51,6 +58,8 @@ const mapStateToProps = (state) => {
   return {
     id_ins: state.id.id_ins,
     id_user: state.auth.user.id,
+    estado: state.id.estado,
+    comentario: state.id.comentario,
     loading: state.auth.loading,
     error: state.auth.error,
   };

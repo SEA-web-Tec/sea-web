@@ -1,17 +1,22 @@
 import React, { Component } from "react";
+import { useStyles } from "./Tabs.styles";
 import TabPanel from "./TabPanel/TabPanel";
 import { connect } from "react-redux";
-import * as actions from "store/actions/index";
 import ValueToLetter from "shared/ValueToLetter";
-import { useStyles } from "./Tabs.styles";
+import Modal from "@material-ui/core/Modal";
 import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
 import {
   AppBar,
   Tabs,
   Tab,
+  IconButton,
+  TextField,
   /*IconButton,*/
 } from "@material-ui/core";
+
+import { Feedback as FeedbackIcon } from "@material-ui/icons";
 
 function a11yProps(index) {
   return {
@@ -27,6 +32,9 @@ class SimpleTabs extends Component {
     value: 0,
     entrar: false,
     num: 0,
+    id_actual: 0,
+    abrirComentario: false,
+    comentario: "",
   };
   handleChange = (event, newValue) => {
     this.setState({ value: newValue });
@@ -48,8 +56,31 @@ class SimpleTabs extends Component {
     return JSON.parse(JSON.stringify(arreglo));
   };
 
+  abrirModal = (modo) => {
+    //true abrir
+    this.setState({ abrirComentario: modo });
+  };
+
   render() {
     const { classes } = this.props;
+    let tabs = null;
+    let infoTabs = null;
+
+    if (this.props.id_ins != null) {
+      if (this.props.id_ins != this.state.id_actual) {
+        this.setState({
+          value: 0,
+          Inicio: [],
+          value: 0,
+          entrar: false,
+          num: 0,
+          id_actual: this.props.id_ins,
+          comentario: "",
+        });
+        tabs = null;
+        infoTabs = null;
+      }
+    }
 
     if (
       this.state.num === 0 &&
@@ -171,11 +202,9 @@ class SimpleTabs extends Component {
       //console.log(arrgInd);
       this.setState({ Inicio: JSON.parse(JSON.stringify(arrgInd)) }, () => {
         this.setState({ entrar: true });
+        console.log(arrgInd);
       });
     }
-
-    let tabs = null;
-    let infoTabs = null;
 
     if (this.state.entrar === true) {
       tabs = this.state.Inicio.map((ins) => {
@@ -210,6 +239,57 @@ class SimpleTabs extends Component {
             {tabs}
           </Tabs>
         </AppBar>
+        <IconButton
+          className={classes.expanderFeedback}
+          size="large"
+          onClick={() => {
+            this.abrirModal(true);
+          }}
+          disabled={!this.props.mostrar}
+          visibility={!this.props.mostrar ? "visible" : "hidden"}
+        >
+          <FeedbackIcon fontSize="large" />
+        </IconButton>
+        <Modal
+          open={this.state.abrirComentario}
+          className={classes.modal}
+          onClose={() => {
+            this.abrirModal(false);
+          }}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {
+            <div className={classes.paper2}>
+              <h2 id="simple-modal-title">Comentario</h2>
+              <TextField
+                id="simple-modal-description"
+                type="text"
+                multiline={true}
+                fullWidth={true}
+                placeholder={
+                  "Intruducir comentario (Rechaza la intrumentación). \r\n\r\nNo introducir un comentario (Aprueba la instrumentación)."
+                }
+                defaultValue={this.state.comentario}
+                onChange={(e) => {
+                  this.setState({ comentario: e.target.value });
+                  this.props.cambiar_comentario(e.target.value);
+                }}
+              />
+              <br />
+              <br />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  this.props.enviar_evaluacion();
+                }}
+              >
+                Enviar
+              </Button>
+            </div>
+          }
+        </Modal>
         {infoTabs}
       </div>
     );
@@ -230,24 +310,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    onIngresar: (
-      id_ins,
-      indicadoresalcance,
-      unidades,
-      evidencias,
-      ponderacion
-    ) =>
-      dispatch(
-        actions.idIngresar(
-          id_ins,
-          indicadoresalcance,
-          unidades,
-          evidencias,
-          ponderacion
-        )
-      ),
-  };
+  return {};
 };
 
 export default connect(

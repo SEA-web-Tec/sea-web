@@ -40,22 +40,22 @@ const MaterialTableEdit = (props) => {
           {props.filas.map((row) => (
             <TableRow key={row.id}>
               <TableCell align="center">
-                <Typography>{row.evidencia}</Typography>
+                <Typography>{row.evidencia.nombre}</Typography>
               </TableCell>
               <TableCell align="right" key={"porcentaje" + row.id}>
-                <Typography>{row.porcentaje}</Typography>
+                <Typography>{row.evidencia.ponderacion}</Typography>
               </TableCell>
               {props.columnas.map((letra) => {
                 return (
                   <TableCell align="right" key={row.id + letra.label}>
                     <Typography>
-                      {row.indicadores[LetterValue(letra.label)]}
+                      {row.indicadoresponderacion[LetterValue(letra.label)]}
                     </Typography>
                   </TableCell>
                 );
               })}
               <TableCell align="center">
-                <Typography>{row.evaluacion}</Typography>
+                <Typography>{row.evidencia.evaluacion_formativa}</Typography>
               </TableCell>
             </TableRow>
           ))}

@@ -1,17 +1,18 @@
 import React from "react";
 import clsx from "clsx";
 import useStyles from "./ChipEdit.styles";
-import "./ChipEdit.css"
+import "./ChipEdit.css";
 
-import {
-  Typography,
-  Select,
-} from "@material-ui/core";
+import { Typography, Select } from "@material-ui/core";
 
 const ChipEdit = (props) => {
   const classes = useStyles();
   var opciones = props.numeros.map((numero) => {
-  return <option value={numero} key={numero}>{numero}</option>;
+    return (
+      <option value={numero} key={numero}>
+        {numero}
+      </option>
+    );
   });
   return (
     <div
@@ -23,17 +24,20 @@ const ChipEdit = (props) => {
           disableUnderline
           id="select"
           className={clsx("selectSize")}
-          defaultValue="1"
-          onChange={props.cambiar}
+          onChange={(e) => {
+            props.modificar(e);
+          }}
+          //defaultValue={props.valor}
+          value={props.valor}
         >
           {opciones}
         </Select>
       </div>
-      <Typography className={clsx(classes.titulo, "fuente")} >
+      <Typography className={clsx(classes.titulo, "fuente")}>
         {props.label}
       </Typography>
     </div>
   );
-}
+};
 
-export default ChipEdit
+export default ChipEdit;

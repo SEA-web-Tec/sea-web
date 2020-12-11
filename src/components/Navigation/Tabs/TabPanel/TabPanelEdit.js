@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import classes from "../Tabs.styles";
+import { useStyles } from "../Tabs.styles";
+import { withStyles } from "@material-ui/core/styles";
 
 import {
   Grid,
@@ -32,6 +33,8 @@ class TabPanelEdit extends Component {
     indicadoresalcance: [],
     material_apoyo: [],
     matriz: [],
+    semana_clases: 1,
+    semana_evaluacion: 1,
     cerrar: false,
   };
   sumaPorcentaje = (id) => {
@@ -62,6 +65,18 @@ class TabPanelEdit extends Component {
       }
     });
     return sumaTotal;
+  };
+
+  modSemClases = (e) => {
+    this.setState({ semana_clases: e.target.value }, () => {
+      this.props.cambiar(e.target.value, "semana_clases", this.props.index);
+    });
+  };
+
+  modSemEva = (e) => {
+    this.setState({ semana_evaluacion: e.target.value }, () => {
+      this.props.cambiar(e.target.value, "semana_evaluacion", this.props.index);
+    });
   };
 
   addRow = () => {
@@ -224,6 +239,8 @@ class TabPanelEdit extends Component {
   render() {
     //const { children, value, index, ...other } = this.props;
     //actividades_aprendizaje
+    const { classes } = this.props;
+
     if (
       this.props.ins_unidad.unidades.actividades_aprendizaje.length != 0 &&
       this.state.actividades_aprendizaje.length === 0
@@ -334,6 +351,10 @@ class TabPanelEdit extends Component {
           this.state.matriz,
           this.props.ins_unidad.matriz
         );
+        this.setState({
+          semana_clases: this.props.ins_unidad.unidades.semana_clases,
+          semana_evaluacion: this.props.ins_unidad.unidades.semana_evaluacion,
+        });
         this.setState({ matriz: arreglo }, () => {
           this.props.cambiar(arreglo, "matriz", this.props.index);
         });
@@ -362,6 +383,8 @@ class TabPanelEdit extends Component {
                 <Box className={classes.semanas}>
                   <ChipEdit
                     label="Semanas de clase"
+                    modificar={this.modSemClases}
+                    valor={this.state.semana_clases}
                     numeros={[
                       1,
                       2,
@@ -382,6 +405,8 @@ class TabPanelEdit extends Component {
                   />
                   <ChipEdit
                     label="Semanas de evaluación"
+                    modificar={this.modSemEva}
+                    valor={this.state.semana_evaluacion}
                     numeros={[
                       1,
                       2,
@@ -712,4 +737,4 @@ TabPanelEdit.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-export default TabPanelEdit;
+export default withStyles(useStyles)(TabPanelEdit);

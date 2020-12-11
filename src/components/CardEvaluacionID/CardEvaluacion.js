@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import useStyles from "./CardEvaluacion.styles";
+import { useStyles } from "./Styles.js"
+import { withStyles } from "@material-ui/core/styles";
 
 import {
   Grid,
@@ -13,77 +14,68 @@ import {
   Drawer,
 } from "@material-ui/core";
 
-export default function CardEvaluacion() {
-  const classes = useStyles();
-  const [intrumentaciones, setIntrumentaciones] = useState([]);
-
-  if (intrumentaciones.length == 0) {
-    var arreglo = [...intrumentaciones];
-    arreglo.push({
-      id: 0,
-      carrera: "ISC",
-      materia: "Ejemplo de materia computacional",
-      nombreP: "Juan de Ejemplo Carreras Prisa",
-      fecha: "28/10/2020",
-    });
-    arreglo.push({
-      id: 1,
-      carrera: "ISC",
-      materia: "Segunda Materia",
-      nombreP: "Juan de Ejemplo Carreras Prisa 2",
-      fecha: "29/10/2020",
-    });
-    setIntrumentaciones(arreglo);
-  }
-  return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Grid container spacing={1}>
-          {intrumentaciones.map((intrumentacion) => {
-            return (
-              <Grid item xs={12} sm={6} key ={intrumentacion.id}>
-                <div className={classes.ListItem} key={intrumentacion.id}>
-                  <div className={classes.Content}>
-                    <ListItemText
-                      key={intrumentacion.id}
-                      primary={
-                        <Typography gutterBottom>
-                          {intrumentacion.materia}
-                        </Typography>
-                      }
-                      secondary={
-                        <Grid container spacing={1} >
-                          <Grid item>
-                            <Chip
-                              size="small"
-                              variant="outlined"
-                              label={`Carrera: ${intrumentacion.carrera}`}
-                            />
+class CardEvaluacion extends Component {
+  render(props) {
+    const { classes } = this.props;
+    return (
+      <Card className={classes.root}>
+        <CardContent>
+          <Grid container spacing={1}>
+            {this.props.intrumentaciones.map((intrumentacion) => {
+              return (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  key={intrumentacion.id}
+                  onClick={() => {
+                    this.props.seleccionar(intrumentacion.id);
+                  }}
+                >
+                  <div className={classes.ListItem} key={intrumentacion.id}>
+                    <div className={classes.Content}>
+                      <ListItemText
+                        key={intrumentacion.id}
+                        primary={
+                          <Typography gutterBottom>
+                            {intrumentacion.materiaNombre}
+                          </Typography>
+                        }
+                        secondary={
+                          <Grid container spacing={1}>
+                            <Grid item>
+                              <Chip
+                                size="small"
+                                variant="outlined"
+                                label={`Nombre: ${
+                                  intrumentacion.nombres +
+                                  " " +
+                                  intrumentacion.apellidoPaterno +
+                                  " " +
+                                  intrumentacion.apellidoMaterno
+                                }`}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <Chip
+                                size="small"
+                                variant="outlined"
+                                label={`Grupo: ${intrumentacion.grupo}`}
+                              />
+                            </Grid>
                           </Grid>
-                          <Grid item>
-                            <Chip
-                              size="small"
-                              variant="outlined"
-                              label={`Nombre: ${intrumentacion.nombreP}`}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <Chip
-                              size="small"
-                              variant="outlined"
-                              label={`Fecha: ${intrumentacion.fecha}`}
-                            />
-                          </Grid>
-                        </Grid>
-                      }
-                    />
+                        }
+                      />
+                    </div>
                   </div>
-                </div>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </CardContent>
-    </Card>
-  );
+                </Grid>
+              );
+            })}
+          </Grid>
+        </CardContent>
+      </Card>
+    );
+  }
 }
+
+export default withStyles(useStyles)(CardEvaluacion);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import useStyles from "../Tabs.styles";
+import useStyles from "./TabPanelEdit.styles";
 
 import {
   Grid,
@@ -14,8 +14,6 @@ import {
   Paper,
   IconButton,
 } from "@material-ui/core";
-
-import { Feedback as FeedbackIcon } from "@material-ui/icons";
 
 import MaterialTable from "material-table";
 import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
@@ -38,19 +36,24 @@ export default function TabPanel(props) {
   ] = useState([]); //unidades
   const [indicadoresalcance, setindicadoresalcance] = useState([]); //indicadoresalcance
   const [material_apoyo, setmaterial_apoyo] = useState([]); //unidades
+  const [cerrar, setcerrar] = useState(false);
 
   const addRow = () => {
     var fila = {
       //evidencias
-      id: matriz.length,
-      evidencia: "Examen", //nombre evidencia
-      evaluacion: "Lista de cotejo", //evaluacion_formativa
-      porcentaje: 0, //agregar
-      indicadores: {B:0}, //indicadores
+      id: this.state.matriz.length,
+      evidencia: {
+        nombre: "Examen",
+        evaluacion_formativa: "Lista de cotejo",
+        ponderacion: 0,
+        unidad: this.props.index + 1,
+        id_ins: this.props.id_ins,
+      },
+      indicadoresponderacion: {},
     };
     indicadoresalcance.forEach((element) => {
       var letra = letterValue(element.label);
-      fila.indicadores[letra] = 0; //ponderacion
+      fila.indicadoresponderacion[letra] = 0;
     });
     console.log(fila);
     var arreglo = [...matriz];
@@ -66,6 +69,14 @@ export default function TabPanel(props) {
       texto: texto,
     });
     ingresar(caso, arreglo);
+  };
+
+  const changeElementInicio = (arrg, arrgMod) => {
+    var arreglo = JSON.parse(JSON.stringify(arrg));
+    for (let i = 0; i < arrgMod.length; i++) {
+      arreglo.push(arrgMod[i]);
+    }
+    return arreglo;
   };
 
   const ingresar = (caso, arreglo) => {
@@ -90,51 +101,94 @@ export default function TabPanel(props) {
     }
   };
 
-  if (actividades_aprendizaje.length === 0) {
+  //actividades_aprendizaje
+  if (
+    props.ins_unidad.unidades.actividades_aprendizaje.length != 0 &&
+    actividades_aprendizaje.length === 0
+  ) {
+    setactividades_aprendizaje(
+      JSON.parse(
+        JSON.stringify(props.ins_unidad.unidades.actividades_aprendizaje)
+      )
+    );
+  } else if (actividades_aprendizaje.length === 0) {
     addElement(
       "Actividad de Aprendizaje",
-      "Ejemplo Actividad de Aprendizaje",
+      "Sin intrumentacion",
       actividades_aprendizaje,
       0
     );
   }
-  if (actividades_enseñanza.length === 0) {
+  //actividades_enseñanza
+  if (
+    props.ins_unidad.unidades.actividades_enseñanza.length != 0 &&
+    actividades_enseñanza.length === 0
+  ) {
+    setactividades_enseñanza(
+      JSON.parse(
+        JSON.stringify(props.ins_unidad.unidades.actividades_enseñanza)
+      )
+    );
+  } else if (actividades_enseñanza.length === 0) {
+    console.log("entre");
     addElement(
       "Actividad de Enseñanza",
-      "Ejemplo Actividad de Enseñanza",
+      "Sin intrumentacion",
       actividades_enseñanza,
       1
     );
   }
-  if (desarrollo_competencias_genericas.length === 0) {
+  //desarrollo_competencias_genericas
+  if (
+    props.ins_unidad.unidades.desarrollo_competencias_genericas.length != 0 &&
+    desarrollo_competencias_genericas.length === 0
+  ) {
+    setdesarrollo_competencias_genericas(
+      JSON.parse(
+        JSON.stringify(
+          props.ins_unidad.unidades.desarrollo_competencias_genericas
+        )
+      )
+    );
+  } else if (desarrollo_competencias_genericas.length === 0) {
     addElement(
       "Desarrollo de Competencias Genericas",
-      "Desarrollo de Competencias Genericas",
+      "Sin intrumentacion",
       desarrollo_competencias_genericas,
       2
     );
   }
-  if (indicadoresalcance.length <= 1) {
+  //indicadoresalcance es distinto
+  if (
+    props.ins_unidad.indicadoresalcance.length != 0 &&
+    indicadoresalcance.length === 0
+  ) {
+    setindicadoresalcance(
+      JSON.parse(JSON.stringify(props.ins_unidad.indicadoresalcance))
+    );
+  } else if (indicadoresalcance.length === 0) {
     addElement(
-      "Indicadored de Alcance",
-      "Ejemplo Indicadore de Alcance " + indicadoresalcance.length,
+      "Indicadores de Alcance",
+      "Sin intrumentacion",
       indicadoresalcance,
       3
     );
-    if (indicadoresalcance.length == 1) {
-      addRow();
-    }
   }
-  if (material_apoyo.length <= 3) {
-    addElement("Material de Apoyo", "Material de Apoyo", material_apoyo, 4);
-  }
-  var feedback = "";
-  if (props.evaluar) {
-    var feedback = (
-      <IconButton className={classes.expanderFeedback}>
-        <FeedbackIcon />
-      </IconButton>
+  //Material de apoyo
+  if (
+    props.ins_unidad.unidades.material_apoyo.length != 0 &&
+    material_apoyo.length === 0
+  ) {
+    setmaterial_apoyo(
+      JSON.parse(JSON.stringify(props.ins_unidad.unidades.material_apoyo))
     );
+  } else if (material_apoyo.length === 0) {
+    addElement("Material de Apoyo", "Sin intrumentacion", material_apoyo, 4);
+  }
+  ///Matriz
+  if (props.ins_unidad.matriz.length !== 0 && !cerrar && matriz.length === 0) {
+    setcerrar(true);
+    setMatriz(JSON.parse(JSON.stringify(props.ins_unidad.matriz)));
   }
 
   return (
@@ -158,17 +212,22 @@ export default function TabPanel(props) {
             </Grid>
             <Grid item xs={12} sm={7} md={6} lg={6}>
               <Box className={classes.semanas}>
-                {feedback}
                 <Chip
                   className={classes.semanasChip}
-                  avatar={<Avatar>4</Avatar>}
+                  avatar={
+                    <Avatar>{props.ins_unidad.unidades.semana_clases}</Avatar>
+                  }
                   label="Semanas de clase"
                   color="primary"
                   variant="outlined"
                 />
                 <Chip
                   className={classes.semanasChip}
-                  avatar={<Avatar>2</Avatar>}
+                  avatar={
+                    <Avatar>
+                      {props.ins_unidad.unidades.semana_evaluacion}
+                    </Avatar>
+                  }
                   label="Semanas de evaluación"
                   color="primary"
                   variant="outlined"

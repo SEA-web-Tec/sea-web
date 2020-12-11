@@ -7,7 +7,7 @@ export const idStart = () => {
   };
 };
 
-export const idSetInicial = (id_ins, no_unidades) => {
+export const idSetInicial = (id_ins, no_unidades, estado, comentario) => {
   return {
     type: actionTypes.ID_SETINICIAL,
     id_ins: id_ins,
@@ -16,6 +16,9 @@ export const idSetInicial = (id_ins, no_unidades) => {
     unidades: [],
     evidencias: [],
     indicadoresponderacion: [],
+    ponderacion: [],
+    estado: estado,
+    comentario: comentario,
   };
 };
 
@@ -25,7 +28,9 @@ export const idSetAll = (
   indicadoresalcance,
   unidades,
   evidencias,
-  ponderacion
+  ponderacion,
+  estado,
+  comentario
 ) => {
   return {
     type: actionTypes.ID_SETALL,
@@ -35,6 +40,15 @@ export const idSetAll = (
     unidades: unidades,
     evidencias: evidencias,
     ponderacion: ponderacion,
+    estado: estado,
+    comentario: comentario,
+  };
+};
+
+export const idSetInstrumentaciones = (intrumentaciones) => {
+  return {
+    type: actionTypes.ID_SETINSTRUMENTACIONES,
+    intrumentaciones: intrumentaciones,
   };
 };
 
@@ -43,31 +57,9 @@ export const idFail = (error) => {
     type: actionTypes.ID_FAIL,
     error: error,
   };
-}; /*export const idCheckState = () => {
-  return (dispatch) => {
-    const token = localStorage.getItem("token");
+};
 
-    if (!token) {
-      dispatch(logout());
-    } else {
-      const user = JSON.parse(localStorage.getItem("user"));
-
-      dispatch(idSuccess(token, user));
-    }
-  };
-};*/ //Guardar
-
-/*export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-
-  return {
-    type: actionTypes.ID_LOGOUT,
-  };
-};*/ export const idBusqueda = (
-  usuario_id,
-  grupo_id
-) => {
+export const idBusqueda = (usuario_id, grupo_id) => {
   return (dispatch) => {
     dispatch(idStart());
 
@@ -76,18 +68,17 @@ export const idFail = (error) => {
       grupo_id: grupo_id,
       usuario_id: usuario_id,
     };
-    console.log("antes");
-
     http
       .post(url, idData)
       .then((response) => {
-        console.log(response.data.unidades);
         if (response.data.unidades.length == "0") {
-          console.log("opcion 1");
+          console.log(response.data.intrumentacion);
           dispatch(
             idSetInicial(
               response.data.intrumentacion.id,
-              response.data.no_unidades
+              response.data.no_unidades,
+              response.data.intrumentacion.estado,
+              response.data.intrumentacion.comentario
             )
           );
         } else {
@@ -95,11 +86,7 @@ export const idFail = (error) => {
             "/evidenciasaprendizaje/consulta/" +
             response.data.intrumentacion.id;
           const idData2 = { id_ins: response.data.intrumentacion.id };
-          console.log(idData2);
           http.get(url, idData2).then((response1) => {
-            console.log(response1.data);
-            console.log("el2");
-
             dispatch(
               idSetAll(
                 response.data.intrumentacion.id,
@@ -107,16 +94,13 @@ export const idFail = (error) => {
                 response1.data.indicadoresalcance,
                 response.data.unidades,
                 response1.data.evidencia,
-                response1.data.indicadoresponderacion
+                response1.data.indicadoresponderacion,
+                response.data.intrumentacion.estado,
+                response.data.intrumentacion.comentario
               )
             );
           });
         }
-
-        //localStorage.setItem("token", response.data.token);
-        //localStorage.setItem("user", JSON.stringify(response.data.user));
-
-        //dispatch(idSuccess(response.data.token, response.data.user));
       })
       .catch((error) => {
         console.log("error?");
@@ -130,6 +114,7 @@ export const idFail = (error) => {
       });
   };
 };
+
 export const idIngresar = (
   id_ins,
   indicadoresalcance,
@@ -173,6 +158,88 @@ export const idIngresar = (
             console.log("Ta okey");
           });
         });
+      })
+      .catch((error) => {
+        dispatch(
+          idFail(
+            error.response
+              ? error.response.data.message
+              : "Ha ocurrido un error, intenta nuevamente"
+          )
+        );
+      });
+  };
+};
+
+//Para el evaluar
+export const idBusquedaAll = () => {
+  return (dispatch) => {
+    dispatch(idStart());
+    let url = "/instrumentaciondidactica/consulta_intrumentaciones";
+    const idData = {};
+    http.get(url, idData).then((response) => {
+      console.log(response.data);
+      dispatch(idSetInstrumentaciones(response.data));
+    });
+  };
+};
+
+export const idBusquedaIndividual = (id_ins) => {
+  return (dispatch) => {
+    dispatch(idStart());
+    let url = "/instrumentaciondidactica/buscar_intrumentacion/" + id_ins;
+    const idData = {
+      id_ins: id_ins,
+    };
+    http
+      .get(url, idData)
+      .then((response) => {
+        const url = "/evidenciasaprendizaje/consulta/" + id_ins;
+        const idData2 = { id_ins: id_ins };
+        http.get(url, idData2).then((response1) => {
+          dispatch(
+            idSetAll(
+              id_ins,
+              response.data.no_unidades,
+              response1.data.indicadoresalcance,
+              response.data.unidades,
+              response1.data.evidencia,
+              response1.data.indicadoresponderacion,
+              response.data.intrumentacion.estado,
+              response.data.intrumentacion.comentario
+            )
+          );
+        });
+      })
+      .catch((error) => {
+        console.log("error?");
+        dispatch(
+          idFail(
+            error.response
+              ? error.response.data.message
+              : "Ha ocurrido un error, intenta nuevamente"
+          )
+        );
+      });
+  };
+};
+
+export const idEvaluar = (id_ins, comentario) => {
+  return (dispatch) => {
+    dispatch(idStart());
+
+    const url = "/instrumentaciondidactica/evaluar";
+    const idData = {
+      id_ins: id_ins,
+      comentario: comentario,
+    };
+
+    //unidades
+    console.log("estoy fuera");
+    http
+      .post(url, idData)
+      .then((response) => {
+        console.log("Intrumentacion evaluada correctamente");
       })
       .catch((error) => {
         dispatch(

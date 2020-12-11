@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import useStyles from "./Tabs.styles";
+import { useStyles } from "./Tabs.styles";
+import { withStyles } from "@material-ui/core/styles";
 import TabPanelEdit from "./TabPanel/TabPanelEdit";
 import "./styles.css";
 import { connect } from "react-redux";
 import * as actions from "store/actions/index";
-
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 import { Button, CircularProgress } from "@material-ui/core";
 
 import {
@@ -39,6 +41,7 @@ class SimpleTabs extends Component {
     entrar: false,
     num: 0,
     error: { enviar: true, nombre: "", num: "", unidad: 0 },
+    correcto: false,
   };
 
   handleChange = (event, newValue) => {
@@ -204,13 +207,6 @@ class SimpleTabs extends Component {
       if (this.state.error.enviar == false) break;
     }
     if (this.state.error.enviar) {
-      /*
-    id_ins,
-      indicadoresalcance,
-      unidades,
-      evidencias,
-      ponderacion
-    */
       const indicadoresalcance = [];
       const unidades = [];
       const evidencias = [];
@@ -224,10 +220,6 @@ class SimpleTabs extends Component {
           ponderacion.push(elementoMatriz.indicadoresponderacion);
         });
       });
-      console.log(indicadoresalcance);
-      console.log(unidades);
-      console.log(evidencias);
-      console.log(ponderacion);
 
       await this.props.onIngresar(
         this.props.id_ins,
@@ -236,6 +228,7 @@ class SimpleTabs extends Component {
         evidencias,
         ponderacion
       );
+      this.setState({ correcto: true });
     } else {
       console.log("salio error");
       console.log(this.state.error);
@@ -333,6 +326,7 @@ class SimpleTabs extends Component {
 
   render() {
     //const classes = "useStyles";
+    const { classes } = this.props;
     if (
       this.state.num === 0 &&
       this.props.id_ins != null &&
@@ -488,14 +482,63 @@ class SimpleTabs extends Component {
         );
       });
     }
+
+    let error = (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={!this.state.error.enviar}
+        onClose={() => {
+          const error = { enviar: true, nombre: "", num: "", unidad: 0 };
+          this.setState({ error: error });
+          //this.props.onAuthDismissError();
+        }}
+        autoHideDuration={3000}
+      >
+        <Alert variant="filled" severity="error">
+          {"Error en " +
+            this.state.error.nombre +
+            " en " +
+            this.state.error.num +
+            " en la unidad " +
+            this.state.error.unidad}
+        </Alert>
+      </Snackbar>
+    );
+
+    let success = (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={this.state.correcto}
+        onClose={() => {
+          this.setState({ correcto: false });
+          const url = "/instrumentacion/" + this.props.grupo; //grupo
+          window.location.replace(url);
+          //this.props.onAuthDismissError();
+        }}
+        autoHideDuration={4000}
+      >
+        <Alert variant="filled" severity="success">
+          {"Intrumentacion editada/creada correctamente"}
+        </Alert>
+      </Snackbar>
+    );
+
     return (
       <React.Fragment>
+        {error}
+        {success}
         <AppBar
           component="div"
           color="primary"
           position="sticky"
           //indicatorColor="primary"
-          //className={classes.unidades}
+          className={classes.unidades}
         >
           <Tabs
             textColor="inherit"
@@ -550,4 +593,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SimpleTabs);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(SimpleTabs));

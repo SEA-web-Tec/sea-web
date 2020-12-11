@@ -1,5 +1,12 @@
 // Auth
-export { auth, logout, authCheckState, authDismissError, fetchPerfil, perfilDismissError } from "./auth";
+export {
+  auth,
+  logout,
+  authCheckState,
+  authDismissError,
+  fetchPerfil,
+  perfilDismissError,
+} from "./auth";
 
 // Grupos
 export { fetchGrupos, gruposDismissError } from "./grupos";
@@ -9,5 +16,10 @@ export { toggleDarkMode } from "./app-theme";
 
 //Instrumentacion Didactica ID
 
-export { idBusqueda, idIngresar } from "./id";
-
+export {
+  idBusqueda,
+  idIngresar,
+  idBusquedaAll,
+  idBusquedaIndividual,
+  idEvaluar,
+} from "./id";

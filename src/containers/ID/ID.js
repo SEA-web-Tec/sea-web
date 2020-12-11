@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Portada from "../../components/Portada/Portada";
 import TabsID from "../../components/Navigation/Tabs/Tabs";
-import TabsIDEditar from "../../components/Navigation/Tabs/TabsEdit";
 
 import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
 import { connect } from "react-redux";
@@ -15,7 +14,7 @@ class ID extends Component {
   };
 
   render(props) {
-    //        <CardEvaluacion />
+    let card = <CardEvaluacion />;
     let info = (
       <div>
         <Portada
@@ -26,14 +25,14 @@ class ID extends Component {
           periodo="Enero - Junio 2020"
           hasTabs
           isID
-          status="Aprobado"
+          status={this.props.estado}
         >
           <TabsID evaluar={true} id_grupo={1} />
         </Portada>
       </div>
     );
 
-    console.log(this.props.id_user);
+    console.log(this.props.estado);
 
     if (this.props.id_ins == null) {
       this.buscarIntrumentacion();
@@ -51,6 +50,8 @@ const mapStateToProps = (state) => {
   return {
     id_ins: state.id.id_ins,
     id_user: state.auth.user.id,
+    estado: state.id.estado,
+    comentario: state.id.comentario,
     loading: state.auth.loading,
     error: state.auth.error,
   };
