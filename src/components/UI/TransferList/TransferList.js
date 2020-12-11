@@ -17,16 +17,6 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     margin: theme.spacing(2)
-  },
-  formControl: {
-    margin: theme.spacing(0, 0, 0, 2),
-    width: 75
-  },
-  ItemsList: {
-    margin: theme.spacing(1),
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
   }
 }));
 
@@ -82,20 +72,6 @@ export default function TransferList() {
     setRight([]);
   };
 
-  const ListItems = (value, labelId) => (
-    <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
-      <ListItemIcon>
-        <Checkbox
-          checked={checked.indexOf(value) !== -1}
-          tabIndex={-1}
-          disableRipple
-          inputProps={{ "aria-labelledby": labelId }}
-        />
-      </ListItemIcon>
-      <ListItemText id={labelId} primary={`List item miau miau miau miau miau miau miau miau miau miau miau miau ${value + 1}`} />
-    </ListItem>
-  );
-
   const customList = (items, title, add) => (
     <Paper variant="outlined" className={classes.paper}>
       <Typography className={classes.title} component="p" variant="h6" align="center">
@@ -105,21 +81,17 @@ export default function TransferList() {
         {items.map((value) => {
           const labelId = `transfer-list-item-${value}-label`;
           return (
-            <Grid container >
-              { add ?
-                <Grid className={classes.ItemsList}>
-                  <Grid item xs={4} sm={2} md={2} lg={2} xl={2}>
-                    <FormControl required variant="outlined" className={classes.formControl}>
-                      <TextField id="outlined-basic" type="number" variant="outlined" />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={8} sm={10} md={10} lg={10} xl={10}>
-                    { ListItems(value, labelId) }
-                  </Grid>
-                </Grid>
-                : <> { ListItems(value, labelId) } </>
-              }
-            </Grid>
+            <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
+              <ListItemIcon>
+                <Checkbox
+                  checked={checked.indexOf(value) !== -1}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ "aria-labelledby": labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={`List item miau miau miau miau miau miau miau miau miau miau miau miau ${value + 1}`} />
+            </ListItem>
           );
         })}
         <ListItem />
