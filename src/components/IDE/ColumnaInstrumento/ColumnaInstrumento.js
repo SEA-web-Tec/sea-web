@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import CeldaInstrumento from "../CeldaInstrumento/CeldaInstrumento";
 import Grid from "@material-ui/core/Grid";
 import TituloColumnaInstrumento from '../TituloColumnaInstrumento/TituloColumnaInstrumento';
@@ -8,9 +7,11 @@ const columnaInstrumento = (props) => {
   const celdas = props.celdas.map((celda) => (
     <Grid item xs={12} key={celda.id}>
       <CeldaInstrumento
-        texto={celda.texto}
+        texto={celda.texto ? celda.texto:celda.criterio}
         cambio={(event) => props.cambio(event,celda.id)}
-        number={props.number}
+        number={celda.puntos_max}
+        cambioNumber={(event) => props.cambioNumber(event,celda.id)}
+        cabecera={props.cabecera}
       />
     </Grid>
   ));
@@ -18,13 +19,12 @@ const columnaInstrumento = (props) => {
   return (
     <Grid container direction="column" spacing={2} >
       <Grid item >
-        <TituloColumnaInstrumento titulo={props.titulo} />
+        <TituloColumnaInstrumento titulo={props.titulo} cambioTitulo={(event) => props.cambioTitulo(event,props.cabeceraId)} />
       </Grid>
       {celdas}
     </Grid>
   );
 };
 
-columnaInstrumento.propTypes = {};
 
 export default columnaInstrumento;

@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import useStyles from "./ListItem.styles";
 
 const ListItem = (props) => {

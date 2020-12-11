@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import Instrumento from "../../components/IDE/Instrumentos/Instrumento";
 import { MenuItem, Divider } from "@material-ui/core";
 
 class ListaInstrumentos extends Component {
-  state = {
+  /* state = {
     instrumentos: [
       {
         nombre: "Rubrica",
@@ -22,7 +21,7 @@ class ListaInstrumentos extends Component {
         fecha: "08 de septiembre de 2019",
       },
     ],
-  };
+  };*/
 
   render() {
     /*const opciones = [
@@ -37,27 +36,30 @@ class ListaInstrumentos extends Component {
         <MenuItem>Crear</MenuItem>
         <MenuItem>Modificar</MenuItem>
         <Divider />
-        <MenuItem>Elminar</MenuItem>
+        <MenuItem>Eliminar</MenuItem>
       </div>
     );
 
-    const listaInstrumetos = this.state.instrumentos.map(
-      (instrumento, index) => (
-        <React.Fragment key={index}>
-          <Instrumento
-            nombre={instrumento.nombre}
-            fecha={instrumento.fecha}
-            descripcion={instrumento.descripcion}
-            opciones={opciones}
-          />
-          <br />
-        </React.Fragment>
-      )
+    const listaInstrumetos = this.props.instrumentos.map(
+      (instrumento, index) => {
+        if ((instrumento.tipo === "Rubrica" && this.props.filtros.rubrica)||(instrumento.tipo === "Lista de Cotejo" && this.props.filtros.cotejo)||(instrumento.tipo === "Lista de Observacion" && this.props.filtros.observacion))
+          return (
+            <React.Fragment key={index}>
+              <Instrumento
+                nombre={instrumento.nombre}
+                fecha={instrumento.fecha}
+                descripcion={instrumento.descripcion}
+                opciones={opciones}
+              />
+              <br />
+            </React.Fragment>
+          );
+          else
+            return null;
+      }
     );
     return <div>{listaInstrumetos}</div>;
   }
 }
-
-ListaInstrumentos.propTypes = {};
 
 export default ListaInstrumentos;

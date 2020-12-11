@@ -56,7 +56,7 @@ class DashboardExamen extends Component {
         periodo="Enero - Junio 2020"
         // hasTabs
       >
-        <Typography className={classes.titulo} variant="h6" component="h6">
+        <Typography className={classes.Titulo} variant="h6" component="h6" gutterBottom>
           Introducción a la programación de dispositivos móviles
         </Typography>
         <Accordion defaultExpanded>
