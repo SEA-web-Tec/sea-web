@@ -1,10 +1,25 @@
 import React, { Component } from "react";
+import { updateObject } from "shared/utility";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
 import { Typography, Grid, FormControl, FormLabel, FormControlLabel, Radio, RadioGroup, InputLabel, Select, MenuItem, TextField, Box, Button } from "@material-ui/core";
 import Portada from "../../../components/Portada/Portada";
 
 class CrearReactivoAbierto extends Component {
+    state = {
+        unidad: 1,
+        tipo: "falso_verdadero",
+        texto_reactivo: "",
+        respuesta_correcta: true
+    };
+
+    inputChangedHandler = (prop) => (event) => {
+        const updatedObject = updateObject(this.state, {
+        [prop]: event.target.value
+        });
+        this.setState(updatedObject);
+    };
+
     render(props) {
         const { classes } = this.props;
         let materias = ['Introducción a interfaces web','Diseño de interfaces gráficas','Creación e implementación de componenetes'];
@@ -32,7 +47,18 @@ class CrearReactivoAbierto extends Component {
                         </Grid>
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <FormControl required variant="outlined" className={classes.formControl}>
-                                <TextField id="outlined-multiline-static" label="Reactivo" required multiline rows={4} variant="outlined" />
+                                <TextField 
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    multiline
+                                    fullWidth
+                                    rows={4}
+                                    id="texto_reactivo"
+                                    name="texto_reactivo"
+                                    label="Reactivo"
+                                    value={this.state.texto_reactivo}
+                                    onChange={this.inputChangedHandler("texto_reactivo")}/>
                             </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
