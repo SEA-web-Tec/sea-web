@@ -9,6 +9,7 @@ import {
 import { Typography, Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Divider} from "@material-ui/core";
 import Portada from "../../../components/Portada/Portada";
 import ExamenesTable from "../../../components/Examenes/ExamenesTable/Table";
+import FloatingButton from "../../../components/Examenes/ExamFloatingButton/FloatingButton";
 
 class DashboardExamen extends Component {
   render(props) {
@@ -46,6 +47,7 @@ class DashboardExamen extends Component {
       estado: "Cerrado"
     }];
     return (
+      <>
       <Portada
         materia="Programación de Dispositivos Móviles"
         carrera="Ing. Sistemas Computacionales"
@@ -85,6 +87,8 @@ class DashboardExamen extends Component {
           </AccordionDetails>
         </Accordion>
       </Portada>
+      <FloatingButton reactivos={false}/>
+      </>
     );
   }
 }

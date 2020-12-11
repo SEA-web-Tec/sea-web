@@ -5,7 +5,10 @@ import { Add as AddIcon,
     Close as CloseIcon,
     Subject as SubjectIcon,
     FormatListBulleted as FormatListBulletedIcon, 
-    FormatListNumbered as FormatListNumberedIcon
+    FormatListNumbered as FormatListNumberedIcon,
+    StorageOutlined as StorageOutlinedIcon,
+    LibraryBooksSharp as LibraryBooksSharpIcon
+
 } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function FloatingButton() {
+function FloatingButton(props) {
     const classes = useStyles();
     const [values, setValues] = React.useState({
         showIcons: false
@@ -33,8 +36,9 @@ export default function FloatingButton() {
 
     const handleClickShow = () => { 
         setValues({ ...values, showIcons: !values.showIcons });
-        console.log(values.showIcons);
+        console.log(props.reactivos);
     };
+    
     return (
         <div className={classes.root} >
             { values.showIcons ? 
@@ -44,23 +48,25 @@ export default function FloatingButton() {
                         <CloseIcon/>
                     </Fab>
                 </Tooltip>
-                <Tooltip title="Abierto" placement="left">
+                <Tooltip title={props.reactivos ? "Abierto" : "Crear examen"} placement="left">
                     <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 130px)"}}>
-                        <SubjectIcon/>
+                    { props.reactivos ? <SubjectIcon/> : <LibraryBooksSharpIcon/> }
                     </Fab>
                 </Tooltip>
-                <Tooltip title="Falso/verdadero" placement="left">
+                <Tooltip title={props.reactivos ? "Falso/verdadero" : "Banco de reactivos"} placement="left">
                     <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 180px)"}}>
-                        <FormatListBulletedIcon/>
+                        { props.reactivos ? <FormatListBulletedIcon/> : <StorageOutlinedIcon/> }
                     </Fab>
                 </Tooltip>
-                <Tooltip title="Opción múltiple" placement="left">
-                    <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 230px)"}}>
-                        <FormatListNumberedIcon/>
-                    </Fab>
-                </Tooltip>
+                { props.reactivos &&
+                    <Tooltip title="Opción múltiple" placement="left">
+                        <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 230px)"}}>
+                            <FormatListNumberedIcon/>
+                        </Fab>
+                    </Tooltip>
+                }
             </> : 
-                <Tooltip title="Crear reactivo" placement="left">
+                <Tooltip title={props.reactivos ? "Crear reactivo" : "Opciones"} placement="left">
                     <Fab color="primary" onClick={handleClickShow} className={classes.mainIcon}>
                         <AddIcon/>
                     </Fab>
@@ -69,3 +75,5 @@ export default function FloatingButton() {
         </div>
     );
 }
+
+export default FloatingButton;

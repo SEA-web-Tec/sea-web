@@ -45,7 +45,7 @@ class CrearReactivoAbierto extends Component {
                 hasTabs>
                 <SimpleTabs data={reactivos}/>
             </Portada>
-            <FloatingButton/>
+            <FloatingButton reactivos={true}/>
             </>
         );
     }
