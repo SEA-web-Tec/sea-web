@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
-import { Grid, FormControl, InputLabel, Select, MenuItem, TextField, Box, Button } from "@material-ui/core";
+import { Grid, FormControl, Typography, InputLabel, Select, MenuItem, TextField, Box, Button } from "@material-ui/core";
 import TransferList from "../../../components/UI/TransferList/TransferList";
 import Portada from "../../../components/Portada/Portada";
 
@@ -17,6 +17,9 @@ class CrearExamen extends Component {
         periodo="Enero - Junio 2020"
         // hasTabs
       >
+        <Typography className={classes.titulo} variant="h6" component="h6">
+          Crear examen
+        </Typography>
         <form style={{ width: "100%" }}>
           <Grid container>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
