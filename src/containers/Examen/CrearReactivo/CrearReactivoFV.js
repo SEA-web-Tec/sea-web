@@ -16,7 +16,7 @@ class CrearReactivoAbierto extends Component {
             grupo="F"
             periodo="Enero - Junio 2020">
             <Typography className={classes.titulo} variant="h6" component="h6">
-                Reactivo Abierto
+                Reactivo Falso / Verdadero
             </Typography>
             <form style={{ width: "100%" }}>
                     <Grid container>
