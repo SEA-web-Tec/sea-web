@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import * as actions from "store/actions/index";
 import { http } from "shared/http";
-import { updateObject } from "shared/utility";
+import { getBase64, updateObject } from "shared/utility";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
 import {
@@ -17,10 +17,14 @@ import {
   List,
   ListItem,
   ListItemText,
-  Divider
+  Divider,
+  Badge,
+  IconButton,
+  Avatar
 } from "@material-ui/core";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { AddCircleTwoTone as AddCircleTwoToneIcon } from "@material-ui/icons";
 
 class Grupo extends Component {
   state = {
@@ -28,7 +32,8 @@ class Grupo extends Component {
     usuario_id: 1,
     grupo: "A",
     anio: new Date().getFullYear(),
-    periodo: "ENE-JUN"
+    periodo: "ENE-JUN",
+    fotoPortada: ""
   };
 
   componentDidMount() {
@@ -44,9 +49,16 @@ class Grupo extends Component {
     this.setState(updatedObject);
   };
 
+  handleFileSelected = (event, prop) => {
+    if (event.target.files.length > 0) {
+      getBase64(event.target.files[0]).then((data) => {
+        this.setState({ [prop]: data.toString() });
+      });
+    }
+  };
+
   submitHandler = (event) => {
     event.preventDefault();
-
     http
       .post(
         "/grupos/crear",
@@ -55,7 +67,8 @@ class Grupo extends Component {
           usuario_id: this.state.usuario_id,
           grupo: this.state.grupo,
           anio: this.state.anio,
-          periodo: this.state.periodo
+          periodo: this.state.periodo,
+          fotoPortada: this.state.fotoPortada
         },
         {
           headers: { Authorization: `Bearer ${this.props.token}` }
@@ -75,6 +88,39 @@ class Grupo extends Component {
         <div className={classes.formContainer}>
           <h2>Registro de grupo nuevo</h2>
           <form className={classes.form} onSubmit={this.submitHandler}>
+            <FormControl fullWidth margin="normal" variant="outlined">
+              <Badge
+                overlap="rectangle"
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right"
+                }}
+                badgeContent={
+                  <Fragment>
+                    <input
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      id="fotoPortada"
+                      type="file"
+                      onChange={(e) => this.handleFileSelected(e, "fotoPortada")}
+                    />
+                    <label htmlFor="fotoPortada">
+                      <IconButton color="secondary" size="small" className={classes.badgeIcon} component="span">
+                        <AddCircleTwoToneIcon fontSize="large" />
+                      </IconButton>
+                    </label>
+                  </Fragment>
+                }
+                className={classes.center}
+              >
+                <Avatar
+                  src={this.state.fotoPortada ? this.state.fotoPortada : undefined}
+                  alt="Foto de portada"
+                  style={{ width: "100%", height: "100px", objectFit: "cover" }}
+                  variant="rounded"
+                />
+              </Badge>
+            </FormControl>
             <FormControl required fullWidth margin="normal" variant="outlined">
               <InputLabel id="materia_idLabel">Materia</InputLabel>
               <Select
@@ -156,7 +202,7 @@ class Grupo extends Component {
             <List>
               {this.props.grupos.map((grupo) => (
                 <ListItem key={grupo.id}>
-                  <ListItemText primary={grupo.nombre} secondary={grupo.grupo} />
+                  <ListItemText primary={grupo.nombre} secondary={`Grupo: ${grupo.grupo}`} />
                 </ListItem>
               ))}
             </List>

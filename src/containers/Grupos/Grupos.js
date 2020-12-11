@@ -27,7 +27,7 @@ class Grupos extends Component {
             materia={grupo.nombre}
             carrera={grupo.carrera}
             maestro={`${this.props.user.nombres} ${this.props.user.apellidoPaterno} ${this.props.user.apellidoMaterno}`}
-            portada={"https://picsum.photos/300/150"}
+            portada={grupo.fotoPortada}
             fotoPerfil={this.props.user.fotoPerfil}
           />
         );

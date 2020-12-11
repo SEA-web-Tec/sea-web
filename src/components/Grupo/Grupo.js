@@ -18,7 +18,15 @@ const Grupo = (props) => {
     <Grid item xs={12} sm={6} md={6} lg={4}>
       <Card className={classes.card}>
         <div className={classes.cardHeader}>
-          <CardMedia className={classes.cardMedia} image={props.portada} title={props.materia} />
+          <CardMedia
+            className={classes.cardMedia}
+            image={
+              props.portada
+                ? props.portada
+                : "https://media.istockphoto.com/photos/bright-blue-defocused-blurred-motion-abstract-background-picture-id1047234038?k=6&m=1047234038&s=612x612&w=0&h=O1lP8GIn46sboZL5bnMsznd4A1tRNJ7iXm1MMVh5I5c="
+            }
+            title={props.materia}
+          />
         </div>
         <CardContent className={classes.cardContent}>
           <Avatar className={classes.avatar} alt={props.maestro} src={props.fotoPerfil} />

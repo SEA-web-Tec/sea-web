@@ -77,8 +77,12 @@ const asyncAdminGrupo = asyncComponent(() => {
 });
 
 class App extends Component {
+  state = {
+    allDone: false
+  };
   componentDidMount() {
     this.props.onAuthCheck();
+    this.setState({ allDone: true });
   }
 
   render() {
@@ -161,8 +165,8 @@ class App extends Component {
 
             {/* ADMIN */}
             <Route path="/admin" exact component={asyncAdmin} />
-            <Route path="/admin/materia" exact component={asyncAdminMateria} />
-            <Route path="/admin/grupo" exact component={asyncAdminGrupo} />
+            <Route path="/admin/materias" exact component={asyncAdminMateria} />
+            <Route path="/admin/grupos" exact component={asyncAdminGrupo} />
 
             {/* NOT FOUND */}
             <Route component={asyncNotFound} />
@@ -183,8 +187,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    isAdmin: true
-    // isAdmin: state.auth.user.userType !== null && state.auth.user.userType == 1
+    isAdmin: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).userType == 1 : false
   };
 };
 
