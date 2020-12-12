@@ -14,14 +14,10 @@ class PerfilPortada extends Component {
           <CardMedia
             className={clsx(classes.cardHeaderBG, this.props.fotoPortada && classes.withImage)}
             component="img"
-            image={`data:image/jpeg;base64,${this.props.fotoPortada}`}
+            image={this.props.fotoPortada}
           />
           <div className={classes.cardHeaderContent}>
-            <Avatar
-              src={`data:image/jpeg;base64,${this.props.fotoPerfil}`}
-              alt={this.props.nombre}
-              className={classes.fotoPerfil}
-            >
+            <Avatar src={this.props.fotoPerfil} alt={this.props.nombre} className={classes.fotoPerfil}>
               <PersonIcon fontSize="large" />
             </Avatar>
             <div>

@@ -7,10 +7,10 @@ export const fetchGruposStart = () => {
   };
 };
 
-export const fetchGruposSuccess = (cursos) => {
+export const fetchGruposSuccess = (grupos) => {
   return {
     type: actionTypes.FETCH_GRUPOS_SUCCESS,
-    cursos: cursos
+    grupos: grupos
   };
 };
 
@@ -27,25 +27,39 @@ export const gruposDismissError = () => {
   };
 };
 
+export const fetchAllGruposSuccess = (grupos) => {
+  return {
+    type: actionTypes.FETCH_ALL_GRUPOS_SUCCESS,
+    grupos: grupos
+  };
+};
+
+export const fetchAllGrupos = (token) => {
+  return (dispatch) => {
+    let url = "/grupos";
+    const authData = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+
+    http.get(url, authData).then((response) => {
+      dispatch(fetchAllGruposSuccess(response.data));
+    });
+  };
+};
+
 export const fetchGrupos = (token, userId) => {
   return (dispatch) => {
     dispatch(fetchGruposStart());
 
     let url = "/grupos/";
     const authData = {
-      headers: {
-        token: token
-      }
+      headers: { Authorization: `Bearer ${token}` }
     };
 
     http
       .get(url + userId, authData)
       .then((response) => {
-        const fetchedGrupos = [];
-        for (const key in response.data) {
-          fetchedGrupos.push({ ...response.data[key], id: key });
-        }
-        dispatch(fetchGruposSuccess(fetchedGrupos));
+        dispatch(fetchGruposSuccess(response.data));
       })
       .catch((error) => {
         dispatch(fetchGruposFail(error.message));
