@@ -13,7 +13,7 @@ import LetterValue from "shared/LetterValue";
 const MaterialTableEdit = (props) => {
   const classes = useStyles();
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} id={"tabla"+ props.numero}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>

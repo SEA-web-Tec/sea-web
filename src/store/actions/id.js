@@ -235,7 +235,6 @@ export const idEvaluar = (id_ins, comentario) => {
     };
 
     //unidades
-    console.log("estoy fuera");
     http
       .post(url, idData)
       .then((response) => {

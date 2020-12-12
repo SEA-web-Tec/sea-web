@@ -443,6 +443,28 @@ class SimpleTabs extends Component {
           });
           //});
         }
+      } else {
+        arrgInd[i].indicadoresalcance = [];
+        const indicadores = {
+          A: "Se adapta a situaciones y contextos complejos.",
+          B: "Hace aportaciones a las actividades académicas desarrolladas.",
+          C:
+            "Propone y/o explica soluciones o procedimientos no vistos en clase.",
+          D:
+            "Introduce recursos y/o experiencias que promuevan un pensamiento crítico.",
+          E:
+            "Incorpora conocimientos y actividades interdiciplinarias en su aprendizaje.",
+          F: "Realiza su trabajo de manera autómata y autorregulada.",
+        };
+        for (let i = 0; i < arreglo.length; i++) {
+          Object.keys(indicadores).map((valor) => {
+            let newFila = {};
+            newFila["label"] = ValueToLetter(valor);
+            newFila["actividad"] = "Indicadores de Alcance";
+            newFila["texto"] = indicadores[valor];
+            arrgInd[i].indicadoresalcance.push(newFila);
+          });
+        }
       }
       //console.log(arrgInd);
       this.setState(

@@ -325,6 +325,7 @@ export default function TabPanel(props) {
                 </AccordionSummary>
                 <AccordionDetails>
                   <MatrizEvaluacion
+                    numero={props.index}
                     columnas={indicadoresalcance}
                     filas={matriz}
                   />

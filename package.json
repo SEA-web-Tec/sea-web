@@ -16,6 +16,8 @@
     "date-fns": "^2.16.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "jspdf": "^2.1.0",
+    "jspdf-autotable": "^3.5.9",
     "material-table": "^1.64.0",
     "prop-types": "^15.7.2",
     "react-google-recaptcha": "^2.1.0",
