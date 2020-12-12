@@ -9,9 +9,16 @@ import Login from "./containers/Autenticacion/Login/Login";
 import Registro from "./containers/Autenticacion/Registro/Registro";
 import Logout from "./containers/Autenticacion/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
+import AppTheme from "./AppTheme"
+// reactivos
+import CrearReactivoAbierto from "./containers/Examen/CrearReactivo/CrearReactivoAbierto.js";
+import CrearReactivoFV from "./containers/Examen/CrearReactivo/CrearReactivoFV.js";
+import CrearReactivoMultiple from "./containers/Examen/CrearReactivo/CrearReactivoMultiple.js";
+import BancoReactivos from "./containers/Examen/BancoReactivos/BancoReactivos.js";
+import Resultados from "./containers/Examen/ResultadosExamen/Resultados.js";
+import Respuestas from "./containers/Examen/ResultadosExamen/Respuestas.js";
 import MaestroGeneral from "containers/Perfil/Maestro/General/MaestroGeneral";
 import MaestroEditar from "containers/Perfil/Maestro/Editar/MaestroEditar";
-import AppTheme from "./AppTheme";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -115,9 +122,16 @@ class App extends Component {
 
           {/* EXAMEN */}
           <Route path="/examen" exact component={asyncDashboardExamen} />
-          <Route path="/examen/crear" exact component={asyncCrearExamen} />
+          <Route path="/examen/crear" component={asyncCrearExamen} />
+          <Route path="/examen/asignar" component={asyncAsignarExamen} />
+          
+          <Route path="/examen/reactivo/abierto" component={CrearReactivoAbierto} />
+          <Route path="/examen/reactivo/fv" component={CrearReactivoFV} />
+          <Route path="/examen/reactivo/multiple" component={CrearReactivoMultiple} />
+          <Route path="/examen/reactivos" component={BancoReactivos} />
+          <Route path="/examen/resultados/respuestas" component={Respuestas} />
+          <Route path="/examen/resultados" component={Resultados} />
           <Route path="/examen/editar" exact component={asyncEditarExamen} />
-          <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
           <Route path="/examen/id" component={asyncContenedorExamen} />
 
           {/* LO DEL CARLOS */}
