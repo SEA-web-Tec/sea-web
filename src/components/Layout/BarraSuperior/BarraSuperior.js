@@ -18,31 +18,12 @@ import * as actions from "store/actions/index";
 const BarraSuperior = (props) => {
   const classes = useStyles();
 
-  // const auth = useSelector((state) => state.auth);
-  // const grupos = useSelector((state) => state.curso.cursos);
-
-  // let token, userId;
-
-  // token = auth.token;
-  // userId = auth.userId;
-
-  // const fotoPerfil = grupos === undefined || grupos.length === 0 ? null : grupos[0].fotoPerfil;
+  const fotoPerfil = useSelector((state) => state.auth.user.fotoPerfil);
 
   const dispatch = useDispatch();
 
   // UseCallback() es recomendado para evitar renderizado innecesario
   const toggleDarkMode = useCallback(() => dispatch(actions.toggleDarkMode()), [dispatch]);
-  // const onFetchGrupos = useCallback(
-  //     (token, userId) => dispatch(actions.fetchCursos(token, userId)),
-  //     [dispatch]
-  // );
-
-  // const fetchGrupos = () => {
-  //     onFetchGrupos(token, userId);
-  // };
-
-  // //ComponentDidMount
-  // useEffect(fetchGrupos, [onFetchGrupos, token, userId]);
 
   return (
     <AppBar position="fixed" className={clsx(classes.appBar)}>
@@ -55,7 +36,7 @@ const BarraSuperior = (props) => {
         </Typography>
         <div className={classes.opciones}>
           <IconButton>
-            <Avatar src={""} />
+            <Avatar src={fotoPerfil} />
           </IconButton>
           <IconButton color="inherit" onClick={toggleDarkMode}>
             <Brightness2Icon />
@@ -67,7 +48,6 @@ const BarraSuperior = (props) => {
       </Toolbar>
     </AppBar>
   );
-  return null;
 };
 
 export default BarraSuperior;

@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector} from "react-redux";
+
 import clsx from "clsx";
 
 import Backdrop from "@material-ui/core/Backdrop";
@@ -21,21 +23,7 @@ import { useStyles } from "./Styles";
 const BarraIzquierda = (props) => {
     const classes = useStyles();
 
-    const grupos = [
-        {
-            nombre: "Programación Web",
-            color: "#673ab7",
-        },
-        {
-            nombre: "Ingeniería de Software",
-            color: "#3f51b5",
-        },
-        {
-            nombre: "Redes de Computadoras",
-            color: "#d500f9",
-        },
-    ];
-
+    const grupos = useSelector((state) => state.grupos.grupos);
     const history = useHistory();
 
     const nombresColores = Object.keys(Colores);
