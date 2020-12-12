@@ -18,7 +18,7 @@ import {
   Box,
   Button
 } from "@material-ui/core";
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { KeyboardDatePicker, MuiPickersUtilsProvider, TimePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import Portada from "../../../components/Portada/Portada";
 import AsignarTransferList from "components/Examenes/AsignarTransferList/AsignarTransferList";
@@ -50,36 +50,14 @@ class Examenes extends Component {
           <AccordionDetails>
             <div style={{ width: "100%" }}>
               <Grid container alignItems="center">
-                <Grid item xs={12} sm={12} md={5}>
+                <Grid item xs={12} sm={12}>
                   <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Grupo</InputLabel>
                     <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Grupo">
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      {/* Poner grupos dinamicos */}
+                      {/* <MenuItem value={10}>Ten</MenuItem> */}
                     </Select>
                   </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={5}>
-                  <FormControl hidden variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Equipo</InputLabel>
-                    <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Equipo">
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={2}>
-                  <Button variant="contained" color="secondary" style={{ margin: "16px", width: "calc(100% - 32px" }}>
-                    Buscar
-                  </Button>
                 </Grid>
               </Grid>
               <AsignarTransferList />
@@ -93,43 +71,13 @@ class Examenes extends Component {
           <AccordionDetails>
             <div style={{ width: "100%" }}>
               <Grid container alignItems="center">
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
+                <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
                   <FormControl required variant="outlined" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-outlined-label">Evidencia de aprendizaje</InputLabel>
                     <Select
                       labelId="demo-simple-select-outlined-label"
                       id="demo-simple-select-outlined"
                       label="Evidencia de aprendizaje"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl required variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Tipo de examen</InputLabel>
-                    <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Tipo de examen">
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl required variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Tipo de oportunidad</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      label="Tipo de oportunidad"
                     >
                       <MenuItem value="">
                         <em>None</em>
@@ -170,23 +118,6 @@ class Examenes extends Component {
                     </MuiPickersUtilsProvider>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl required variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Método de calificación</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      label="Método de calificación"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
               </Grid>
             </div>
           </AccordionDetails>
@@ -200,106 +131,27 @@ class Examenes extends Component {
               <Grid container alignItems="center">
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                   <FormControl required variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">No. de intentos</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      label="No. de intentos"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
+                    <TextField id="outlined-number" label="No. de intentos" type="number" variant="outlined" />
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                   <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Tiempo limite por intento</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      label="Tiempo limite por intento"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl required variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Navegación</InputLabel>
-                    <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Navegación">
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Periodo de gracia</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      label="Periodo de gracia"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Duración del periodo de gracia</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      label="Duración del periodo de gracia"
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl required variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Revisión</InputLabel>
-                    <Select labelId="demo-simple-select-outlined-label" id="demo-simple-select-outlined" label="Revisión">
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <TimePicker
+                        autoOk
+                        ampm={false}
+                        label="Tiempo limite por intento"
+                        // value={selectedDate}
+                        // onChange={handleDateChange}
+                        inputVariant="outlined"
+                        variant="inline"
+                      />
+                    </MuiPickersUtilsProvider>
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                   <FormControl className={classes.formControl}>
                     <TextField id="filled-required" label="Contraseña" variant="outlined" />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-                  <FormControl className={classes.formControl}>
-                    <FormControlLabel control={<Checkbox checked name="checkedA" />} label="Ordenar reactivos al azar" />
                   </FormControl>
                 </Grid>
               </Grid>

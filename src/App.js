@@ -64,9 +64,25 @@ const asyncExposiciones = asyncComponent(() => {
   return import("./components/TrabajoIndividual/TrabajoIndividual");
 });
 
+const asyncAdmin = asyncComponent(() => {
+  return import("./containers/Admin/Admin");
+});
+
+const asyncAdminMateria = asyncComponent(() => {
+  return import("./containers/Admin/Materia/Materia");
+});
+
+const asyncAdminGrupo = asyncComponent(() => {
+  return import("./containers/Admin/Grupo/Grupo");
+});
+
 class App extends Component {
+  state = {
+    allDone: false
+  };
   componentDidMount() {
     this.props.onAuthCheck();
+    this.setState({ allDone: true });
   }
 
   render() {
@@ -93,11 +109,7 @@ class App extends Component {
 
           {/* INSTRUMENTACION DIDACTICA */}
           <Route path="/instrumentacion/:id" exact component={asyncID} />
-          <Route
-            path="/instrumentacion/editar/:id"
-            exact
-            component={asyncIDEditar}
-          />
+          <Route path="/instrumentacion/editar/:id" exact component={asyncIDEditar} />
 
           {/* LO DEL JULIO */}
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
@@ -111,12 +123,56 @@ class App extends Component {
           <Route path="/examen/editar" exact component={asyncEditarExamen} />
           <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
           <Route path="/examen/id" component={asyncContenedorExamen} />
-          <Route component={asyncNotFound} />
 
           {/* LO DEL CARLOS */}
           <Route path="/trabajo-individual" component={asyncExposiciones} />
+
+          {/* NOT FOUND */}
+          <Route component={asyncNotFound} />
         </Switch>
       );
+      if (this.props.isAdmin) {
+        routes = (
+          <Switch>
+            {/* AUTH */}
+            <Route path="/" exact component={Login} />
+            <Route path="/logout" exact component={Logout} />
+            <Route path="/grupos" exact component={Grupos} />
+
+            {/* PERFIL MAESTRO */}
+            <Route path="/usuario/:id" exact component={MaestroGeneral} />
+            <Route path="/usuario/:id/editar" component={MaestroEditar} />
+
+            {/* INSTRUMENTACION DIDACTICA */}
+            <Route path="/instrumentacion/:id" exact component={asyncID} />
+            <Route path="/instrumentacion/editar/:id" exact component={asyncIDEditar} />
+
+            {/* LO DEL JULIO */}
+            <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
+            <Route path="/rubrica" exact component={asyncRubrica} />
+            <Route path="/listacotejo" exact component={asyncListaCotejo} />
+            <Route path="/listaobservacion" component={asyncListaObservacion} />
+
+            {/* EXAMEN */}
+            <Route path="/examen" exact component={asyncDashboardExamen} />
+            <Route path="/examen/crear" exact component={asyncCrearExamen} />
+            <Route path="/examen/editar" exact component={asyncEditarExamen} />
+            <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
+            <Route path="/examen/id" component={asyncContenedorExamen} />
+
+            {/* LO DEL CARLOS */}
+            <Route path="/trabajo-individual" component={asyncExposiciones} />
+
+            {/* ADMIN */}
+            <Route path="/admin" exact component={asyncAdmin} />
+            <Route path="/admin/materias" exact component={asyncAdminMateria} />
+            <Route path="/admin/grupos" exact component={asyncAdminGrupo} />
+
+            {/* NOT FOUND */}
+            <Route component={asyncNotFound} />
+          </Switch>
+        );
+      }
     }
 
     return (
@@ -130,7 +186,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
+    isAdmin: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).userType == 1 : false
   };
 };
 
