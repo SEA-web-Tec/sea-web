@@ -77,12 +77,8 @@ const asyncAdminGrupo = asyncComponent(() => {
 });
 
 class App extends Component {
-  state = {
-    allDone: false
-  };
   componentDidMount() {
     this.props.onAuthCheck();
-    this.setState({ allDone: true });
   }
 
   render() {
@@ -187,7 +183,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    isAdmin: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).userType == 1 : false
+    isAdmin: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).userType === 1 : false
   };
 };
 
