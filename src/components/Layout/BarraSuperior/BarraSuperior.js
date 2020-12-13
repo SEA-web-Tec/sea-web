@@ -136,7 +136,7 @@ const BarraSuperior = (props) => {
                         <Avatar
                             src={fotoPerfil}
                             onClick={() => {
-                                history.push("/usuario/" + idUsuario);
+                                history.push("/perfil");
                             }}
                         />
                     </IconButton>
