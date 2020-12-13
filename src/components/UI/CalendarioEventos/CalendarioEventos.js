@@ -8,6 +8,9 @@ import { useStyles } from "./Styles";
 const CalendarioEventos = (props) => {
     const classes = useStyles();
 
+    const onChange = (event)=> {
+
+    }
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DatePicker
@@ -16,6 +19,7 @@ const CalendarioEventos = (props) => {
                 variant="static"
                 openTo="date"
                 className={classes.calendario}
+                onChange = {onChange}
             />
         </MuiPickersUtilsProvider>
     );
