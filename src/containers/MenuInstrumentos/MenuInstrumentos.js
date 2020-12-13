@@ -81,7 +81,7 @@ class MenuInstrumentos extends Component {
       url = "rubrica/borrarrubrica/"
     }
     if(tipo=="Lista de Cotejo"){
-      
+      url = "listacotejo/borrarlo/"
     }
     if(tipo=="Lista de Observacion"){
       
@@ -123,6 +123,38 @@ class MenuInstrumentos extends Component {
       this.setState((prevState,props) => {
         return{
           instrumentos: [...prevState.instrumentos,...rubricas]
+        }
+      });
+    })
+    .catch((error) => {
+      if (error.response === undefined) {
+        this.setState({
+          error: true,
+          errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+          errorStatus: 500
+        });
+      } else {
+        this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
+        console.log(error.response.data.message)
+      }
+    });
+
+    http
+    .get("listacotejo/consultalistacotejo/1")
+    .then((response) => {
+      console.log(response);
+      const listacotejo = response.data.Listasdecotejo.map(cotejo => {
+        return {
+          id:cotejo.id,
+          nombre:cotejo.nombre,
+          descripcion:cotejo.descripcion,
+          fecha:cotejo.created_at,
+          tipo:"Lista de Cotejo"
+        }
+      });
+      this.setState((prevState,props) => {
+        return{
+          instrumentos: [...prevState.instrumentos,...listacotejo]
         }
       });
     })

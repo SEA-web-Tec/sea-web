@@ -6,41 +6,151 @@ import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Hidden from "@material-ui/core/Hidden";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import OpcionesRenglon from "../../components/IDE/OpcionesRenglon/OpcionesRenglon";
 import TituloColumnaInstrumento from "../../components/IDE/TituloColumnaInstrumento/TituloColumnaInstrumento";
 import CeldaInstrumento from "../../components/IDE/CeldaInstrumento/CeldaInstrumento";
+import Snackbar from "@material-ui/core/Snackbar"
+import { Alert } from "@material-ui/lab";
+import { http } from "shared/http";
 
 class ListaCotejo extends Component {
   state = {
+    guardando:false,
+    error:false,
+    errorMessage:"",
+    errorStatus:0,
     id: 1,
     nombre: "Lista para exposición",
     descripcion: "Esta es una descripción de la lista",
     id_personal: 1,
+    id_carpeta:1,
     rengloneslc: [
       {
         id: 1,
         numrenglon: 1,
         id_cotejo: 1,
         criterio: "Este es un criterio 1",
-        ponderacion: 10,
+        puntos: 10,
       },
       {
         id: 2,
         numrenglon: 2,
         id_cotejo: 1,
         criterio: "Este es un criterio 2",
-        ponderacion: 10,
+        puntos: 10,
       },
       {
         id: 3,
         numrenglon: 3,
         id_cotejo: 1,
         criterio: "Este es un criterio 3",
-        ponderacion: 10,
+        puntos: 10,
       },
     ],
   };
 
+
+  componentDidMount() {
+    const id = this.getUrlParameter("id");
+    console.log(id);
+    if(id) {
+      http
+        .get("listacotejo/consultalc/"+id)
+        .then((response) => {
+          const cotejo = {
+            id:response.data.Listasdecotejo.id,
+            nombre:response.data.Listasdecotejo.nombre,
+            descripcion:response.data.Listasdecotejo.descripcion,
+            id_personal:response.data.Listasdecotejo.id_usuario,
+            id_carpeta:1
+          }
+          this.setState({ ...cotejo });
+        })
+        .catch((error) => {
+          if (error.response === undefined) {
+            this.setState({
+              error: true,
+              errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+              errorStatus: 500
+            });
+            console.log("d")
+          } else {
+            this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
+            console.log(error.response.data.message)
+          }
+        });
+
+        http
+        .get("listacotejo/consultarenglones/"+id)
+        .then((response) => {
+          this.setState({ rengloneslc:response.data.Listasdecotejo });
+          console.log(response.data.Listasdecotejo )
+        })
+        .catch((error) => {
+          if (error.response === undefined) {
+            this.setState({
+              error: true,
+              errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+              errorStatus: 500
+            });
+            console.log("d")
+          } else {
+            this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
+            console.log(error.response.data.message)
+          }
+        });
+
+    }
+  }
+
+  crearListaDeCotejo = () => {
+    const cotejo = {
+      nombre:this.state.nombre,
+      descripcion:this.state.descripcion,
+      id_usuario:this.state.id_personal,
+      id_carpeta:this.state.id_carpeta
+    }
+    const renglones = this.state.rengloneslc.map((cotejo)=>{
+      return {
+        numrenglon: cotejo.numrenglon,
+        criterio: cotejo.criterio,
+        puntos: cotejo.puntos
+      }
+    });
+    console.log("Procesando...",cotejo,renglones,this.state.rengloneslc)
+    this.setState({ guardando:true });
+    http
+    .post("listacojeto/crear", {
+      Listasdecotejo:cotejo,
+      Renglones_lc:renglones
+    })
+    .then((response) => {
+      this.setState({ error: true, errorMessage: response.data.message, errorStatus: 201,guardando:false });
+      console.log(response.data)
+    })
+    .catch((error) => {
+      if (error.response === undefined) {
+        this.setState({
+          error: true,
+          errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+          errorStatus: 500,
+          guardando:false
+        });
+        console.log("d")
+      } else {
+        this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status,guardando:false });
+        console.log(error.response.data.message)
+      }
+    });
+  }
+  getUrlParameter = (name) => {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    let results = regex.exec(window.location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
   agregarRenglon = () => {
     const renglonesActualizados = [...this.state.rengloneslc];
     const cantidadMaxRenglones = this.state.rengloneslc.reduce(
@@ -56,7 +166,7 @@ class ListaCotejo extends Component {
       criterio: "Agrega Criterio",
       numrenglon: cantidadMaxRenglones + 1,
       id_cotejo: this.state.rengloneslc[0].id_cotejo,
-      ponderacion: 10,
+      puntos: 10,
     });
     this.setState({
       rengloneslc: renglonesActualizados,
@@ -81,7 +191,8 @@ class ListaCotejo extends Component {
         numrenglon: numrenglon,
       };
 
-      this.setState({ rengloneslc: renglonesActualizados });
+      
+      this.setState({ rengloneslc: renglonesActualizados },()=>{console.log(this.state.rengloneslc)});
     }
   };
   bajarRenglon = (event, numrenglon) => {
@@ -137,7 +248,7 @@ class ListaCotejo extends Component {
               criterio: renglon.criterio,
               numrenglon: renglon.numrenglon - 1,
               id_cotejo: renglon.id_cotejo,
-              ponderacion: renglon.ponderacion,
+              puntos: renglon.puntos,
             };
           } else {
             return renglon;
@@ -158,7 +269,7 @@ class ListaCotejo extends Component {
     let renglonesActualizados = [...this.state.rengloneslc];
     renglonesActualizados[renglonIndex] = {
       ...renglonesActualizados[renglonIndex],
-      ponderacion: event.target.value,
+      puntos: event.target.value,
     };
 
     this.setState({
@@ -206,7 +317,7 @@ class ListaCotejo extends Component {
         <Grid item xs={10} sm={5}>
           <CeldaInstrumento
             texto={renglon.criterio}
-            number={renglon.ponderacion}
+            number={renglon.puntos}
             cambio={(event) =>
               this.criterioModificadoHandler(event, renglon.numrenglon)
             }
@@ -243,9 +354,40 @@ class ListaCotejo extends Component {
         </Hidden>
       </Grid>
     ));
+
+    let boton;
+    if (!this.state.guardando) {
+      boton = (
+        <Button variant="contained" color="primary" onClick={this.crearListaDeCotejo}>
+          Guardar
+        </Button>
+      )
+    }else{
+      boton = (
+        <CircularProgress variant="indeterminate" disableShrink size={40}/>
+      )
+    }
+    let error = (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        open={this.state.error}
+        onClose={() => {
+          this.setState({ error: false });
+        }}
+        autoHideDuration={6000}
+      >
+        <Alert variant="filled" severity={this.state.errorStatus === 201 ? "success" : "warning"}>
+          {this.state.errorMessage !== "" ? this.state.errorMessage : "Favor de realizar el CAPTCHA antes de registrarte!"}
+        </Alert>
+      </Snackbar>
+    );
     return (
       <div>
         <Grid container spacing={2}>
+          {error}
           <Grid item xs={12}>
             <Typography
               variant="h4"
@@ -305,6 +447,19 @@ class ListaCotejo extends Component {
               </Box>
             </Grid>
           </Grid>
+          <Grid item xs={6} sm={12}>
+          <Grid container >
+              <Grid item xs={6} sm={2}>
+                <Button variant="outlined" color="primary" onClick={()=> {this.props.history.push("/instrumentos");}}>
+                  Cancelar
+                </Button>
+              </Grid>
+              <Grid item xs={6} sm={2}>
+                {boton}
+              </Grid>
+          </Grid>
+          
+        </Grid>
         </Grid>
       </div>
     );
