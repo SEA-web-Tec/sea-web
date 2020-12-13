@@ -4,6 +4,7 @@ import ListaInstrumentos from "../ListaInstrumentos/ListaInstrumentos";
 import EventosPanel from "../../components/UI/EventosPanel/EventosPanel";
 import FiltrarInstrumentos from "../../components/IDE/FiltrarInstrumentos/FiltrarInstrumentos";
 import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
 
 class MenuInstrumentos extends Component {
   state = {
@@ -104,4 +105,13 @@ class MenuInstrumentos extends Component {
   }
 }
 
-export default MenuInstrumentos;
+const mapStateToProps = (state) => {
+  return {
+      token: state.auth.token,
+      userId: state.auth.userId,
+      isAuthenticated: state.auth.token !== null,
+  };
+};
+
+
+export default connect(mapStateToProps, null)(MenuInstrumentos);

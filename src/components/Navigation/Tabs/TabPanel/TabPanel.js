@@ -218,7 +218,6 @@ export default function TabPanel(props) {
                     <Avatar>{props.ins_unidad.unidades.semana_clases}</Avatar>
                   }
                   label="Semanas de clase"
-                  color="primary"
                   variant="outlined"
                 />
                 <Chip
@@ -229,7 +228,6 @@ export default function TabPanel(props) {
                     </Avatar>
                   }
                   label="Semanas de evaluación"
-                  color="primary"
                   variant="outlined"
                 />
               </Box>

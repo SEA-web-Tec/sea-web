@@ -9,13 +9,12 @@ export {
 } from "./auth";
 
 // Grupos
-export { fetchGrupos, gruposDismissError } from "./grupos";
+export { fetchGrupos, fetchAllGrupos, gruposDismissError } from "./grupos";
 
 // App Theme
 export { toggleDarkMode } from "./app-theme";
 
-//Instrumentacion Didactica ID
-
+// Instrumentacion Didactica ID
 export {
   idBusqueda,
   idIngresar,
@@ -23,3 +22,12 @@ export {
   idBusquedaIndividual,
   idEvaluar,
 } from "./id";
+
+// Temarios
+export { fetchTemarios } from "./temarios";
+
+// Materias
+export { fetchMaterias } from "./materias";
+
+// Users
+export { fetchUsers } from "./users";

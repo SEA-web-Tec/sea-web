@@ -12,19 +12,23 @@ const initialState = {
     //         backgroundColor: newSecondaryMain,
     //     },
     // },
-    MuiFabPrimary: {
-      backgroundColor: newSecondaryMain,
-    },
     MuiPickersCalendar: {
       week: {
         justifyContent: "inherit",
         width: right,
       },
+      transitionContainer: {
+        marginTop: 4,
+        minHeight: "initial",
+      },
     },
     MuiPickersBasePicker: {
       pickerView: {
-        width: right,
-        minWidth: "inherit",
+        minWidth: "initial",
+        maxWidth: "initial",
+        minHeight: "initial",
+        height: 270,
+        justifyContent: "inherit",
       },
     },
     MuiPickersDay: {

@@ -18,7 +18,7 @@ const BarraUtilidades = (props) => {
             anchor="right"
         >
             <CalendarioEventos></CalendarioEventos>
-            <EventosPanel></EventosPanel>
+            {/* <EventosPanel></EventosPanel> */}
         </Drawer>
     );
 };
