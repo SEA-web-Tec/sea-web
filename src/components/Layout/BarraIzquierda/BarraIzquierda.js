@@ -65,15 +65,8 @@ const BarraIzquierda = (props) => {
                     <SideItem text="Notificaciones">
                         <NotificationsIcon />
                     </SideItem>
-                    <SideItem
-                        text="Instrumentación didáctica"
-                        clicked={() => {
-                            history.push("/instrumentacion");
-                        }}
-                    >
-                        <CalendarIcon />
-                    </SideItem>
-                    <SideItem
+                   
+                    {/* <SideItem
                         text="Instrumentos"
                         clicked={() => {
                             history.push("/instrumentos");
@@ -88,7 +81,7 @@ const BarraIzquierda = (props) => {
                         }}
                     >
                         <CalendarIcon />
-                    </SideItem>
+                    </SideItem> */}
                 </List>
                 <Divider />
                 <List>

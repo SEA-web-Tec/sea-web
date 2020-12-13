@@ -25,9 +25,9 @@ class MaestroGeneral extends Component {
 
     let authRedirect = null;
 
-    if (this.props.user.id != this.props.match.params.id) {
-      authRedirect = <Redirect to={"/404"} />;
-    }
+    // if (this.props.user.id) {
+    //   authRedirect = <Redirect to={"/404"} />;
+    // }
 
     let perfil = <CircularProgress className={classes.spinner} />;
 

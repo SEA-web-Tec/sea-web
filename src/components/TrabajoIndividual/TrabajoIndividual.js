@@ -72,7 +72,7 @@ export default function FormDialog() {
                   </Select>
               </Grid>
               <Grid item xl={5}>
-                <FormControl component="fieldset">
+                {/* <FormControl component="fieldset">
                   <RadioGroup row efaultValue="Equipo">
                     <FormControlLabel
                       value="Equipo"
@@ -87,7 +87,7 @@ export default function FormDialog() {
                       labelPlacement="Individual"
                     />
                   </RadioGroup>
-                </FormControl>
+                </FormControl> */}
               </Grid>
               <Grid item xl={12} lg={12} md={12}  sm={12} xs={12}>
                   <span>{"Instrumentos de evaluación"}</span>
@@ -173,14 +173,14 @@ export default function FormDialog() {
             </Grid>
             <Grid container style={{ marginTop: 20 }} justify="center">
               <Button variant="contained" color="primary">
-                Modificar tarea
+                Asignar tarea
               </Button>
             </Grid>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} style={{ color: "#ea2c2c" }}>
-                Eliminar tarea
+                Dejar sin fechas
             </Button>
           </DialogActions>
         </Dialog>
