@@ -21,6 +21,7 @@ class ID extends Component {
 
   buscarIntrumentacion = async () => {
     await this.props.onBusqueda(this.props.id_user, this.props.match.params.id);
+    await this.props.onFetchGrupos(this.props.token, this.props.id_user);
     console.log(this.props.grupo);
     for (let i = 0; i < this.props.grupo.length; i++) {
       if (this.props.grupo[i].id == this.props.match.params.id) {
@@ -35,7 +36,7 @@ class ID extends Component {
             this.props.usuario.apellidoPaterno +
             " " +
             this.props.usuario.apellidoMaterno,
-          //periodo
+          periodo: this.props.grupo[i].periodo + " " + this.props.grupo[i].anio,
         });
         break;
       }
@@ -50,7 +51,7 @@ class ID extends Component {
           carrera={this.state.carrera}
           maestro={this.state.maestro}
           grupo={this.state.grupo}
-          periodo="Enero - Junio 2020"
+          periodo={this.state.periodo}
           fotoPortada={this.state.foto}
           hasTabs
           isID
@@ -79,9 +80,10 @@ class ID extends Component {
 const mapStateToProps = (state) => {
   return {
     id_ins: state.id.id_ins,
+    token: state.auth.token,
     id_user: state.auth.user.id,
     usuario: state.auth.user,
-    grupo: state.grupos,
+    grupo: state.grupos.grupos,
     estado: state.id.estado,
     comentario: state.id.comentario,
     loading: state.auth.loading,
@@ -93,6 +95,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onBusqueda: (user_id, grupo_id) =>
       dispatch(actions.idBusqueda(user_id, grupo_id)),
+    onFetchGrupos: (token, userId) =>
+      dispatch(actions.fetchGrupos(token, userId)),
   };
 };
 

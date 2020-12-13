@@ -83,7 +83,6 @@ class Portada extends Component {
                       <Typography component="p" variant="subtitle2">
                         {this.props.status}
                       </Typography>
-
                       <CheckCircleIcon
                         className={classes.checkIcon}
                         fontSize="small"
