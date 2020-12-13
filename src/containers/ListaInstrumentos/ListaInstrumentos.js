@@ -31,14 +31,6 @@ class ListaInstrumentos extends Component {
       { nombre: "Eliminar", onClick: "" },
     ];*/
 
-    const opciones = (
-      <div>
-        <MenuItem>Crear</MenuItem>
-        <MenuItem>Modificar</MenuItem>
-        <Divider />
-        <MenuItem>Eliminar</MenuItem>
-      </div>
-    );
 
     const listaInstrumetos = this.props.instrumentos.map(
       (instrumento, index) => {
@@ -49,7 +41,9 @@ class ListaInstrumentos extends Component {
                 nombre={instrumento.nombre}
                 fecha={instrumento.fecha}
                 descripcion={instrumento.descripcion}
-                opciones={opciones}
+                modificar={() => this.props.modificar(instrumento.tipo,instrumento.id)}
+                eliminar={() => this.props.eliminar(instrumento.tipo,instrumento.id)}
+                tipo={instrumento.tipo}
               />
               <br />
             </React.Fragment>
