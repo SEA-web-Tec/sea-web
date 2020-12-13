@@ -7,10 +7,6 @@ import SpeedDial from "@material-ui/lab/SpeedDial";
 import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
 
-//Editar
-import SendIcon from "@material-ui/icons/Send";
-//import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-
 //vista previa
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import EditIcon from "@material-ui/icons/Edit";
@@ -32,17 +28,6 @@ const useStyles = makeStyles((theme) => ({
     color: "white"
   },
 }));
-
-/**
- * Vista Previa
- * Mandar a editar
- * PDF
- *
- * Editar
- * Enviar
- * Regresar
- *
- */
 
 export default function FloatingButton(props) {
   const classes = useStyles();
