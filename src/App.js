@@ -60,7 +60,7 @@ const asyncListaObservacion = asyncComponent(() => {
   return import("./containers/ListaObservacion/ListaObservacion");
 });
 
-const asyncExposiciones = asyncComponent(() => {
+const asyncTrabajo = asyncComponent(() => {
   return import("./components/TrabajoIndividual/TrabajoIndividual");
 });
 
@@ -125,7 +125,7 @@ class App extends Component {
           <Route path="/examen/id" component={asyncContenedorExamen} />
 
           {/* LO DEL CARLOS */}
-          <Route path="/trabajo-individual" component={asyncExposiciones} />
+          <Route path="/trabajo-individual" component={asyncTrabajo} />
 
           {/* NOT FOUND */}
           <Route component={asyncNotFound} />
@@ -161,7 +161,7 @@ class App extends Component {
             <Route path="/examen/id" component={asyncContenedorExamen} />
 
             {/* LO DEL CARLOS */}
-            <Route path="/trabajo-individual" component={asyncExposiciones} />
+            <Route path="/trabajo-individual" component={asyncTrabajo} />
 
             {/* ADMIN */}
             <Route path="/admin" exact component={asyncAdmin} />
