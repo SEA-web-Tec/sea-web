@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 import clsx from "clsx";
 
@@ -16,6 +16,9 @@ import CalendarIcon from "@material-ui/icons/CalendarToday";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import SettingsIcon from "@material-ui/icons/Settings";
 import HelpIcon from "@material-ui/icons/Help";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import SadIcon from "@material-ui/icons/SentimentVeryDissatisfied";
+import SchoolIcon from '@material-ui/icons/School';
 
 import SideItem from "components/SideItem/SideItem";
 import { useStyles } from "./Styles";
@@ -24,9 +27,37 @@ const BarraIzquierda = (props) => {
     const classes = useStyles();
 
     const grupos = useSelector((state) => state.grupos.grupos);
+    const userType = useSelector((state) => state.auth.user.userType);
     const history = useHistory();
 
     const nombresColores = Object.keys(Colores);
+    const despliegueGrupos =
+        grupos.length > 0 ? (
+            grupos.map((grupo, index) => {
+                const texto = grupo.nombre;
+                const letra = texto.charAt(0).toUpperCase();
+                return (
+                    <SideItem key={texto} text={texto}>
+                        <Avatar
+                            style={{
+                                backgroundColor:
+                                    Colores[
+                                        nombresColores[(index + 2) % 100]
+                                    ][400],
+                                color: "#FFF",
+                            }}
+                            className={classes.Avatar}
+                        >
+                            {letra}
+                        </Avatar>
+                    </SideItem>
+                );
+            })
+        ) : (
+            <SideItem text="Sin grupos asignados">
+                <SadIcon></SadIcon>
+            </SideItem>
+        );
 
     return (
         <Fragment>
@@ -65,7 +96,26 @@ const BarraIzquierda = (props) => {
                     <SideItem text="Notificaciones">
                         <NotificationsIcon />
                     </SideItem>
-                   
+                    {userType == 1 ? (
+                        <SideItem
+                            text="Materias"
+                            clicked={() => {
+                                history.push("/admin/materias");
+                            }}
+                        >
+                            <MenuBookIcon />
+                        </SideItem>
+                    ) : null}
+                    {userType == 1 ? (
+                        <SideItem
+                            text="Instrumentaciones"
+                            clicked={() => {
+                                history.push("/instrumentacion/evaluar");
+                            }}
+                        >
+                            <SchoolIcon />
+                        </SideItem>
+                    ) : null}
                     {/* <SideItem
                         text="Instrumentos"
                         clicked={() => {
@@ -84,30 +134,7 @@ const BarraIzquierda = (props) => {
                     </SideItem> */}
                 </List>
                 <Divider />
-                <List>
-                    {grupos.map((grupo, index) => {
-                        const texto = grupo.nombre;
-                        const letra = texto.charAt(0).toUpperCase();
-                        return (
-                            <SideItem key={texto} text={texto}>
-                                <Avatar
-                                    style={{
-                                        backgroundColor:
-                                            Colores[
-                                                nombresColores[
-                                                    (index + 2) % 100
-                                                ]
-                                            ][400],
-                                        color: "#FFF",
-                                    }}
-                                    className={classes.Avatar}
-                                >
-                                    {letra}
-                                </Avatar>
-                            </SideItem>
-                        );
-                    })}
-                </List>
+                <List>{despliegueGrupos}</List>
                 <Divider />
                 <List>
                     <SideItem text="Configuración">
