@@ -1,9 +1,15 @@
-export const useStyles = ((theme) => ({
+export const useStyles = (theme) => ({
   root: {
     minWidth: 275,
     marginBottom: "1%",
     height: 210,
     overflowY: "scroll",
+  },
+  addHover: {
+    cursor:"pointer",
+    "&:hover": {
+      filter: "brightness(80%)",
+    },
   },
   ListItem: {
     backgroundColor: theme.palette.background.paper,
@@ -26,4 +32,4 @@ export const useStyles = ((theme) => ({
     padding: theme.spacing(2),
     width: "100%",
   },
-}));
+});

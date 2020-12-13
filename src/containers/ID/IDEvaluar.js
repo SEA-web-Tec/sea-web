@@ -12,9 +12,13 @@ import { CircularProgress } from "@material-ui/core";
 
 class ID extends Component {
   state = {
+    entrar:null,
     intrumentaciones: [],
     seleccionado: 0,
     comentario: "",
+    nombreMaestroSeleccionado: "",
+    grupoSeleccionado: "",
+    materiaSeleccionado: "",
     mostrarIcono: false,
     correcto: true,
   };
@@ -28,8 +32,23 @@ class ID extends Component {
   //cambiar intrumentacion
   //evaluar intrumentacipon seleccionada
 
-  cambiarSeleccionado = async (dato) => {
+  cambiarSeleccionado = async (dato, index) => {
     this.setState({ seleccionado: dato, comentario: "", mostrarIcono: true });
+    console.log(index);
+    const nombreM = `Nombre: ${
+      this.state.intrumentaciones[index].nombres +
+      " " +
+      this.state.intrumentaciones[index].apellidoPaterno +
+      " " +
+      this.state.intrumentaciones[index].apellidoMaterno
+    }`;
+    this.setState({
+      nombreMaestroSeleccionado: nombreM,
+      grupoSeleccionado: this.state.intrumentaciones[index].grupo,
+      materiaSeleccionado: this.state.intrumentaciones[index]
+        .materiaNombre,
+    });
+
     await this.props.onBusquedaInd(dato);
     console.log(dato);
   };
@@ -49,7 +68,8 @@ class ID extends Component {
   render(props) {
     let info = null;
 
-    if (this.props.intrumentaciones == null) {
+    if (this.state.entrar == null) {
+      this.setState({entrar:"lel"})
       this.buscarIntrumentaciones();
     } else {
       if (
@@ -75,10 +95,10 @@ class ID extends Component {
                 intrumentaciones={this.state.intrumentaciones}
               />
               <Portada
-                materia="Programación de Dispositivos Móviles"
-                carrera="Ing. Sistemas Computacionales"
-                maestro="José Tadeo Rodriguez Solano"
-                grupo="F"
+                materia={this.state.materiaSeleccionado}
+                carrera="Evaluando"
+                maestro={this.state.nombreMaestroSeleccionado}
+                grupo={this.state.grupoSeleccionado}
                 periodo="Enero - Junio 2020"
                 hasTabs
                 isID

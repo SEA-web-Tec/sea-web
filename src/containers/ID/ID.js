@@ -9,20 +9,49 @@ import * as actions from "store/actions/index";
 import { CircularProgress } from "@material-ui/core";
 
 class ID extends Component {
+  state = {
+    entrar: null,
+    materia: "",
+    carrera: "",
+    maestro: "",
+    grupo: "",
+    periodo: "",
+    foto: "",
+  };
+
   buscarIntrumentacion = async () => {
     await this.props.onBusqueda(this.props.id_user, this.props.match.params.id);
+    console.log(this.props.grupo);
+    for (let i = 0; i < this.props.grupo.length; i++) {
+      if (this.props.grupo[i].id == this.props.match.params.id) {
+        this.setState({
+          materia: this.props.grupo[i].nombre,
+          carrera: this.props.grupo[i].carrera,
+          grupo: this.props.grupo[i].grupo,
+          foto: this.props.grupo[i].fotoPortada,
+          maestro:
+            this.props.usuario.nombres +
+            " " +
+            this.props.usuario.apellidoPaterno +
+            " " +
+            this.props.usuario.apellidoMaterno,
+          //periodo
+        });
+        break;
+      }
+    }
   };
 
   render(props) {
-    let card = <CardEvaluacion />;
     let info = (
       <div>
         <Portada
-          materia="Programación de Dispositivos Móviles"
-          carrera="Ing. Sistemas Computacionales"
-          maestro="José Tadeo Rodriguez Solano"
-          grupo="F"
+          materia={this.state.materia}
+          carrera={this.state.carrera}
+          maestro={this.state.maestro}
+          grupo={this.state.grupo}
           periodo="Enero - Junio 2020"
+          fotoPortada={this.state.foto}
           hasTabs
           isID
           status={this.props.estado}
@@ -34,7 +63,8 @@ class ID extends Component {
 
     console.log(this.props.estado);
 
-    if (this.props.id_ins == null) {
+    if (this.state.entrar == null) {
+      this.setState({ entrar: "simon" });
       this.buscarIntrumentacion();
     }
 
@@ -50,6 +80,8 @@ const mapStateToProps = (state) => {
   return {
     id_ins: state.id.id_ins,
     id_user: state.auth.user.id,
+    usuario: state.auth.user,
+    grupo: state.grupos,
     estado: state.id.estado,
     comentario: state.id.comentario,
     loading: state.auth.loading,

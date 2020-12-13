@@ -6,6 +6,9 @@ import * as actions from "store/actions/index";
 import { CircularProgress } from "@material-ui/core";
 
 class ID extends Component {
+  state = {
+    entrar: null,
+  };
   buscarIntrumentacion = async () => {
     await this.props.onBusqueda(this.props.id_user, this.props.match.params.id);
   };
@@ -13,15 +16,13 @@ class ID extends Component {
   render(props) {
     //        <CardEvaluacion />
     let info = (
-      <TabsIDEditar
-        evaluar={true}
-        grupo={this.props.match.params.id}
-      />
+      <TabsIDEditar evaluar={true} grupo={this.props.match.params.id} />
     );
 
     console.log(this.props.id_user);
 
-    if (this.props.id_ins == null) {
+    if (this.state.entrar == null) {
+      this.setState({ entrar: "simon" });
       this.buscarIntrumentacion();
     }
 

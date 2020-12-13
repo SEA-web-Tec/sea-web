@@ -72,7 +72,8 @@ export const idBusqueda = (usuario_id, grupo_id) => {
       .post(url, idData)
       .then((response) => {
         if (response.data.unidades.length == "0") {
-          console.log(response.data.intrumentacion);
+          console.log("Entre");
+          console.log(response.data);
           dispatch(
             idSetInicial(
               response.data.intrumentacion.id,

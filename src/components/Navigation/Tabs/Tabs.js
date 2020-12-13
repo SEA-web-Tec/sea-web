@@ -431,7 +431,6 @@ class SimpleTabs extends Component {
           });
         }
       } else {
-        arrgInd[i].indicadoresalcance = [];
         const indicadores = {
           A: "Se adapta a situaciones y contextos complejos.",
           B: "Hace aportaciones a las actividades académicas desarrolladas.",
@@ -444,6 +443,7 @@ class SimpleTabs extends Component {
           F: "Realiza su trabajo de manera autómata y autorregulada.",
         };
         for (let i = 0; i < arreglo.length; i++) {
+          arrgInd[i].indicadoresalcance = [];
           Object.keys(indicadores).map((valor) => {
             let newFila = {};
             newFila["label"] = ValueToLetter(valor);
@@ -453,7 +453,7 @@ class SimpleTabs extends Component {
           });
         }
       }
-      //console.log(arrgInd);
+      console.log(arrgInd);
       this.setState({ Inicio: JSON.parse(JSON.stringify(arrgInd)) }, () => {
         this.setState({ entrar: true });
       });

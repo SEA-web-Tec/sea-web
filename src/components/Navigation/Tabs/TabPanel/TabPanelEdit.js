@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { useStyles } from "../Tabs.styles";
 import { withStyles } from "@material-ui/core/styles";
+import ListItem from "../../../UI/ListItem/ListItem";
 
 import {
   Grid,
@@ -594,46 +595,12 @@ class TabPanelEdit extends Component {
                   <AccordionDetails style={{ flexDirection: "column" }}>
                     {this.state.indicadoresalcance.map((Act) => {
                       return (
-                        <ListItemEdit
-                          key={Act.label}
-                          label={Act.label}
-                          mayus={true}
-                          Actividad={Act.actividad}
-                          ultimo={this.state.indicadoresalcance.length}
-                          crear={() => {
-                            this.addLetras();
-                            this.addElement(
-                              Act.actividad,
-                              this.state.indicadoresalcance,
-                              3
-                            );
-                          }}
-                          eliminar={() => {
-                            this.deleteLetras();
-                            this.deleteElement(
-                              Act.label,
-                              this.state.indicadoresalcance,
-                              3
-                            );
-                          }}
-                        >
-                          <TextField
-                            type="text"
-                            multiline={true}
-                            fullWidth={true}
-                            placeholder={Act.actividad}
-                            defaultValue={Act.texto}
-                            onBlur={(e) => {
-                              this.changeElement(
-                                Act.label,
-                                e.target.value,
-                                this.state.indicadoresalcance,
-                                3
-                              );
-                            }}
-                          />
-                        </ListItemEdit>
-                      );
+                      <ListItem
+                        key={"indicadoresalcance" + Act.label}
+                        label={letterValue(Act.label)}
+                        content={Act.texto}
+                      ></ListItem>
+                    );
                     })}
                   </AccordionDetails>
                 </Accordion>

@@ -21,15 +21,16 @@ class CardEvaluacion extends Component {
     let agregarIntrumentacion = null;
     if (this.props.intrumentaciones.length != 0) {
       agregarIntrumentacion = this.props.intrumentaciones.map(
-        (intrumentacion) => {
+        (intrumentacion, index) => {
           return (
             <Grid
               item
               xs={12}
               sm={6}
               key={intrumentacion.id}
+              className={classes.addHover}
               onClick={() => {
-                this.props.seleccionar(intrumentacion.id);
+                this.props.seleccionar(intrumentacion.id, index);
               }}
             >
               <div className={classes.ListItem} key={intrumentacion.id}>

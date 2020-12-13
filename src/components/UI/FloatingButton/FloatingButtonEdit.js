@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(3),
   },
   icono: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     color: "white",
   },
 }));
