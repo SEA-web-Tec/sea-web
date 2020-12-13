@@ -12,6 +12,9 @@ const initialState = {
     //         backgroundColor: newSecondaryMain,
     //     },
     // },
+    MuiFabPrimary: {
+      backgroundColor: newSecondaryMain,
+    },
     MuiPickersCalendar: {
       week: {
         justifyContent: "inherit",
@@ -41,7 +44,7 @@ const initialState = {
       main: newSecondaryMain,
       dark: "#FF5722",
     },
-  }
+  },
 };
 
 const toggleDarkMode = (state, action) => {

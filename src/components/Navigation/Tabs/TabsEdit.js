@@ -8,13 +8,18 @@ import * as actions from "store/actions/index";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { Button, CircularProgress } from "@material-ui/core";
+import FloatingButtonEdit from "../../UI/FloatingButton/FloatingButtonEdit";
 
 import {
   AppBar,
   Tabs,
   Tab,
+  IconButton,
+  Typography,
   /*IconButton,*/
 } from "@material-ui/core";
+import { Feedback as FeedbackIcon } from "@material-ui/icons";
+import Modal from "@material-ui/core/Modal";
 import ValueToLetter from "shared/ValueToLetter";
 import letterValue from "shared/LetterValue";
 import { addSyntheticTrailingComment } from "typescript";
@@ -324,6 +329,11 @@ class SimpleTabs extends Component {
     );
   };
 
+  abrirModal = (modo) => {
+    //true abrir
+    this.setState({ abrirComentario: modo });
+  };
+
   render() {
     //const classes = "useStyles";
     const { classes } = this.props;
@@ -551,6 +561,21 @@ class SimpleTabs extends Component {
       </Snackbar>
     );
 
+    let feedback = null;
+    if (this.props.comentario != null) {
+      feedback = (
+        <IconButton
+          className={classes.expanderFeedback}
+          size="large"
+          onClick={() => {
+            this.abrirModal(true);
+          }}
+        >
+          <FeedbackIcon fontSize="large" />
+        </IconButton>
+      );
+    }
+
     return (
       <React.Fragment>
         {error}
@@ -572,10 +597,32 @@ class SimpleTabs extends Component {
             {tabs}
           </Tabs>
         </AppBar>
+        {feedback}
         {infoTabs}
-        <Button variant="contained" color="primary" onClick={this.enviar}>
-          Enviar
-        </Button>
+        <FloatingButtonEdit
+          grupo={this.props.grupo}
+          enviar={() => {
+            this.enviar();
+          }}
+        />
+        <Modal
+          open={this.state.abrirComentario}
+          className={classes.modal}
+          onClose={() => {
+            this.abrirModal(false);
+          }}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {
+            <div className={classes.paper2}>
+              <h2 id="simple-modal-title">Comentario</h2>
+              <Typography id="simple-modal-description" fullWidth={true}>
+                {this.props.comentario}
+              </Typography>
+            </div>
+          }
+        </Modal>
       </React.Fragment>
     );
   }
@@ -589,6 +636,7 @@ const mapStateToProps = (state) => {
     unidades: state.id.unidades,
     evidencias: state.id.evidencias,
     indicadoresponderacion: state.id.ponderacion,
+    comentario: state.id.comentario,
     loading: state.auth.loading,
     error: state.auth.error,
   };

@@ -6,6 +6,8 @@ import ValueToLetter from "shared/ValueToLetter";
 import Modal from "@material-ui/core/Modal";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 import {
   AppBar,
@@ -35,6 +37,7 @@ class SimpleTabs extends Component {
     id_actual: 0,
     abrirComentario: false,
     comentario: "",
+    correcto: false,
   };
   handleChange = (event, newValue) => {
     this.setState({ value: newValue });
@@ -232,13 +235,9 @@ class SimpleTabs extends Component {
       });
     }
 
-    return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Tabs value={this.state.value} onChange={this.handleChange}>
-            {tabs}
-          </Tabs>
-        </AppBar>
+    let feedback = null;
+    if (this.props.mostrar) {
+      feedback = (
         <IconButton
           className={classes.expanderFeedback}
           size="large"
@@ -250,6 +249,38 @@ class SimpleTabs extends Component {
         >
           <FeedbackIcon fontSize="large" />
         </IconButton>
+      );
+    }
+
+    const success = (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={this.state.correcto}
+        onClose={() => {
+          this.setState({ correcto: false });
+          //const url = "/grupos/";
+          //window.location.replace(url);
+          //this.props.onAuthDismissError();
+        }}
+        autoHideDuration={2000}
+      >
+        <Alert variant="filled" severity="success">
+          {"La instrumentación ha sido evaluada correctamente."}
+        </Alert>
+      </Snackbar>
+    );
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Tabs value={this.state.value} onChange={this.handleChange}>
+            {tabs}
+          </Tabs>
+        </AppBar>
+        {feedback}
         <Modal
           open={this.state.abrirComentario}
           className={classes.modal}
@@ -267,9 +298,7 @@ class SimpleTabs extends Component {
                 type="text"
                 multiline={true}
                 fullWidth={true}
-                placeholder={
-                  "Intruducir comentario (Rechaza la intrumentación). \r\n\r\nNo introducir un comentario (Aprueba la instrumentación)."
-                }
+                placeholder={"Intruducir un comentario rechazará la intrumentación a evaluar."}
                 defaultValue={this.state.comentario}
                 onChange={(e) => {
                   this.setState({ comentario: e.target.value });
@@ -283,14 +312,17 @@ class SimpleTabs extends Component {
                 color="primary"
                 onClick={() => {
                   this.props.enviar_evaluacion();
+                  this.abrirModal(false);
+                  this.setState({ correcto: true });
                 }}
               >
-                Enviar
+                {this.state.comentario == "" ? "Aprobar" : "Rechazar"}
               </Button>
             </div>
           }
         </Modal>
         {infoTabs}
+        {success}
       </div>
     );
   }

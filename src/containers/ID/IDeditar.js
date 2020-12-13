@@ -1,12 +1,8 @@
 import React, { Component, Fragment } from "react";
 import Portada from "../../components/Portada/Portada";
-import TabsID from "../../components/Navigation/Tabs/Tabs";
 import TabsIDEditar from "../../components/Navigation/Tabs/TabsEdit";
-
-import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
 import { connect } from "react-redux";
 import * as actions from "store/actions/index";
-
 import { CircularProgress } from "@material-ui/core";
 
 class ID extends Component {

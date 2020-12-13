@@ -7,8 +7,19 @@ import { useStyles } from "./Tabs.styles";
 import { withStyles } from "@material-ui/core/styles";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import FloatingButton from "../../UI/FloatingButton/FloatingButton";
 
-import { AppBar, Tabs, Tab, Button, IconButton } from "@material-ui/core";
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Button,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+
+import { Feedback as FeedbackIcon } from "@material-ui/icons";
+import Modal from "@material-ui/core/Modal";
 
 function a11yProps(index) {
   return {
@@ -24,6 +35,7 @@ class SimpleTabs extends Component {
     value: 0,
     entrar: false,
     num: 0,
+    abrirComentario: false,
   };
   handleChange = (event, newValue) => {
     this.setState({ value: newValue });
@@ -295,6 +307,11 @@ class SimpleTabs extends Component {
     else return (total - 5).toString() + "-" + total.toString() + "%";
   };
 
+  abrirModal = (modo) => {
+    //true abrir
+    this.setState({ abrirComentario: modo });
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -471,6 +488,21 @@ class SimpleTabs extends Component {
       });
     }
 
+    let feedback = null;
+    if (this.props.comentario != null) {
+      feedback = (
+        <IconButton
+          className={classes.expanderFeedback}
+          size="large"
+          onClick={() => {
+            this.abrirModal(true);
+          }}
+        >
+          <FeedbackIcon fontSize="large" />
+        </IconButton>
+      );
+    }
+
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -478,16 +510,33 @@ class SimpleTabs extends Component {
             {tabs}
           </Tabs>
         </AppBar>
+        {feedback}
         {infoTabs}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
+        <FloatingButton
+          grupo={this.props.id_grupo}
+          estado={this.props.estado}
+          crearPDF={() => {
             this.crearPDF();
           }}
+        />
+        <Modal
+          open={this.state.abrirComentario}
+          className={classes.modal}
+          onClose={() => {
+            this.abrirModal(false);
+          }}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
         >
-          Pdf
-        </Button>
+          {
+            <div className={classes.paper2}>
+              <h2 id="simple-modal-title">Comentario</h2>
+              <Typography id="simple-modal-description" fullWidth={true}>
+                {this.props.comentario}
+              </Typography>
+            </div>
+          }
+        </Modal>
       </div>
     );
   }
@@ -501,6 +550,8 @@ const mapStateToProps = (state) => {
     unidades: state.id.unidades,
     evidencias: state.id.evidencias,
     indicadoresponderacion: state.id.ponderacion,
+    estado: state.id.estado,
+    comentario: state.id.comentario,
     loading: state.auth.loading,
     error: state.auth.error,
   };

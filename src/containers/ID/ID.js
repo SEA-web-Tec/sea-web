@@ -27,7 +27,7 @@ class ID extends Component {
           isID
           status={this.props.estado}
         >
-          <TabsID evaluar={true} id_grupo={1} />
+          <TabsID evaluar={true} id_grupo={this.props.match.params.id} />
         </Portada>
       </div>
     );
