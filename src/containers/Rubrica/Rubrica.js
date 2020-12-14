@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Grid,
   Typography,
@@ -14,15 +15,16 @@ import { http } from "shared/http";
 
 class Rubrica extends Component {
   state = {
+    editando:false,
     guardando:false,
     error:false,
     errorMessage:"",
     errorStatus:0,
     rubrica: [],
-    id: 1,
+    id: 0,
     nombre: "Este es un nombre",
     descripcion: "Esta es una descripción de la rúbrica",
-    id_personal: 1,
+    id_personal: this.props.userId,
     id_carpeta:1,
     /*Las columnas deben de estar ordenas por num_columna */
     columnas: [
@@ -152,6 +154,7 @@ class Rubrica extends Component {
     console.log(id);
 
     if(id){
+      this.setState({editando:true})
       http
       .get("rubrica/consultarub/"+id)
       .then((response) => {
@@ -244,7 +247,7 @@ class Rubrica extends Component {
           return c;
         });
 
-        const celdas=[...celdasExcelente,...celdasBueno,...celdasRegular,...celdasSuficiente,...celdasInsuficiente];
+        const celdas=[...JSON.parse(JSON.stringify(celdasExcelente)),...JSON.parse(JSON.stringify(celdasBueno)),...JSON.parse(JSON.stringify(celdasRegular)),...JSON.parse(JSON.stringify(celdasSuficiente)),...JSON.parse(JSON.stringify(celdasInsuficiente))];
         console.log(celdas)
         this.setState({ celdas:celdas,renglones:renglones },()=>console.log(this.state));
       })
@@ -280,19 +283,20 @@ class Rubrica extends Component {
     }
 
     const renglones = this.state.renglones.map(renglon => {
+      console.log(renglon.num_renglon);
       const num = renglon.num_renglon;
       const criterio = renglon.criterio;
-      const excelente = this.state.celdas.filter((celda) => celda.id_columna == 1 && celda.id_renglon == renglon.num_renglon)[0].texto;
-      const bueno = this.state.celdas.filter((celda) => celda.id_columna == 2 && celda.id_renglon == renglon.num_renglon)[0].texto;
-      const regular = this.state.celdas.filter((celda) => celda.id_columna == 3 && celda.id_renglon == renglon.num_renglon)[0].texto;
-      const suficiente = this.state.celdas.filter((celda) => celda.id_columna == 4 && celda.id_renglon == renglon.num_renglon)[0].texto;
-      const insuficiente = this.state.celdas.filter((celda) => celda.id_columna == 5 && celda.id_renglon == renglon.num_renglon)[0].texto;
+      const excelente = this.state.celdas.filter((celda) => celda.id_columna == 1 && celda.id_renglon == renglon.id)[0].texto;
+      const bueno = this.state.celdas.filter((celda) => celda.id_columna == 2 && celda.id_renglon == renglon.id)[0].texto;
+      const regular = this.state.celdas.filter((celda) => celda.id_columna == 3 && celda.id_renglon == renglon.id)[0].texto;
+      const suficiente = this.state.celdas.filter((celda) => celda.id_columna == 4 && celda.id_renglon == renglon.id)[0].texto;
+      const insuficiente = this.state.celdas.filter((celda) => celda.id_columna == 5 && celda.id_renglon == renglon.id)[0].texto;
 
-      const puntosexcelente = this.state.celdas.filter((celda) => celda.id_columna == 1 && celda.id_renglon == renglon.num_renglon)[0].puntos_max;
-      const puntosbueno = this.state.celdas.filter((celda) => celda.id_columna == 2 && celda.id_renglon == renglon.num_renglon)[0].puntos_max;
-      const puntosregular = this.state.celdas.filter((celda) => celda.id_columna == 3 && celda.id_renglon == renglon.num_renglon)[0].puntos_max;
-      const puntossuficiente = this.state.celdas.filter((celda) => celda.id_columna == 4 && celda.id_renglon == renglon.num_renglon)[0].puntos_max;
-      const puntosinsuficiente = this.state.celdas.filter((celda) => celda.id_columna == 5 && celda.id_renglon == renglon.num_renglon)[0].puntos_max;
+      const puntosexcelente = this.state.celdas.filter((celda) => celda.id_columna == 1 && celda.id_renglon == renglon.id)[0].puntos_max;
+      const puntosbueno = this.state.celdas.filter((celda) => celda.id_columna == 2 && celda.id_renglon == renglon.id)[0].puntos_max;
+      const puntosregular = this.state.celdas.filter((celda) => celda.id_columna == 3 && celda.id_renglon == renglon.id)[0].puntos_max;
+      const puntossuficiente = this.state.celdas.filter((celda) => celda.id_columna == 4 && celda.id_renglon == renglon.id)[0].puntos_max;
+      const puntosinsuficiente = this.state.celdas.filter((celda) => celda.id_columna == 5 && celda.id_renglon == renglon.id)[0].puntos_max;
 
       return {
         numrenglon:num,
@@ -310,9 +314,10 @@ class Rubrica extends Component {
       }
     })
     console.log("Procesando...",rubrica,renglones)
+    const url = this.state.editando ? "rubrica/editar/"+this.state.id : "rubrica/crear";
     this.setState({ guardando:true });
     http
-    .post("rubrica/crear", {
+    .post(url, {
       Rubrica:rubrica,
       Renglonesrubrica:renglones
     })
@@ -394,15 +399,24 @@ class Rubrica extends Component {
       renglonesActualizados[renglonSubir] = {
         ...renglonesActualizados[renglonSubir],
         num_renglon: num_renglon - 1,
-        id: num_renglon - 1
+        //id: num_renglon - 1
       };
       renglonesActualizados[renglonBajar] = {
         ...renglonesActualizados[renglonBajar],
         num_renglon: num_renglon,
-        id: num_renglon
+        //id: num_renglon
       };
-
-      this.setState({ renglones: renglonesActualizados });
+      /*const celdas = this.state.celdas.map((celda)=> {
+        let c = {...celda};
+        if(celda.id_renglon === num_renglon){
+          c.id_renglon =num_renglon-1
+        }else if(celda.id_renglon === num_renglon -1) {
+          c.id_renglon = num_renglon
+        }
+        return c;
+      })*/
+      
+      this.setState({ renglones: renglonesActualizados/*,celdas:celdas */});
     }
   };
   bajarRenglon = (event, num_renglon) => {
@@ -422,15 +436,25 @@ class Rubrica extends Component {
       renglonesActualizados[renglonSubir] = {
         ...renglonesActualizados[renglonSubir],
         num_renglon: num_renglon,
-        id: num_renglon
+        //id: num_renglon
       };
       renglonesActualizados[renglonBajar] = {
         ...renglonesActualizados[renglonBajar],
         num_renglon: num_renglon + 1,
-        id: num_renglon +1
+        //id: num_renglon +1
       };
 
-      this.setState({ renglones: renglonesActualizados });
+      /*const celdas = this.state.celdas.map((celda)=> {
+        let c = {...celda};
+        if(celda.id_renglon === num_renglon + 1){
+          c.id_renglon =num_renglon
+        }else if(celda.id_renglon === num_renglon) {
+          c.id_renglon = num_renglon +1
+        }
+        return c;
+      })*/
+
+      this.setState({ renglones: renglonesActualizados/*,celdas:celdas */});
     }
   };
   eliminarRenglon = (event, num_renglon) => {
@@ -710,4 +734,13 @@ class Rubrica extends Component {
   }
 }
 
-export default Rubrica;
+const mapStateToProps = (state) => {
+  return {
+      token: state.auth.token,
+      userId: state.auth.user.id,
+      isAuthenticated: state.auth.token !== null,
+  };
+};
+
+
+export default connect(mapStateToProps, null)(Rubrica);

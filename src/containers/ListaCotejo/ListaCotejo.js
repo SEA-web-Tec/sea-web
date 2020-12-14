@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -17,6 +18,7 @@ import { http } from "shared/http";
 
 class ListaCotejo extends Component {
   state = {
+    editando:false,
     guardando:false,
     error:false,
     errorMessage:"",
@@ -24,7 +26,7 @@ class ListaCotejo extends Component {
     id: 1,
     nombre: "Lista para exposición",
     descripcion: "Esta es una descripción de la lista",
-    id_personal: 1,
+    id_personal: this.props.userId,
     id_carpeta:1,
     rengloneslc: [
       {
@@ -56,6 +58,7 @@ class ListaCotejo extends Component {
     const id = this.getUrlParameter("id");
     console.log(id);
     if(id) {
+      this.setState({editando:true})
       http
         .get("listacotejo/consultalc/"+id)
         .then((response) => {
@@ -119,10 +122,11 @@ class ListaCotejo extends Component {
         puntos: cotejo.puntos
       }
     });
-    console.log("Procesando...",cotejo,renglones,this.state.rengloneslc)
+    console.log("Procesando...",cotejo,renglones,this.state.rengloneslc);
+    const url = this.state.editando ? "listacotejo/editar/"+this.state.id : "listacojeto/crear";
     this.setState({ guardando:true });
     http
-    .post("listacojeto/crear", {
+    .post(url, {
       Listasdecotejo:cotejo,
       Renglones_lc:renglones
     })
@@ -460,10 +464,19 @@ class ListaCotejo extends Component {
           </Grid>
           
         </Grid>
-        </Grid>
+      </Grid>
       </div>
     );
   }
 }
 
-export default ListaCotejo;
+const mapStateToProps = (state) => {
+  return {
+      token: state.auth.token,
+      userId: state.auth.user.id,
+      isAuthenticated: state.auth.token !== null,
+  };
+};
+
+
+export default connect(mapStateToProps, null)(ListaCotejo);

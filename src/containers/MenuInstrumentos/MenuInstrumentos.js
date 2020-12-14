@@ -4,6 +4,8 @@ import ListaInstrumentos from "../ListaInstrumentos/ListaInstrumentos";
 import EventosPanel from "../../components/UI/EventosPanel/EventosPanel";
 import FiltrarInstrumentos from "../../components/IDE/FiltrarInstrumentos/FiltrarInstrumentos";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar"
+import { Alert } from "@material-ui/lab";
 import { connect } from "react-redux";
 import { http } from "shared/http";
 
@@ -78,19 +80,20 @@ class MenuInstrumentos extends Component {
   eliminarInstrumento = (tipo,id) => {
     let url = "";
     if(tipo=="Rubrica"){
-      url = "rubrica/borrarrubrica/"
+      url = "rubrica/borrarrubrica/";
     }
     if(tipo=="Lista de Cotejo"){
-      url = "listacotejo/borrarlo/"
+      url = "listacotejo/borrarlo/";
     }
     if(tipo=="Lista de Observacion"){
-      
+      url = "listasobservacion/borrarlo/";
     }
     http
     .delete(url+id)
     .then((response) => {
       console.log(response.data.message);
-      this.setState()
+      const instrumentosActualizados = this.state.instrumentos.filter((instrumento) => (instrumento.tipo!=tipo)||(instrumento.id!=id&&instrumento.tipo===tipo));
+      this.setState({instrumentos:instrumentosActualizados,error: true, errorMessage: response.data.message, errorStatus: 201});
     })
     .catch((error) => {
       if (error.response === undefined) {
@@ -108,7 +111,7 @@ class MenuInstrumentos extends Component {
 
   componentDidMount() {
     http
-    .get("rubrica/consultarubrica/1")
+    .get("rubrica/consultarubrica/"+this.props.userId)
     .then((response) => {
       console.log(response);
       const rubricas = response.data.Rubrica.map(rubrica => {
@@ -140,7 +143,7 @@ class MenuInstrumentos extends Component {
     });
 
     http
-    .get("listacotejo/consultalistacotejo/1")
+    .get("listacotejo/consultalistacotejo/"+this.props.userId)
     .then((response) => {
       console.log(response);
       const listacotejo = response.data.Listasdecotejo.map(cotejo => {
@@ -170,10 +173,60 @@ class MenuInstrumentos extends Component {
         console.log(error.response.data.message)
       }
     });
+
+    http
+    .get("listasobservacion/consultalistasobservacion/"+this.props.userId)
+    .then((response) => {
+      console.log(response);
+      const listaobservacion = response.data.Listasdeobservacion.map(observacion => {
+        return {
+          id:observacion.id,
+          nombre:observacion.nombre,
+          descripcion:observacion.descripcion,
+          fecha:observacion.created_at,
+          tipo:"Lista de Observacion"
+        }
+      });
+      this.setState((prevState,props) => {
+        return{
+          instrumentos: [...prevState.instrumentos,...listaobservacion]
+        }
+      });
+    })
+    .catch((error) => {
+      if (error.response === undefined) {
+        this.setState({
+          error: true,
+          errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+          errorStatus: 500
+        });
+      } else {
+        this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
+        console.log(error.response.data.message)
+      }
+    });
   }
   render() {
+    let error = (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        open={this.state.error}
+        onClose={() => {
+          this.setState({ error: false });
+        }}
+        autoHideDuration={6000}
+      >
+        <Alert variant="filled" severity={this.state.errorStatus === 201 ? "success" : "warning"}>
+          {this.state.errorMessage !== "" ? this.state.errorMessage : "Favor de realizar el CAPTCHA antes de registrarte!"}
+        </Alert>
+      </Snackbar>
+    );
     return (
       <Grid container>
+        {error}
         <Grid item xs={12}>
           <Box m={2}></Box>
         </Grid>
@@ -227,7 +280,7 @@ class MenuInstrumentos extends Component {
 const mapStateToProps = (state) => {
   return {
       token: state.auth.token,
-      userId: state.auth.userId,
+      userId: state.auth.user.id,
       isAuthenticated: state.auth.token !== null,
   };
 };
