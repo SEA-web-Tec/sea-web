@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -6,16 +7,30 @@ import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Hidden from "@material-ui/core/Hidden";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import OpcionesRenglon from "../../components/IDE/OpcionesRenglon/OpcionesRenglon";
 import TituloColumnaInstrumento from "../../components/IDE/TituloColumnaInstrumento/TituloColumnaInstrumento";
 import CeldaInstrumento from "../../components/IDE/CeldaInstrumento/CeldaInstrumento";
+import { http } from "shared/http";
+import Snackbar from "@material-ui/core/Snackbar"
+import { Alert } from "@material-ui/lab";
+import FloatingButtonInstrumentos from "../../components/IDE/FloatingButtonInstrumentos/FloatingButtonInstrumentos";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 class ListaObservacion extends Component {
   state = {
+    editando:false,
+    guardando: false,
+    error: false,
+    errorMessage: "",
+    errorStatus: 0,
     id: 1,
     nombre: "Lista para exposición",
     descripcion: "Esta es una descripción de la lista de observacion",
-    id_personal: 1,
+    id_personal: this.props.userId,
+    id_carpeta:1,
     rengloneslo: [
       {
         id: 1,
@@ -39,6 +54,134 @@ class ListaObservacion extends Component {
         puntos: 10,
       },
     ],
+  };
+
+  componentDidMount() {
+    const id = this.getUrlParameter("id");
+    console.log(id);
+    if (id) {
+      this.setState({editando:true})
+      http
+        .get("/listasobservacion/consultalo/" + id)
+        .then((response) => {
+          const observacion = {
+            id: response.data.Listasdeobservacion.id,
+            nombre: response.data.Listasdeobservacion.nombre,
+            descripcion: response.data.Listasdeobservacion.descripcion,
+            id_personal: response.data.Listasdeobservacion.id_usuario,
+            id_carpeta: 1,
+          };
+          this.setState({ ...observacion });
+        })
+        .catch((error) => {
+          if (error.response === undefined) {
+            this.setState({
+              error: true,
+              errorMessage:
+                "Ha ocurrido un error, favor de intentarlo más tarde",
+              errorStatus: 500,
+            });
+            console.log("d");
+          } else {
+            this.setState({
+              error: true,
+              errorMessage: error.response.data.message,
+              errorStatus: error.response.status,
+            });
+            console.log(error.response.data.message);
+          }
+        });
+
+      http
+        .get("listasobservacion/consultarenglones/" + id)
+        .then((response) => {
+          this.setState({ rengloneslo: response.data.Listasdeobservacion });
+          console.log(response.data.Listasdeobservacion);
+        })
+        .catch((error) => {
+          if (error.response === undefined) {
+            this.setState({
+              error: true,
+              errorMessage:
+                "Ha ocurrido un error, favor de intentarlo más tarde",
+              errorStatus: 500,
+            });
+            console.log("d");
+          } else {
+            this.setState({
+              error: true,
+              errorMessage: error.response.data.message,
+              errorStatus: error.response.status,
+            });
+            console.log(error.response.data.message);
+          }
+        });
+    }
+  }
+  crearListaDeObservacion = () => {
+    const observacion = {
+      nombre: this.state.nombre,
+      descripcion: this.state.descripcion,
+      id_usuario: this.state.id_personal,
+      id_carpeta: this.state.id_carpeta,
+    };
+    const renglones = this.state.rengloneslo.map((observacion) => {
+      return {
+        numrenglon: observacion.numrenglon,
+        criterio: observacion.criterio,
+        puntos: observacion.puntos,
+      };
+    });
+    console.log(
+      "Procesando...",
+      observacion,
+      renglones,
+      this.state.rengloneslc
+    );
+    const url = this.state.editando ? "listasobservacion/editar/"+this.state.id : "listasobservacion/crear";
+    this.setState({ guardando: true });
+    http
+      .post(url, {
+        Listasdeobservacion: observacion,
+        Renglones_lo: renglones,
+      })
+      .then((response) => {
+        this.setState({
+          error: true,
+          errorMessage: response.data.message,
+          errorStatus: 201,
+          guardando: false,
+        });
+        console.log(response.data);
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          this.setState({
+            error: true,
+            errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+            errorStatus: 500,
+            guardando: false,
+          });
+          console.log("d");
+        } else {
+          this.setState({
+            error: true,
+            errorMessage: error.response.data.message,
+            errorStatus: error.response.status,
+            guardando: false,
+          });
+          console.log(error.response.data.message);
+        }
+      });
+  };
+
+  getUrlParameter = (name) => {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    let regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    let results = regex.exec(window.location.search);
+    return results === null
+      ? ""
+      : decodeURIComponent(results[1].replace(/\+/g, " "));
   };
 
   agregarRenglon = () => {
@@ -185,6 +328,33 @@ class ListaObservacion extends Component {
 
     this.setState({ rengloneslo: renglonesActualizados });
   };
+
+  descargarPDF = () => {
+    const renglonesOrdenados = this.state.rengloneslo.sort(((a, b) => a.numrenglon - b.numrenglon));
+    
+    const body = renglonesOrdenados.map((renglon) => {
+      const b = [];
+      b.push(renglon.criterio + "\r\rPuntos: " + renglon.puntos);
+      b.push("");
+      b.push("");
+      return b;
+    });
+    console.log(body);
+    const rubrica = jsPDF();
+    const finalY = rubrica.lastAutoTable.finalY || 10;
+    rubrica.setFontSize(12);
+    const textWidth = rubrica.getStringUnitWidth(this.state.nombre) * rubrica.internal.getFontSize() / rubrica.internal.scaleFactor;
+    const textOffset = (rubrica.internal.pageSize.width - textWidth) / 2;
+    rubrica.text(textOffset, finalY, this.state.nombre);
+    rubrica.text(this.state.descripcion, 15, finalY + 15,{
+      styles: { fontSize: 5 }})
+    rubrica.autoTable({
+        startY: finalY+ 20,
+        head: [['Criterio', 'Observaciones', 'Puntuacion']],
+        body: body 
+      })
+    rubrica.save("listadeobservacion.pdf");
+  }
   render() {
     const renglonesOrdenados = [...this.state.rengloneslo];
     renglonesOrdenados.sort((a, b) => a.numrenglon - b.numrenglon);
@@ -216,7 +386,7 @@ class ListaObservacion extends Component {
           />
         </Grid>
         <Hidden xsDown>
-          <Grid item  sm={6}>
+          <Grid item sm={6}>
             <Box boxShadow={2} display="flex" flexDirection="column">
               <TextField
                 multiline
@@ -230,9 +400,39 @@ class ListaObservacion extends Component {
         </Hidden>
       </Grid>
     ));
+    let boton;
+    if (!this.state.guardando) {
+      boton = (
+        <Button variant="contained" color="primary" onClick={this.crearListaDeObservacion}>
+          Guardar
+        </Button>
+      )
+    }else{
+      boton = (
+        <CircularProgress variant="indeterminate" disableShrink size={40}/>
+      )
+    }
+    let error = (
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        open={this.state.error}
+        onClose={() => {
+          this.setState({ error: false });
+        }}
+        autoHideDuration={6000}
+      >
+        <Alert variant="filled" severity={this.state.errorStatus === 201 ? "success" : "warning"}>
+          {this.state.errorMessage !== "" ? this.state.errorMessage : "Favor de realizar el CAPTCHA antes de registrarte!"}
+        </Alert>
+      </Snackbar>
+    );
     return (
       <div>
         <Grid container spacing={2}>
+          {error}
           <Grid item xs={12}>
             <Typography
               variant="h4"
@@ -287,10 +487,22 @@ class ListaObservacion extends Component {
               </Box>
             </Grid>
           </Grid>
+          <Grid item xs={6} sm={12}>
+            <FloatingButtonInstrumentos guardar={this.crearListaDeObservacion} crearPDF={this.descargarPDF}/>
+          </Grid>
         </Grid>
       </div>
     );
   }
 }
 
-export default ListaObservacion;
+const mapStateToProps = (state) => {
+  return {
+      token: state.auth.token,
+      userId: state.auth.user.id,
+      isAuthenticated: state.auth.token !== null,
+  };
+};
+
+
+export default connect(mapStateToProps, null)(ListaObservacion);

@@ -23,6 +23,7 @@ export default function FiltrarInstrumentos(props) {
         <CardHeader subheader="Filtrar Instrumentos"></CardHeader>
         <CardContent>
           <FormControlLabel
+            style={{color:"#F00"}}
             control={
               <Checkbox
                 checked={props.filtros.rubrica}
@@ -34,6 +35,7 @@ export default function FiltrarInstrumentos(props) {
             label="Rubrica"
           />
           <FormControlLabel
+            style={{color:"#00F"}}
             control={
               <Checkbox
                 checked={props.filtros.cotejo}
@@ -45,6 +47,7 @@ export default function FiltrarInstrumentos(props) {
             label="Lista de Cotejo"
           />
           <FormControlLabel
+            style={{color:"#0F0"}}
             control={
               <Checkbox
                 checked={props.filtros.observacion}
