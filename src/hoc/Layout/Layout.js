@@ -6,28 +6,28 @@ import BarraUtilidades from "components/Layout/BarraUtilidades/BarraUtilidades";
 import Contenido from "components/Layout/Contenido/Contenido";
 
 class Layout extends Component {
-  state = {
-    open: false
-  };
+    state = {
+        open: false,
+    };
 
-  sideDrawerCloseHandler = () => {
-    this.setState({ open: false });
-  };
+    sideDrawerCloseHandler = () => {
+        this.setState({ open: false });
+    };
 
-  sideDrawerToggleHandler = () => {
-    this.setState((prevState) => {
-      return { open: !prevState.open };
-    });
-  };
+    sideDrawerToggleHandler = () => {
+        this.setState((prevState) => {
+            return { open: !prevState.open };
+        });
+    };
 
     render() {
         return (
-            <Fragment >
+            <Fragment>
                 {this.props.isAuthenticated ? (
                     <Fragment>
                         <BarraSuperior
                             toggleDrawer={this.sideDrawerToggleHandler}
-                            titulo="Inicio"
+                            titulo={this.props.titulo}
                         ></BarraSuperior>
                         <BarraIzquierda
                             open={this.state.open}
@@ -36,15 +36,17 @@ class Layout extends Component {
                         <BarraUtilidades></BarraUtilidades>
                     </Fragment>
                 ) : null}
-                <Contenido isLogin={!this.props.isAuthenticated}>{this.props.children}</Contenido>
+                <Contenido isLogin={!this.props.isAuthenticated}>
+                    {this.props.children}
+                </Contenido>
             </Fragment>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: state.auth.token !== null
-  };
+    return {
+        isAuthenticated: state.auth.token !== null,
+    };
 };
 export default connect(mapStateToProps)(Layout);
