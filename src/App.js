@@ -9,9 +9,16 @@ import Login from "./containers/Autenticacion/Login/Login";
 import Registro from "./containers/Autenticacion/Registro/Registro";
 import Logout from "./containers/Autenticacion/Logout/Logout";
 import Grupos from "./containers/Grupos/Grupos";
+import AppTheme from "./AppTheme";
+// reactivos
+import CrearReactivoAbierto from "./containers/Examen/CrearReactivo/CrearReactivoAbierto.js";
+import CrearReactivoFV from "./containers/Examen/CrearReactivo/CrearReactivoFV.js";
+import CrearReactivoMultiple from "./containers/Examen/CrearReactivo/CrearReactivoMultiple.js";
+import BancoReactivos from "./containers/Examen/BancoReactivos/BancoReactivos.js";
+import Resultados from "./containers/Examen/ResultadosExamen/Resultados.js";
+import Respuestas from "./containers/Examen/ResultadosExamen/Respuestas.js";
 import MaestroGeneral from "containers/Perfil/Maestro/General/MaestroGeneral";
 import MaestroEditar from "containers/Perfil/Maestro/Editar/MaestroEditar";
-import AppTheme from "./AppTheme";
 
 const asyncID = asyncComponent(() => {
   return import("./containers/ID/ID");
@@ -83,8 +90,7 @@ const asyncAdminGrupo = asyncComponent(() => {
 class App extends Component {
   async componentDidMount() {
     await this.props.onAuthCheck();
-    if (this.props.user != null)
-      await this.props.onFetchGrupos(this.props.token, this.props.user.id);
+    if (this.props.user != null) await this.props.onFetchGrupos(this.props.token, this.props.user.id);
   }
 
   render() {
@@ -97,6 +103,14 @@ class App extends Component {
       </Switch>
     );
 
+    ////////////
+    //
+    //
+    //  RECUERDEN AGREGAR LAS RUTAS EN AMBAS PARTES, DONDE
+    //  DICE *this.props.isAuthenticated* Y *this.props.isAdmin*
+    //
+    //
+    ///////////
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
@@ -111,28 +125,30 @@ class App extends Component {
 
           {/* INSTRUMENTACION DIDACTICA */}
           <Route path="/instrumentacion/:id" exact component={asyncID} />
-          <Route
-            path="/instrumentacion/:id/editar"
-            exact
-            component={asyncIDEditar}
-          />
+          <Route path="/instrumentacion/:id/editar" exact component={asyncIDEditar} />
 
           {/* LO DEL JULIO */}
           <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
           <Route path="/rubrica" exact component={asyncRubrica} />
           <Route path="/listacotejo" exact component={asyncListaCotejo} />
-          <Route path="/listaobservacion" component={asyncListaObservacion} />
-          <Route path="/rubricaPDF" component={asyncRubricaPDF} />
+          <Route path="/listaobservacion" exact component={asyncListaObservacion} />
 
           {/* EXAMEN */}
           <Route path="/examen" exact component={asyncDashboardExamen} />
           <Route path="/examen/crear" exact component={asyncCrearExamen} />
-          <Route path="/examen/editar" exact component={asyncEditarExamen} />
           <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
-          <Route path="/examen/id" component={asyncContenedorExamen} />
+
+          <Route path="/examen/reactivos" exact component={BancoReactivos} />
+          <Route path="/examen/reactivo/abierto" exact component={CrearReactivoAbierto} />
+          <Route path="/examen/reactivo/fv" exact component={CrearReactivoFV} />
+          <Route path="/examen/reactivo/multiple" exact component={CrearReactivoMultiple} />
+          <Route path="/examen/resultados" exact component={Resultados} />
+          <Route path="/examen/resultados/respuestas" exact component={Respuestas} />
+          <Route path="/examen/editar" exact component={asyncEditarExamen} />
+          <Route path="/examen/id" exact component={asyncContenedorExamen} />
 
           {/* LO DEL CARLOS */}
-          <Route path="/trabajo-individual" component={asyncTrabajo} />
+          <Route path="/trabajo-individual" exact component={asyncExposiciones} />
 
           {/* NOT FOUND */}
           <Route component={asyncNotFound} />
@@ -151,41 +167,31 @@ class App extends Component {
             <Route path="/perfil/editar" component={MaestroEditar} />
 
             {/* INSTRUMENTACION DIDACTICA */}
-            <Route
-              path="/instrumentacion/evaluar/"
-              exact
-              component={asyncIDEvaluar}
-            />
+            <Route path="/instrumentacion/evaluar/" exact component={asyncIDEvaluar} />
             <Route path="/instrumentacion/:id" exact component={asyncID} />
-            <Route
-              path="/instrumentacion/:id/editar"
-              exact
-              component={asyncIDEditar}
-            />
+            <Route path="/instrumentacion/:id/editar" exact component={asyncIDEditar} />
 
             {/* LO DEL JULIO */}
-            <Route
-              path="/instrumentos"
-              exact
-              component={asyncMenuInstrumentos}
-            />
+            <Route path="/instrumentos" exact component={asyncMenuInstrumentos} />
             <Route path="/rubrica" exact component={asyncRubrica} />
             <Route path="/listacotejo" exact component={asyncListaCotejo} />
-            <Route path="/listaobservacion" component={asyncListaObservacion} />
+            <Route path="/listaobservacion" exact component={asyncListaObservacion} />
 
             {/* EXAMEN */}
             <Route path="/examen" exact component={asyncDashboardExamen} />
             <Route path="/examen/crear" exact component={asyncCrearExamen} />
+            <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
+            <Route path="/examen/reactivos" exact component={BancoReactivos} />
+            <Route path="/examen/reactivo/abierto" exact component={CrearReactivoAbierto} />
+            <Route path="/examen/reactivo/fv" exact component={CrearReactivoFV} />
+            <Route path="/examen/reactivo/multiple" exact component={CrearReactivoMultiple} />
+            <Route path="/examen/resultados" exact component={Resultados} />
+            <Route path="/examen/resultados/respuestas" exact component={Respuestas} />
             <Route path="/examen/editar" exact component={asyncEditarExamen} />
-            <Route
-              path="/examen/asignar"
-              exact
-              component={asyncAsignarExamen}
-            />
-            <Route path="/examen/id" component={asyncContenedorExamen} />
+            <Route path="/examen/id" exact component={asyncContenedorExamen} />
 
             {/* LO DEL CARLOS */}
-            <Route path="/trabajo-individual" component={asyncTrabajo} />
+            <Route path="/trabajo-individual" exact component={asyncExposiciones} />
 
             {/* ADMIN */}
             <Route path="/admin" exact component={asyncAdmin} />
@@ -212,19 +218,16 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.token !== null,
-    isAdmin: localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user")).userType == 1
-      : false,
+    isAdmin: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).userType === 1 : false,
     token: state.auth.token,
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuthCheck: () => dispatch(actions.authCheckState()),
-    onFetchGrupos: (token, userId) =>
-      dispatch(actions.fetchGrupos(token, userId)),
+    onFetchGrupos: (token, userId) => dispatch(actions.fetchGrupos(token, userId))
   };
 };
 

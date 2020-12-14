@@ -16,7 +16,7 @@ class ID extends Component {
     maestro: "",
     grupo: "",
     periodo: "",
-    foto: "",
+    foto: ""
   };
 
   buscarIntrumentacion = async () => {
@@ -30,12 +30,8 @@ class ID extends Component {
           grupo: this.props.grupo[i].grupo,
           foto: this.props.grupo[i].fotoPortada,
           maestro:
-            this.props.usuario.nombres +
-            " " +
-            this.props.usuario.apellidoPaterno +
-            " " +
-            this.props.usuario.apellidoMaterno,
-          periodo: this.props.grupo[i].periodo + " " + this.props.grupo[i].anio,
+            this.props.usuario.nombres + " " + this.props.usuario.apellidoPaterno + " " + this.props.usuario.apellidoMaterno,
+          periodo: this.props.grupo[i].periodo + " " + this.props.grupo[i].anio
         });
         break;
       }
@@ -51,7 +47,7 @@ class ID extends Component {
           maestro={this.state.maestro}
           grupo={this.state.grupo}
           periodo={this.state.periodo}
-          fotoPortada={this.state.foto}
+          portada={this.state.foto}
           hasTabs
           isID
           status={this.props.estado}
@@ -84,16 +80,14 @@ const mapStateToProps = (state) => {
     estado: state.id.estado,
     comentario: state.id.comentario,
     loading: state.auth.loading,
-    error: state.auth.error,
+    error: state.auth.error
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBusqueda: (user_id, grupo_id) =>
-      dispatch(actions.idBusqueda(user_id, grupo_id)),
-    onFetchGrupos: (token, userId) =>
-      dispatch(actions.fetchGrupos(token, userId)),
+    onBusqueda: (user_id, grupo_id) => dispatch(actions.idBusqueda(user_id, grupo_id)),
+    onFetchGrupos: (token, userId) => dispatch(actions.fetchGrupos(token, userId))
   };
 };
 

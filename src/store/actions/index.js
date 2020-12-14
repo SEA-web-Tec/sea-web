@@ -27,7 +27,10 @@ export {
 export { fetchTemarios } from "./temarios";
 
 // Materias
-export { fetchMaterias } from "./materias";
+export { fetchMaterias, fetchMateriasConGrupo } from "./materias";
 
 // Users
 export { fetchUsers } from "./users";
+
+// Reactivos
+export { fetchReactivosSpecific } from "./reactivos";

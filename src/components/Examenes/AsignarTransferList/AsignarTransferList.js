@@ -4,11 +4,11 @@ import { Grid, List, ListItem, ListItemIcon, ListItemText, Checkbox, Button, Pap
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(2, "auto")
+    margin: theme.spacing(2, "auto"),
   },
   paper: {
-    width: 300,
-    height: 330,
+    maxWidth: 550,
+    height: 350,
     overflow: "auto"
   },
   button: {
@@ -72,7 +72,7 @@ export default function AsignarTransferList() {
     setRight([]);
   };
 
-  const customList = (items, title) => (
+  const customList = (items, title, add) => (
     <Paper variant="outlined" className={classes.paper}>
       <Typography className={classes.title} component="p" variant="h6" align="center">
         {title}
@@ -80,7 +80,6 @@ export default function AsignarTransferList() {
       <List dense component="div" role="list">
         {items.map((value) => {
           const labelId = `transfer-list-item-${value}-label`;
-
           return (
             <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
               <ListItemIcon>
@@ -91,7 +90,7 @@ export default function AsignarTransferList() {
                   inputProps={{ "aria-labelledby": labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+              <ListItemText id={labelId} primary={`List item miau miau miau miau miau miau miau miau miau miau miau miau ${value + 1}`} />
             </ListItem>
           );
         })}
@@ -102,7 +101,7 @@ export default function AsignarTransferList() {
 
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-      <Grid item>{customList(left, "Alumnos")}</Grid>
+      <Grid item>{customList(left, "Lista de alumnos", true)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -147,7 +146,7 @@ export default function AsignarTransferList() {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(right, "Alumnos seleccionados")}</Grid>
+      <Grid item>{customList(right, "Alumnos asignados", false)}</Grid>
     </Grid>
   );
 }
