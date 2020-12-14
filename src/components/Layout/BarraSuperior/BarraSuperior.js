@@ -21,7 +21,9 @@ import Avatar from "@material-ui/core/Avatar";
 
 import Brightness2Icon from "@material-ui/icons/Brightness2";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from 'react-router-dom';
 import * as actions from "store/actions/index";
+import TituloRuta from "shared/titulosRutas"
 
 const BarraSuperior = (props) => {
     const classes = useStyles();
@@ -30,6 +32,8 @@ const BarraSuperior = (props) => {
     const fotoPerfil = useSelector((state) => state.auth.user.fotoPerfil);
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
+    const location = useLocation();
+    const titulo = TituloRuta(location.pathname)
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -129,7 +133,7 @@ const BarraSuperior = (props) => {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap className={classes.titulo}>
-                    {props.titulo}
+                    {titulo}
                 </Typography>
                 <div className={classes.opciones}>
                     <IconButton>

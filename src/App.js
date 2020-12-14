@@ -198,10 +198,11 @@ class App extends Component {
       }
     }
 
+    const titulo = "pepe";
     return (
       <AppTheme>
         <CssBaseline />
-        <Layout>{routes}</Layout>
+        <Layout titulo={titulo}>{routes}</Layout>
       </AppTheme>
     );
   }
