@@ -12,6 +12,9 @@ import ColumnaInstrumento from "../../components/IDE/ColumnaInstrumento/ColumnaI
 import ColumnaOpcionesInstrumento from "../../components/IDE/ColumnaOpcionesInstrumento/ColumnaOpcionesInstrumento";
 import AddIcon from "@material-ui/icons/Add";
 import { http } from "shared/http";
+import FloatingButtonInstrumentos from "../../components/IDE/FloatingButtonInstrumentos/FloatingButtonInstrumentos";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 class Rubrica extends Component {
   state = {
@@ -560,6 +563,45 @@ class Rubrica extends Component {
     });
   };
 
+  descargarPDF = () => {
+    const renglonesOrdenados = this.state.renglones.sort(((a, b) => a.num_renglon - b.num_renglon));
+    const body = renglonesOrdenados.map((renglon) => {
+      const b  = [];
+      b.push(renglon.criterio);
+      
+      const excelente  = this.state.celdas.filter(celda => celda.id_columna == 1 && celda.id_renglon == renglon.num_renglon)[0];
+      b.push(excelente.texto + "\r\rPuntos: " + excelente.puntos_max);
+      
+      const bueno  = this.state.celdas.filter(celda => celda.id_columna == 2 && celda.id_renglon == renglon.num_renglon)[0];
+      b.push(bueno.texto + "\r\rPuntos: " + bueno.puntos_max);
+      
+      const regular  = this.state.celdas.filter(celda => celda.id_columna == 3 && celda.id_renglon == renglon.num_renglon)[0];
+      b.push(regular.texto + "\r\rPuntos: " + regular.puntos_max);
+      
+      const suficiente  = this.state.celdas.filter(celda => celda.id_columna == 4 && celda.id_renglon == renglon.num_renglon)[0];
+      b.push(suficiente.texto + "\r\rPuntos: " + suficiente.puntos_max);
+      
+      const insuficiente  = this.state.celdas.filter(celda => celda.id_columna == 5 && celda.id_renglon == renglon.num_renglon)[0];
+      b.push(insuficiente.texto + "\r\rPuntos: " + insuficiente.puntos_max);
+      return b;
+    });
+
+    const rubrica = jsPDF();
+    const finalY = rubrica.lastAutoTable.finalY || 10;
+    rubrica.setFontSize(12);
+    const textWidth = rubrica.getStringUnitWidth(this.state.nombre) * rubrica.internal.getFontSize() / rubrica.internal.scaleFactor;
+    const textOffset = (rubrica.internal.pageSize.width - textWidth) / 2;
+    rubrica.text(textOffset, finalY, this.state.nombre);
+    rubrica.text(this.state.descripcion, 15, finalY + 15,{
+      styles: { fontSize: 5 }})
+    rubrica.autoTable({
+        startY: finalY+ 20,
+        head: [['Criterio', 'Excelente', 'Bueno', 'Regular', 'Suficiente','Insuficiente']],
+        body: body 
+      })
+    rubrica.save("rubrica.pdf");
+  }
+
   render() {
     const columnas = this.state.columnas.map((columna) => {
       const celdas = [];
@@ -728,7 +770,7 @@ class Rubrica extends Component {
           </Grid>
           
         </Grid>
-        {}
+        <FloatingButtonInstrumentos guardar={this.crearRubrica} crearPDF ={this.descargarPDF}/>
       </Grid>
     );
   }

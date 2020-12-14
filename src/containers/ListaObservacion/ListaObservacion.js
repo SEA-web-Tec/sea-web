@@ -15,6 +15,9 @@ import CeldaInstrumento from "../../components/IDE/CeldaInstrumento/CeldaInstrum
 import { http } from "shared/http";
 import Snackbar from "@material-ui/core/Snackbar"
 import { Alert } from "@material-ui/lab";
+import FloatingButtonInstrumentos from "../../components/IDE/FloatingButtonInstrumentos/FloatingButtonInstrumentos";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 class ListaObservacion extends Component {
   state = {
@@ -325,6 +328,33 @@ class ListaObservacion extends Component {
 
     this.setState({ rengloneslo: renglonesActualizados });
   };
+
+  descargarPDF = () => {
+    const renglonesOrdenados = this.state.rengloneslo.sort(((a, b) => a.numrenglon - b.numrenglon));
+    
+    const body = renglonesOrdenados.map((renglon) => {
+      const b = [];
+      b.push(renglon.criterio + "\r\rPuntos: " + renglon.puntos);
+      b.push("");
+      b.push("");
+      return b;
+    });
+    console.log(body);
+    const rubrica = jsPDF();
+    const finalY = rubrica.lastAutoTable.finalY || 10;
+    rubrica.setFontSize(12);
+    const textWidth = rubrica.getStringUnitWidth(this.state.nombre) * rubrica.internal.getFontSize() / rubrica.internal.scaleFactor;
+    const textOffset = (rubrica.internal.pageSize.width - textWidth) / 2;
+    rubrica.text(textOffset, finalY, this.state.nombre);
+    rubrica.text(this.state.descripcion, 15, finalY + 15,{
+      styles: { fontSize: 5 }})
+    rubrica.autoTable({
+        startY: finalY+ 20,
+        head: [['Criterio', 'Observaciones', 'Puntuacion']],
+        body: body 
+      })
+    rubrica.save("listadeobservacion.pdf");
+  }
   render() {
     const renglonesOrdenados = [...this.state.rengloneslo];
     renglonesOrdenados.sort((a, b) => a.numrenglon - b.numrenglon);
@@ -475,6 +505,7 @@ class ListaObservacion extends Component {
               </Grid>
             </Grid>
           </Grid>
+          <FloatingButtonInstrumentos guardar={this.crearListaDeObservacion} crearPDF={this.descargarPDF}/>
         </Grid>
       </div>
     );

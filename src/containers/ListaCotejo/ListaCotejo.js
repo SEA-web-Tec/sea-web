@@ -14,6 +14,9 @@ import TituloColumnaInstrumento from "../../components/IDE/TituloColumnaInstrume
 import CeldaInstrumento from "../../components/IDE/CeldaInstrumento/CeldaInstrumento";
 import Snackbar from "@material-ui/core/Snackbar"
 import { Alert } from "@material-ui/lab";
+import FloatingButtonInstrumentos from "../../components/IDE/FloatingButtonInstrumentos/FloatingButtonInstrumentos";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import { http } from "shared/http";
 
 class ListaCotejo extends Component {
@@ -300,6 +303,34 @@ class ListaCotejo extends Component {
 
     this.setState({ rengloneslc: renglonesActualizados });
   };
+
+  descargarPDF = () => {
+    const renglonesOrdenados = this.state.rengloneslc.sort(((a, b) => a.numrenglon - b.numrenglon));
+    
+    const body = renglonesOrdenados.map((renglon) => {
+      const b = [];
+      b.push(renglon.criterio + "\r\rPuntos: " + renglon.puntos);
+      b.push("SI cumple ");
+      b.push("NO cumple");
+      return b;
+    });
+    console.log(body);
+    const rubrica = jsPDF();
+    const finalY = rubrica.lastAutoTable.finalY || 10;
+    rubrica.setFontSize(12);
+    const textWidth = rubrica.getStringUnitWidth(this.state.nombre) * rubrica.internal.getFontSize() / rubrica.internal.scaleFactor;
+    const textOffset = (rubrica.internal.pageSize.width - textWidth) / 2;
+    rubrica.text(textOffset, finalY, this.state.nombre);
+    rubrica.text(this.state.descripcion, 15, finalY + 15,{
+      styles: { fontSize: 5 }})
+    rubrica.autoTable({
+        startY: finalY+ 20,
+        head: [['Criterio', 'Si', 'No']],
+        body: body 
+      })
+    rubrica.save("listadecotejo.pdf");
+  }
+
   render() {
     const renglonesOrdenados = [...this.state.rengloneslc];
     renglonesOrdenados.sort((a, b) => a.numrenglon - b.numrenglon);
@@ -461,9 +492,9 @@ class ListaCotejo extends Component {
               <Grid item xs={6} sm={2}>
                 {boton}
               </Grid>
-          </Grid>
-          
+          </Grid>     
         </Grid>
+        <FloatingButtonInstrumentos guardar={this.crearListaDeCotejo} crearPDF ={this.descargarPDF}/>
       </Grid>
       </div>
     );
