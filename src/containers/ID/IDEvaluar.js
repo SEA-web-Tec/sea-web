@@ -12,7 +12,7 @@ import { CircularProgress } from "@material-ui/core";
 
 class ID extends Component {
   state = {
-    entrar:null,
+    entrar: null,
     intrumentaciones: [],
     seleccionado: 0,
     comentario: "",
@@ -21,6 +21,7 @@ class ID extends Component {
     materiaSeleccionado: "",
     mostrarIcono: false,
     correcto: true,
+    cambio: false,
   };
 
   //Buscar todas las intrumentaciones
@@ -34,7 +35,6 @@ class ID extends Component {
 
   cambiarSeleccionado = async (dato, index) => {
     this.setState({ seleccionado: dato, comentario: "", mostrarIcono: true });
-    console.log(index);
     const nombreM = `Nombre: ${
       this.state.intrumentaciones[index].nombres +
       " " +
@@ -45,12 +45,10 @@ class ID extends Component {
     this.setState({
       nombreMaestroSeleccionado: nombreM,
       grupoSeleccionado: this.state.intrumentaciones[index].grupo,
-      materiaSeleccionado: this.state.intrumentaciones[index]
-        .materiaNombre,
+      materiaSeleccionado: this.state.intrumentaciones[index].materiaNombre,
     });
 
     await this.props.onBusquedaInd(dato);
-    console.log(dato);
   };
 
   cambiarComentario = (comentario) => {
@@ -69,79 +67,88 @@ class ID extends Component {
     let info = null;
 
     if (this.state.entrar == null) {
-      this.setState({entrar:"lel"})
+      this.setState({ entrar: "lel" });
       this.buscarIntrumentaciones();
     } else {
-      if (
-        this.state.intrumentaciones.length === 0 &&
-        this.props.intrumentaciones.length !== 0
-      ) {
-        this.setState({ intrumentaciones: this.props.intrumentaciones }, () => {
-          if (this.props.intrumentaciones.length != 0) {
-            this.setState({
-              seleccionado: this.props.intrumentaciones[0].id,
-              comentario: "",
-            });
+      if (this.props.intrumentaciones !== null)
+        if (
+          this.state.intrumentaciones.length === 0 &&
+          this.props.intrumentaciones.length !== 0 &&
+          !this.state.cambio
+        ) {
+          if (this.props.intrumentaciones.length !== 0) {
+            this.setState(
+              { intrumentaciones: this.props.intrumentaciones },
+              () => {
+                if (this.props.intrumentaciones.length != 0) {
+                  this.setState({
+                    seleccionado: this.props.intrumentaciones[0].id,
+                    comentario: "",
+                  });
+                }
+              }
+            );
+          } else {
+            this.setState({ cambio: true });
           }
-        });
-      } else {
-        let card = null;
-        let ninguna = null;
-        if (this.state.intrumentaciones.length !== 0) {
-          card = (
-            <div>
-              <CardEvaluacion
-                seleccionar={this.cambiarSeleccionado}
-                intrumentaciones={this.state.intrumentaciones}
-              />
-              <Portada
-                materia={this.state.materiaSeleccionado}
-                carrera="Evaluando"
-                maestro={this.state.nombreMaestroSeleccionado}
-                grupo={this.state.grupoSeleccionado}
-                periodo="Enero - Junio 2020"
-                hasTabs
-                isID
-                status={this.props.estado}
-              >
-                <TabsID
-                  evaluar={true}
-                  cambiar_comentario={this.cambiarComentario}
-                  enviar_evaluacion={this.enviarInstrumentacion}
-                  mostrar={this.state.mostrarIcono}
+        } else {
+          let card = null;
+          let ninguna = null;
+          if (this.state.intrumentaciones.length !== 0) {
+            card = (
+              <div>
+                <CardEvaluacion
+                  seleccionar={this.cambiarSeleccionado}
+                  intrumentaciones={this.state.intrumentaciones}
                 />
-              </Portada>
+                <Portada
+                  materia={this.state.materiaSeleccionado}
+                  carrera="Evaluando"
+                  maestro={this.state.nombreMaestroSeleccionado}
+                  grupo={this.state.grupoSeleccionado}
+                  periodo="Enero - Junio 2020"
+                  hasTabs
+                  isID
+                  status={this.props.estado}
+                >
+                  <TabsID
+                    evaluar={true}
+                    cambiar_comentario={this.cambiarComentario}
+                    enviar_evaluacion={this.enviarInstrumentacion}
+                    mostrar={this.state.mostrarIcono}
+                  />
+                </Portada>
+              </div>
+            );
+          } else if (this.state.correcto) {
+            ninguna = (
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={this.state.correcto}
+                onClose={() => {
+                  this.setState({ correcto: false });
+                  const url = "/grupos/";
+                  window.location.replace(url);
+                  //this.props.onAuthDismissError();
+                }}
+                autoHideDuration={2500}
+              >
+                <Alert variant="filled" severity="info">
+                  {"No hay instrumentaciones para evaluar."}
+                </Alert>
+              </Snackbar>
+            );
+          }
+          info = (
+            <div>
+              {card}
+              {ninguna}
             </div>
           );
-        } else if (this.state.correcto) {
-          ninguna = (
-            <Snackbar
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={this.state.correcto}
-              onClose={() => {
-                this.setState({ correcto: false });
-                const url = "/grupos/";
-                window.location.replace(url);
-                //this.props.onAuthDismissError();
-              }}
-              autoHideDuration={2500}
-            >
-              <Alert variant="filled" severity="info">
-                {"No hay instrumentaciones para evaluar."}
-              </Alert>
-            </Snackbar>
-          );
         }
-        info = (
-          <div>
-            {card}
-            {ninguna}
-          </div>
-        );
-      }
     }
 
     if (this.props.loading) {

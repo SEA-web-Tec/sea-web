@@ -16,7 +16,6 @@ import {
 
 class CardEvaluacion extends Component {
   render(props) {
-    console.log(this.props.intrumentaciones);
     const { classes } = this.props;
     let agregarIntrumentacion = null;
     if (this.props.intrumentaciones.length != 0) {

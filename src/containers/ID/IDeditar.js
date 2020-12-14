@@ -18,7 +18,6 @@ class ID extends Component {
   buscarIntrumentacion = async () => {
     await this.props.onBusqueda(this.props.id_user, this.props.match.params.id);
     await this.props.onFetchGrupos(this.props.token, this.props.id_user);
-    console.log(this.props.grupo);
     for (let i = 0; i < this.props.grupo.length; i++) {
       if (this.props.grupo[i].id == this.props.match.params.id) {
         this.setState({
@@ -45,7 +44,6 @@ class ID extends Component {
       <TabsIDEditar evaluar={true} grupo={this.props.match.params.id} />
     );
 
-    console.log(this.props.id_user);
 
     if (this.state.entrar == null) {
       this.setState({ entrar: "simon" });
@@ -56,7 +54,6 @@ class ID extends Component {
       info = <CircularProgress /*className={classes.spinner}*/ />;
     }
 
-    console.log(this.props.estado);
 
     return (
       <Fragment>

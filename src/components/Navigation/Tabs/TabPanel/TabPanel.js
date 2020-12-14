@@ -55,7 +55,6 @@ export default function TabPanel(props) {
       var letra = letterValue(element.label);
       fila.indicadoresponderacion[letra] = 0;
     });
-    console.log(fila);
     var arreglo = [...matriz];
     arreglo.push(fila);
     setMatriz(arreglo);
@@ -130,7 +129,6 @@ export default function TabPanel(props) {
       )
     );
   } else if (actividades_enseñanza.length === 0) {
-    console.log("entre");
     addElement(
       "Actividad de Enseñanza",
       "Sin intrumentacion",

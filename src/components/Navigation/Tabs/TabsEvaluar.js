@@ -202,10 +202,8 @@ class SimpleTabs extends Component {
           //});
         }
       }
-      //console.log(arrgInd);
       this.setState({ Inicio: JSON.parse(JSON.stringify(arrgInd)) }, () => {
         this.setState({ entrar: true });
-        console.log(arrgInd);
       });
     }
 

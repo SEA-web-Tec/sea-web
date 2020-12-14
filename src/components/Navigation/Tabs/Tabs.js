@@ -59,7 +59,6 @@ class SimpleTabs extends Component {
 
   arrayToStringAll = async () => {
     const arrg = JSON.parse(JSON.stringify(this.state.Inicio));
-    console.log(arrg);
     for (let i = 0; i < arrg.length; i++) {
       arrg[i].unidades["actividades_aprendizaje"] = await this.arrayToString(
         arrg[i],
@@ -157,7 +156,6 @@ class SimpleTabs extends Component {
             : 0,
           this.state.Inicio[i].matriz[j].evidencia.evaluacion_formativa,
         ]);
-        console.log(cuerpoME[i][cuerpoME[i].length - 1][3]);
         sumas[i].A =
           (sumas[i].A != undefined ? sumas[i].A : 0) +
           cuerpoME[i][cuerpoME[i].length - 1][2];
@@ -176,7 +174,6 @@ class SimpleTabs extends Component {
         sumas[i].F =
           (sumas[i].F != undefined ? sumas[i].F : 0) +
           cuerpoME[i][cuerpoME[i].length - 1][7];
-        console.log(sumas[i]);
       }
       cuerpoIndicadores[i].push([indicadores[0], sumas[i].A]);
       cuerpoIndicadores[i].push([indicadores[1], sumas[i].B]);
@@ -194,7 +191,6 @@ class SimpleTabs extends Component {
         intrumentacionPDF.lastAutoTable.finalY || 10,
         "Unidad" + (i + 1)
       );
-      console.log(cuerpoTemasYSubtemas[i]);
       intrumentacionPDF.autoTable({
         head: [
           [
@@ -453,7 +449,6 @@ class SimpleTabs extends Component {
           });
         }
       }
-      console.log(arrgInd);
       this.setState({ Inicio: JSON.parse(JSON.stringify(arrgInd)) }, () => {
         this.setState({ entrar: true });
       });

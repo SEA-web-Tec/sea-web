@@ -83,7 +83,8 @@ const asyncAdminGrupo = asyncComponent(() => {
 class App extends Component {
   async componentDidMount() {
     await this.props.onAuthCheck();
-    await this.props.onFetchGrupos(this.props.token, this.props.user.id);
+    if (this.props.user != null)
+      await this.props.onFetchGrupos(this.props.token, this.props.user.id);
   }
 
   render() {

@@ -133,9 +133,6 @@ class SimpleTabs extends Component {
               unidad: arrg[i].unidad,
             };
             this.setState({ error: error }, () => {
-              console.log("error interno");
-              console.log(sumaInterna);
-              console.log(this.state.error);
               //break;
             });
           }
@@ -182,7 +179,6 @@ class SimpleTabs extends Component {
 
   arrayToStringAll = async () => {
     const arrg = JSON.parse(JSON.stringify(this.state.intrumentacion));
-    console.log(arrg);
     for (let i = 0; i < arrg.length; i++) {
       arrg[i].unidades["actividades_aprendizaje"] = await this.arrayToString(
         arrg[i],
@@ -237,7 +233,6 @@ class SimpleTabs extends Component {
     } else {
       console.log("salio error");
       console.log(this.state.error);
-      console.log(this.state.intrumentacion);
     }
   };
 
