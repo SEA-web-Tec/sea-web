@@ -20,3 +20,16 @@ export const fetchMaterias = (token) => {
     });
   };
 };
+
+export const fetchMateriasConGrupo = (token) => {
+  return (dispatch) => {
+    let url = "/materias/con-grupo";
+    const authData = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+
+    http.get(url, authData).then((response) => {
+      dispatch(fetchMateriasSuccess(response.data));
+    });
+  };
+};

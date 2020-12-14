@@ -7,6 +7,7 @@ import idReducer from "./id";
 import temariosReducer from "./temarios";
 import materiasReducer from "./materias";
 import usersReducer from "./users";
+import reactivosReducer from "./reactivos";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   id: idReducer,
   temarios: temariosReducer,
   materias: materiasReducer,
-  users: usersReducer
+  users: usersReducer,
+  reactivos: reactivosReducer
 });
 
 export default rootReducer;
