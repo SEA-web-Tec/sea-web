@@ -483,18 +483,8 @@ class ListaCotejo extends Component {
             </Grid>
           </Grid>
           <Grid item xs={6} sm={12}>
-          <Grid container >
-              <Grid item xs={6} sm={2}>
-                <Button variant="outlined" color="primary" onClick={()=> {this.props.history.push("/instrumentos");}}>
-                  Cancelar
-                </Button>
-              </Grid>
-              <Grid item xs={6} sm={2}>
-                {boton}
-              </Grid>
-          </Grid>     
-        </Grid>
-        <FloatingButtonInstrumentos guardar={this.crearListaDeCotejo} crearPDF ={this.descargarPDF}/>
+            <FloatingButtonInstrumentos guardar={this.crearListaDeCotejo} crearPDF ={this.descargarPDF}/>
+          </Grid>
       </Grid>
       </div>
     );
