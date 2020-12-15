@@ -5,11 +5,11 @@ import { useHistory } from "react-router-dom";
 import { Add as AddIcon,  
     Close as CloseIcon,
     Subject as SubjectIcon,
-    FormatListBulleted as FormatListBulletedIcon, 
     FormatListNumbered as FormatListNumberedIcon,
     StorageOutlined as StorageOutlinedIcon,
     LibraryBooksSharp as LibraryBooksSharpIcon
 } from '@material-ui/icons';
+import { ExamenesVF } from 'assets/icons/Index';
 
 const useStyles = makeStyles(() => ({
     mainIcon: {
@@ -53,7 +53,7 @@ function FloatingButton(props) {
                 <Tooltip title={props.reactivos ? "Falso/verdadero" : "Banco de reactivos"} placement="left">
                     <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 180px)"}}>
                         { props.reactivos ? 
-                        <FormatListBulletedIcon onClick={()=>{history.push("/examen/"+props.id+"/reactivo/fv")}}/> 
+                        <ExamenesVF onClick={()=>{history.push("/examen/"+props.id+"/reactivo/fv")}}/> 
                         : <StorageOutlinedIcon onClick={()=>{history.push("/examen/"+props.id+"/reactivos")}}/> }
                     </Fab>
                 </Tooltip>
