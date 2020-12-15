@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Portada from "../../components/Portada/Portada";
 import TabsID from "../../components/Navigation/Tabs/Tabs";
-
-import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
 import { connect } from "react-redux";
 import * as actions from "store/actions/index";
 
@@ -16,7 +14,20 @@ class ID extends Component {
     maestro: "",
     grupo: "",
     periodo: "",
-    foto: ""
+    foto: "",
+    entrar: false,
+  };
+
+  UNSAFE_componentWillMount = async () => {
+    this.setState({
+      entrar: null,
+      materia: "",
+      carrera: "",
+      maestro: "",
+      grupo: "",
+      periodo: "",
+      foto: "",
+    });
   };
 
   buscarIntrumentacion = async () => {
@@ -30,8 +41,12 @@ class ID extends Component {
           grupo: this.props.grupo[i].grupo,
           foto: this.props.grupo[i].fotoPortada,
           maestro:
-            this.props.usuario.nombres + " " + this.props.usuario.apellidoPaterno + " " + this.props.usuario.apellidoMaterno,
-          periodo: this.props.grupo[i].periodo + " " + this.props.grupo[i].anio
+            this.props.usuario.nombres +
+            " " +
+            this.props.usuario.apellidoPaterno +
+            " " +
+            this.props.usuario.apellidoMaterno,
+          periodo: this.props.grupo[i].periodo + " " + this.props.grupo[i].anio,
         });
         break;
       }
@@ -39,24 +54,7 @@ class ID extends Component {
   };
 
   render(props) {
-    let info = (
-      <div>
-        <Portada
-          materia={this.state.materia}
-          carrera={this.state.carrera}
-          maestro={this.state.maestro}
-          grupo={this.state.grupo}
-          periodo={this.state.periodo}
-          portada={this.state.foto}
-          hasTabs
-          isID
-          status={this.props.estado}
-        >
-          <TabsID evaluar={true} id_grupo={this.props.match.params.id} />
-        </Portada>
-      </div>
-    );
-
+    let info = null;
     if (this.state.entrar == null) {
       this.setState({ entrar: "simon" });
       this.buscarIntrumentacion();
@@ -64,6 +62,24 @@ class ID extends Component {
 
     if (this.props.loading) {
       info = <CircularProgress /*className={classes.spinner}*/ />;
+    } else if (this.state.materia != "" && this.props.id_ins != null) {
+      info = (
+        <div>
+          <Portada
+            materia={this.state.materia}
+            carrera={this.state.carrera}
+            maestro={this.state.maestro}
+            grupo={this.state.grupo}
+            periodo={this.state.periodo}
+            portada={this.state.foto}
+            hasTabs
+            isID
+            status={this.props.estado}
+          >
+            <TabsID evaluar={true} id_grupo={this.props.match.params.id} />
+          </Portada>
+        </div>
+      );
     }
 
     return <Fragment>{info}</Fragment>;
@@ -80,14 +96,16 @@ const mapStateToProps = (state) => {
     estado: state.id.estado,
     comentario: state.id.comentario,
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBusqueda: (user_id, grupo_id) => dispatch(actions.idBusqueda(user_id, grupo_id)),
-    onFetchGrupos: (token, userId) => dispatch(actions.fetchGrupos(token, userId))
+    onBusqueda: (user_id, grupo_id) =>
+      dispatch(actions.idBusqueda(user_id, grupo_id)),
+    onFetchGrupos: (token, userId) =>
+      dispatch(actions.fetchGrupos(token, userId)),
   };
 };
 

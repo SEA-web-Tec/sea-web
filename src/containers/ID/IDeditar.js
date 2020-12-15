@@ -13,8 +13,21 @@ class ID extends Component {
     maestro: "",
     grupo: "",
     periodo: "",
-    foto: ""
+    foto: "",
   };
+
+  componentDidMount = async () => {
+    this.setState({
+      entrar: null,
+      materia: "",
+      carrera: "",
+      maestro: "",
+      grupo: "",
+      periodo: "",
+      foto: "",
+    });
+  };
+
   buscarIntrumentacion = async () => {
     await this.props.onBusqueda(this.props.id_user, this.props.match.params.id);
     await this.props.onFetchGrupos(this.props.token, this.props.id_user);
@@ -26,8 +39,12 @@ class ID extends Component {
           grupo: this.props.grupo[i].grupo,
           foto: this.props.grupo[i].fotoPortada,
           maestro:
-            this.props.usuario.nombres + " " + this.props.usuario.apellidoPaterno + " " + this.props.usuario.apellidoMaterno,
-          periodo: this.props.grupo[i].periodo + " " + this.props.grupo[i].anio
+            this.props.usuario.nombres +
+            " " +
+            this.props.usuario.apellidoPaterno +
+            " " +
+            this.props.usuario.apellidoMaterno,
+          periodo: this.props.grupo[i].periodo + " " + this.props.grupo[i].anio,
         });
         break;
       }
@@ -36,7 +53,9 @@ class ID extends Component {
 
   render(props) {
     //        <CardEvaluacion />
-    let info = <TabsIDEditar evaluar={true} grupo={this.props.match.params.id} />;
+    let info = (
+      <TabsIDEditar evaluar={true} grupo={this.props.match.params.id} />
+    );
 
     if (this.state.entrar == null) {
       this.setState({ entrar: "simon" });
@@ -77,14 +96,16 @@ const mapStateToProps = (state) => {
     estado: state.id.estado,
     comentario: state.id.comentario,
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBusqueda: (user_id, grupo_id) => dispatch(actions.idBusqueda(user_id, grupo_id)),
-    onFetchGrupos: (token, userId) => dispatch(actions.fetchGrupos(token, userId))
+    onBusqueda: (user_id, grupo_id) =>
+      dispatch(actions.idBusqueda(user_id, grupo_id)),
+    onFetchGrupos: (token, userId) =>
+      dispatch(actions.fetchGrupos(token, userId)),
   };
 };
 
