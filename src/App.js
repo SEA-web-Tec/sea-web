@@ -134,18 +134,17 @@ class App extends Component {
           <Route path="/listaobservacion" exact component={asyncListaObservacion} />
 
           {/* EXAMEN */}
-          <Route path="/examen" exact component={asyncDashboardExamen} />
-          <Route path="/examen/crear" exact component={asyncCrearExamen} />
-          <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
-
-          <Route path="/examen/reactivos" exact component={BancoReactivos} />
-          <Route path="/examen/reactivo/abierto" exact component={CrearReactivoAbierto} />
-          <Route path="/examen/reactivo/fv" exact component={CrearReactivoFV} />
-          <Route path="/examen/reactivo/multiple" exact component={CrearReactivoMultiple} />
-          <Route path="/examen/resultados" exact component={Resultados} />
-          <Route path="/examen/resultados/respuestas" exact component={Respuestas} />
-          <Route path="/examen/editar" exact component={asyncEditarExamen} />
-          <Route path="/examen/id" exact component={asyncContenedorExamen} />
+          <Route path="/examen/:materia_id" exact component={asyncDashboardExamen} />
+          <Route path="/examen/:materia_id/crear" exact component={asyncCrearExamen} />
+          <Route path="/examen/:materia_id/asignar" exact component={asyncAsignarExamen} />
+          <Route path="/examen/:materia_id/reactivos" exact component={BancoReactivos} />
+          <Route path="/examen/:materia_id/reactivo/abierto" exact component={CrearReactivoAbierto} />
+          <Route path="/examen/:materia_id/reactivo/fv" exact component={CrearReactivoFV} />
+          <Route path="/examen/:materia_id/reactivo/multiple" exact component={CrearReactivoMultiple} />
+          <Route path="/examen/:materia_id/resultados" exact component={Resultados} />
+          <Route path="/examen/:materia_id/resultados/respuestas" exact component={Respuestas} />
+          <Route path="/examen/:materia_id/editar" exact component={asyncEditarExamen} />
+          <Route path="/examen/:materia_id/id" exact component={asyncContenedorExamen} />
 
           {/* LO DEL CARLOS */}
           <Route path="/trabajo-individual" exact component={asyncTrabajo} />
@@ -178,17 +177,17 @@ class App extends Component {
             <Route path="/listaobservacion" exact component={asyncListaObservacion} />
 
             {/* EXAMEN */}
-            <Route path="/examen" exact component={asyncDashboardExamen} />
-            <Route path="/examen/crear" exact component={asyncCrearExamen} />
-            <Route path="/examen/asignar" exact component={asyncAsignarExamen} />
-            <Route path="/examen/reactivos" exact component={BancoReactivos} />
-            <Route path="/examen/reactivo/abierto" exact component={CrearReactivoAbierto} />
-            <Route path="/examen/reactivo/fv" exact component={CrearReactivoFV} />
-            <Route path="/examen/reactivo/multiple" exact component={CrearReactivoMultiple} />
-            <Route path="/examen/resultados" exact component={Resultados} />
-            <Route path="/examen/resultados/respuestas" exact component={Respuestas} />
-            <Route path="/examen/editar" exact component={asyncEditarExamen} />
-            <Route path="/examen/id" exact component={asyncContenedorExamen} />
+            <Route path="/examen/:materia_id" exact component={asyncDashboardExamen} />
+            <Route path="/examen/:materia_id/crear" exact component={asyncCrearExamen} />
+            <Route path="/examen/:materia_id/asignar" exact component={asyncAsignarExamen} />
+            <Route path="/examen/:materia_id/reactivos" exact component={BancoReactivos} />
+            <Route path="/examen/:materia_id/reactivo/abierto" exact component={CrearReactivoAbierto} />
+            <Route path="/examen/:materia_id/reactivo/fv" exact component={CrearReactivoFV} />
+            <Route path="/examen/:materia_id/reactivo/multiple" exact component={CrearReactivoMultiple} />
+            <Route path="/examen/:materia_id/resultados" exact component={Resultados} />
+            <Route path="/examen/:materia_id/resultados/respuestas" exact component={Respuestas} />
+            <Route path="/examen/:materia_id/editar" exact component={asyncEditarExamen} />
+            <Route path="/examen/:materia_id/id" exact component={asyncContenedorExamen} />
 
             {/* LO DEL CARLOS */}
             <Route path="/trabajo-individual" exact component={asyncTrabajo} />

@@ -17,7 +17,7 @@ class DashboardExamen extends Component {
     examenes: []
   }
   componentDidMount() {
-    let url = "/examenes/" + 1;
+    let url = "/examenes/" + this.props.match.params.materia_id;
     const idData = {
     };
     http.get(url, idData)
@@ -89,7 +89,7 @@ class DashboardExamen extends Component {
           </Accordion>
         )})}
       </Portada>
-      <FloatingButton reactivos={false}/>
+      <FloatingButton reactivos={false} id={this.props.match.params.materia_id}/>
       </>
     );
   }

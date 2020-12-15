@@ -46,21 +46,21 @@ function FloatingButton(props) {
                 <Tooltip title={props.reactivos ? "Abierto" : "Crear examen"} placement="left">
                     <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 130px)"}}>
                     { props.reactivos ? 
-                        <SubjectIcon onClick={()=>{history.push("/examen/reactivo/abierto")}}/> 
-                        : <LibraryBooksSharpIcon onClick={()=>{history.push("/examen/crear")}}/> }
+                        <SubjectIcon onClick={()=>{history.push("/examen/"+props.id+"/reactivo/abierto")}}/> 
+                        : <LibraryBooksSharpIcon onClick={()=>{history.push("/examen/"+props.id+"/crear")}}/> }
                     </Fab>
                 </Tooltip>
                 <Tooltip title={props.reactivos ? "Falso/verdadero" : "Banco de reactivos"} placement="left">
                     <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 180px)"}}>
                         { props.reactivos ? 
-                        <FormatListBulletedIcon onClick={()=>{history.push("/examen/reactivo/fv")}}/> 
-                        : <StorageOutlinedIcon onClick={()=>{history.push("/examen/reactivos")}}/> }
+                        <FormatListBulletedIcon onClick={()=>{history.push("/examen/"+props.id+"/reactivo/fv")}}/> 
+                        : <StorageOutlinedIcon onClick={()=>{history.push("/examen/"+props.id+"/reactivos")}}/> }
                     </Fab>
                 </Tooltip>
                 { props.reactivos &&
                     <Tooltip title="Opción múltiple" placement="left">
                         <Fab color="primary" size="small" className={classes.extendedIcon} style={{top: "calc(100% - 230px)"}}>
-                            <FormatListNumberedIcon onClick={()=>{history.push("/examen/reactivo/multiple")}}/>
+                            <FormatListNumberedIcon onClick={()=>{history.push("/examen/"+props.id+"/reactivo/multiple")}}/>
                         </Fab>
                     </Tooltip>
                 }

@@ -9,7 +9,7 @@ class CrearReactivoAbierto extends Component {
         reactivos: []
     }
     componentDidMount() {
-        let url = "/reactivos/todo/" + 1/*id_materia*/;
+        let url = "/reactivos/todo/" + this.props.match.params.materia_id;
         const idData = {
     };
     http.get(url, idData)
@@ -73,7 +73,7 @@ class CrearReactivoAbierto extends Component {
                 periodo="Enero - Junio 2020"
                 hasTabs>
                 <SimpleTabs data={reactivos} reactivos={this.state.reactivos}/>
-            <FloatingButton reactivos={true}/>
+            <FloatingButton reactivos={true} id={this.props.match.params.materia_id}/>
             </Portada>
         );
     }

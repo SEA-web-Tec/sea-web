@@ -20,6 +20,7 @@ import {
 } from "../../assets/icons/Index";
 import { blue, red, green, amber } from "@material-ui/core/colors";
 import BigTooltip from "../UI/BigTooltip/BigTooltip";
+import { Link as RouterLink } from "react-router-dom";
 
 const Grupo = (props) => {
     const classes = useStyles();
