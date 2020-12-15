@@ -10,6 +10,12 @@ const rutasTitulos = {
     // PENDIENTES
 
     // PENDIENTES
+
+    //INSTRUMENTOS
+    "/instrumentos":"Instrumentos de Evaluación",
+    "/rubrica":"Rubrica",
+    "/listacotejo":"Lista de Cotejo",
+    "/listaobservacion":"Lista de Observacion",
     //Admin
     "/admin/materias": "Agregar materias",
     "/admin/grupos": "Agregar grupos",
