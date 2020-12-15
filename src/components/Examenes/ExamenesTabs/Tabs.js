@@ -18,7 +18,6 @@ class SimpleTabs extends Component {
 
   handleChange = (event, newValue) => {
     this.setState({value: newValue});
-    console.log('value:'+newValue);
   };
 
   render () {
@@ -32,8 +31,7 @@ class SimpleTabs extends Component {
         })
         constDatos = this.state.reactivos.map((reac,indice) => {
           return (
-            <TabPanel key={(reac[0].unidad - 1)} value={this.state.value} index={(reac[0].unidad - 1)} 
-            data={this.props.data} reactivos={this.state.reactivos[indice]}>
+            <TabPanel key={(reac[0].unidad - 1)} value={this.state.value} index={(reac[0].unidad - 1)} reactivos={this.state.reactivos[indice]}>
               {this.props.children}
             </TabPanel>
           );

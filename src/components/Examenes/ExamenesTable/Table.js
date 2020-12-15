@@ -82,8 +82,8 @@ const useStyles2 = makeStyles((theme) => ({
     iconSaw: { color: "#5685ED" },
     iconIncorrect: { color: "#DF042F" },
     iconCorrect: { color: "#04B528" },
-    success: {  backgroundColor: theme.palette.success.main },
-    pending: { backgroundColor: theme.palette.warning.main }
+    success: { backgroundColor: theme.palette.success.main },
+    pending: { color: theme.palette.error.dark }
 }));
 
 function ExamenesTable(props) {
@@ -103,8 +103,8 @@ function ExamenesTable(props) {
         setPage(0);
     };
 
-    const handleClickRow = () => { // desplegar la respuesta en la parte superior
-        console.log("click row");
+    const handleClickRow = () => {
+        //console.log("click row");
     };
 
     return (

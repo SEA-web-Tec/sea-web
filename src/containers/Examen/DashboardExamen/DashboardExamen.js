@@ -66,7 +66,7 @@ class DashboardExamen extends Component {
               <Box component="div" className={classes.examenList}>
                 <Box component="div">
                   <Typography>
-                    { exam.nombre } - Unidad {exam.unidad}
+                    Unidad {exam.unidad}: { exam.nombre }
                   </Typography>
                 </Box>
                 <Box component="div">

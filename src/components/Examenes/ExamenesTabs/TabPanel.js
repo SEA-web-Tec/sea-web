@@ -17,12 +17,10 @@ export default function TabPanel(props) {
     console.info('You clicked the Chip to edit it.');
   };
 
-  console.log("TabsPanel: "+props.reactivos);
   return (
     <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} {...other}>
       <br/>
       {props.reactivos.map((reactivo) => {
-        console.log(reactivo);
         return (
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <FormControl className={classes.formControl}>
