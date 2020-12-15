@@ -9,14 +9,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import FloatingButton from "../../UI/FloatingButton/FloatingButton";
 
-import {
-  AppBar,
-  Tabs,
-  Tab,
-  Button,
-  IconButton,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, Tabs, Tab, Button, IconButton, Typography } from "@material-ui/core";
 
 import { Feedback as FeedbackIcon } from "@material-ui/icons";
 import Modal from "@material-ui/core/Modal";
@@ -24,7 +17,7 @@ import Modal from "@material-ui/core/Modal";
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`
   };
 }
 
@@ -35,7 +28,7 @@ class SimpleTabs extends Component {
     value: 0,
     entrar: false,
     num: 0,
-    abrirComentario: false,
+    abrirComentario: false
   };
   handleChange = (event, newValue) => {
     this.setState({ value: newValue });
@@ -49,7 +42,7 @@ class SimpleTabs extends Component {
       const fila = {
         label: num,
         actividad: actividad,
-        texto: elemento,
+        texto: elemento
       };
       arreglo.push(fila);
       num++;
@@ -60,28 +53,14 @@ class SimpleTabs extends Component {
   arrayToStringAll = async () => {
     const arrg = JSON.parse(JSON.stringify(this.state.Inicio));
     for (let i = 0; i < arrg.length; i++) {
-      arrg[i].unidades["actividades_aprendizaje"] = await this.arrayToString(
-        arrg[i],
-        "actividades_aprendizaje",
-        i + 1
-      );
-      arrg[i].unidades["actividades_enseñanza"] = await this.arrayToString(
-        arrg[i],
-        "actividades_enseñanza",
-        i + 1
-      );
-      arrg[i].unidades[
-        "desarrollo_competencias_genericas"
-      ] = await this.arrayToString(
+      arrg[i].unidades["actividades_aprendizaje"] = await this.arrayToString(arrg[i], "actividades_aprendizaje", i + 1);
+      arrg[i].unidades["actividades_enseñanza"] = await this.arrayToString(arrg[i], "actividades_enseñanza", i + 1);
+      arrg[i].unidades["desarrollo_competencias_genericas"] = await this.arrayToString(
         arrg[i],
         "desarrollo_competencias_genericas",
         i + 1
       );
-      arrg[i].unidades["material_apoyo"] = await this.arrayToString(
-        arrg[i],
-        "material_apoyo",
-        i + 1
-      );
+      arrg[i].unidades["material_apoyo"] = await this.arrayToString(arrg[i], "material_apoyo", i + 1);
     }
     return arrg;
   };
@@ -103,7 +82,7 @@ class SimpleTabs extends Component {
     const finalY = intrumentacionPDF.lastAutoTable.finalY || 10;
     intrumentacionPDF.setFontSize(12);
     intrumentacionPDF.text("lel", 15, finalY + 15, {
-      styles: { fontSize: 5 },
+      styles: { fontSize: 5 }
     });
 
     const indicadores = [
@@ -112,7 +91,7 @@ class SimpleTabs extends Component {
       "Propone y/o explica soluciones o procedimientos no vistos en clase.",
       "Introduce recursos y/o experiencias que promuevan un pensamiento crítico.",
       "Incorpora conocimientos y actividades interdiciplinarias en su aprendizaje.",
-      "Realiza su trabajo de manera autómata y autorregulada.",
+      "Realiza su trabajo de manera autómata y autorregulada."
     ];
 
     let cuerpoME = [];
@@ -130,7 +109,7 @@ class SimpleTabs extends Component {
         arregloTexto[i].unidades.actividades_aprendizaje,
         arregloTexto[i].unidades.actividades_enseñanza,
         arregloTexto[i].unidades.desarrollo_competencias_genericas,
-        "",
+        ""
       ]);
       for (let j = 0; j < this.state.Inicio[i].matriz.length; j++) {
         cuerpoME[i].push([
@@ -154,26 +133,14 @@ class SimpleTabs extends Component {
           this.state.Inicio[i].matriz[j].indicadoresponderacion.F != undefined
             ? this.state.Inicio[i].matriz[j].indicadoresponderacion.F
             : 0,
-          this.state.Inicio[i].matriz[j].evidencia.evaluacion_formativa,
+          this.state.Inicio[i].matriz[j].evidencia.evaluacion_formativa
         ]);
-        sumas[i].A =
-          (sumas[i].A != undefined ? sumas[i].A : 0) +
-          cuerpoME[i][cuerpoME[i].length - 1][2];
-        sumas[i].B =
-          (sumas[i].B != undefined ? sumas[i].B : 0) +
-          cuerpoME[i][cuerpoME[i].length - 1][3];
-        sumas[i].C =
-          (sumas[i].C != undefined ? sumas[i].C : 0) +
-          cuerpoME[i][cuerpoME[i].length - 1][4];
-        sumas[i].D =
-          (sumas[i].D != undefined ? sumas[i].D : 0) +
-          cuerpoME[i][cuerpoME[i].length - 1][5];
-        sumas[i].E =
-          (sumas[i].E != undefined ? sumas[i].E : 0) +
-          cuerpoME[i][cuerpoME[i].length - 1][6];
-        sumas[i].F =
-          (sumas[i].F != undefined ? sumas[i].F : 0) +
-          cuerpoME[i][cuerpoME[i].length - 1][7];
+        sumas[i].A = (sumas[i].A != undefined ? sumas[i].A : 0) + cuerpoME[i][cuerpoME[i].length - 1][2];
+        sumas[i].B = (sumas[i].B != undefined ? sumas[i].B : 0) + cuerpoME[i][cuerpoME[i].length - 1][3];
+        sumas[i].C = (sumas[i].C != undefined ? sumas[i].C : 0) + cuerpoME[i][cuerpoME[i].length - 1][4];
+        sumas[i].D = (sumas[i].D != undefined ? sumas[i].D : 0) + cuerpoME[i][cuerpoME[i].length - 1][5];
+        sumas[i].E = (sumas[i].E != undefined ? sumas[i].E : 0) + cuerpoME[i][cuerpoME[i].length - 1][6];
+        sumas[i].F = (sumas[i].F != undefined ? sumas[i].F : 0) + cuerpoME[i][cuerpoME[i].length - 1][7];
       }
       cuerpoIndicadores[i].push([indicadores[0], sumas[i].A]);
       cuerpoIndicadores[i].push([indicadores[1], sumas[i].B]);
@@ -186,11 +153,7 @@ class SimpleTabs extends Component {
     for (let i = 0; i < this.state.Inicio.length; i++) {
       //Temas y esas madres
       if (i != 0) intrumentacionPDF.addPage();
-      intrumentacionPDF.text(
-        132,
-        intrumentacionPDF.lastAutoTable.finalY || 10,
-        "Unidad" + (i + 1)
-      );
+      intrumentacionPDF.text(132, intrumentacionPDF.lastAutoTable.finalY || 10, "Unidad" + (i + 1));
       intrumentacionPDF.autoTable({
         head: [
           [
@@ -198,12 +161,12 @@ class SimpleTabs extends Component {
             "Actividades de Aprendizaje",
             "Actividadea de Enseñanza",
             "Desarrollo de Competencias Genericas",
-            "Horas-Teorico-Practica",
-          ],
+            "Horas-Teorico-Practica"
+          ]
         ],
         styles: { fontSize: 10 },
         startY: intrumentacionPDF.lastAutoTable.finalY + 5 || 20,
-        body: [...cuerpoTemasYSubtemas[i]],
+        body: [...cuerpoTemasYSubtemas[i]]
       });
       //Indicadores de alcance
       //intrumentacionPDF.addPage();
@@ -211,75 +174,30 @@ class SimpleTabs extends Component {
         head: [["Indicadores de alcance", "Valores del indicador"]],
         styles: { fontSize: 10 },
         startY: intrumentacionPDF.lastAutoTable.finalY + 10,
-        body: [...cuerpoIndicadores[i]],
+        body: [...cuerpoIndicadores[i]]
       });
       //Niveles de desempeño
-      intrumentacionPDF.text(
-        122,
-        intrumentacionPDF.lastAutoTable.finalY + 8,
-        "Niveles de Desempeño"
-      );
+      intrumentacionPDF.text(122, intrumentacionPDF.lastAutoTable.finalY + 8, "Niveles de Desempeño");
       intrumentacionPDF.autoTable({
         startY: intrumentacionPDF.lastAutoTable.finalY + 15,
         //headStyles:{1:{halign:"center",fillColor:[0,255,0]}},
-        head: [
-          [
-            "DESEMPEÑO",
-            "NIVEL DE DESEMPEÑO",
-            "INDICADORES DE ALCANCE",
-            "VALORACIÓN NUMERICA",
-          ],
-        ],
+        head: [["DESEMPEÑO", "NIVEL DE DESEMPEÑO", "INDICADORES DE ALCANCE", "VALORACIÓN NUMERICA"]],
         styles: { fontSize: 10 },
         body: [
           ["", "Excelente", "ABCDEF", this.Porcentaje(sumas[i], 5, false)],
-          [
-            "Competencia",
-            "Notable",
-            "ABCDE",
-            this.Porcentaje(sumas[i], 4, false),
-          ],
+          ["Competencia", "Notable", "ABCDE", this.Porcentaje(sumas[i], 4, false)],
           ["alcanzada", "Bueno", "ABCDE", this.Porcentaje(sumas[i], 4, true)],
           ["", "Suficiente", "ABCD", this.Porcentaje(sumas[i], 3, false)],
-          ["Competencia no alcanzada", "Insuficiente", "ABC", "NA"],
-        ],
+          ["Competencia no alcanzada", "Insuficiente", "ABC", "NA"]
+        ]
       });
       //Matriz de evaluacion
-      intrumentacionPDF.text(
-        122,
-        intrumentacionPDF.lastAutoTable.finalY + 8,
-        "Matriz de Evaluación"
-      );
+      intrumentacionPDF.text(122, intrumentacionPDF.lastAutoTable.finalY + 8, "Matriz de Evaluación");
       intrumentacionPDF.autoTable({
-        head: [
-          [
-            "Matriz de Evaluación",
-            "%",
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "Evaluacion Formativa de la Competencia",
-          ],
-        ],
+        head: [["Matriz de Evaluación", "%", "A", "B", "C", "D", "E", "F", "Evaluacion Formativa de la Competencia"]],
         styles: { fontSize: 10 },
         startY: intrumentacionPDF.lastAutoTable.finalY + 15,
-        body: [
-          ...cuerpoME[i],
-          [
-            "Total",
-            "100",
-            sumas[i].A,
-            sumas[i].B,
-            sumas[i].C,
-            sumas[i].D,
-            sumas[i].E,
-            sumas[i].F,
-            "",
-          ],
-        ],
+        body: [...cuerpoME[i], ["Total", "100", sumas[i].A, sumas[i].B, sumas[i].C, sumas[i].D, sumas[i].E, sumas[i].F, ""]]
       });
     }
 
@@ -311,11 +229,7 @@ class SimpleTabs extends Component {
   render() {
     const { classes } = this.props;
 
-    if (
-      this.state.num === 0 &&
-      this.props.id_ins != null &&
-      !this.state.entrar
-    ) {
+    if (this.state.num === 0 && this.props.id_ins != null && !this.state.entrar) {
       this.setState({ num: 1 });
 
       let i = 0;
@@ -331,17 +245,11 @@ class SimpleTabs extends Component {
             unidad: i + 1,
             actividades_aprendizaje:
               this.props.unidades.length != 0
-                ? this.stringToArray(
-                    this.props.unidades[i].actividades_aprendizaje,
-                    "actividades_aprendizaje"
-                  )
+                ? this.stringToArray(this.props.unidades[i].actividades_aprendizaje, "actividades_aprendizaje")
                 : [],
             actividades_enseñanza:
               this.props.unidades.length != 0
-                ? this.stringToArray(
-                    this.props.unidades[i].actividades_enseñanza,
-                    "actividades_enseñanza"
-                  )
+                ? this.stringToArray(this.props.unidades[i].actividades_enseñanza, "actividades_enseñanza")
                 : [],
             desarrollo_competencias_genericas:
               this.props.unidades.length != 0
@@ -352,24 +260,12 @@ class SimpleTabs extends Component {
                 : [],
             material_apoyo:
               this.props.unidades.length != 0
-                ? this.stringToArray(
-                    this.props.unidades[i].material_apoyo,
-                    "material_apoyo"
-                  )
+                ? this.stringToArray(this.props.unidades[i].material_apoyo, "material_apoyo")
                 : [],
-            semana_clases:
-              this.props.unidades.length != 0
-                ? this.props.unidades[i].semana_clases
-                : 1,
-            semana_evaluacion:
-              this.props.unidades.length != 0
-                ? this.props.unidades[i].semana_evaluacion
-                : 1,
+            semana_clases: this.props.unidades.length != 0 ? this.props.unidades[i].semana_clases : 1,
+            semana_evaluacion: this.props.unidades.length != 0 ? this.props.unidades[i].semana_evaluacion : 1
           },
-          indicadoresalcance:
-            this.props.indicadoresalcance.length != 0
-              ? this.props.indicadoresalcance[i]
-              : [], //bien
+          indicadoresalcance: this.props.indicadoresalcance.length != 0 ? this.props.indicadoresalcance[i] : [] //bien
         });
         i++;
       }
@@ -385,15 +281,13 @@ class SimpleTabs extends Component {
               indicador != "id_ins" &&
               this.props.indicadoresponderacion[i][indicador] != null
             ) {
-              indicadorIngresar[indicador] = this.props.indicadoresponderacion[
-                i
-              ][indicador];
+              indicadorIngresar[indicador] = this.props.indicadoresponderacion[i][indicador];
             }
           });
           arreglo[this.props.evidencias[i].unidad - 1].matriz.push({
             id: arreglo[this.props.evidencias[i].unidad - 1].matriz.length,
             evidencia: this.props.evidencias[i],
-            indicadoresponderacion: { ...indicadorIngresar },
+            indicadoresponderacion: { ...indicadorIngresar }
           });
         }
       }
@@ -417,11 +311,7 @@ class SimpleTabs extends Component {
               newFila["actividad"] = "Indicadores de Alcance";
               newFila["texto"] = arreglo[i]["indicadoresalcance"][valor];
               arrgInd[i].indicadoresalcance.push(newFila);
-            } else if (
-              arreglo[i]["indicadoresalcance"][valor]
-                .toString()
-                .replace(" ", "") == ""
-            ) {
+            } else if (arreglo[i]["indicadoresalcance"][valor].toString().replace(" ", "") == "") {
               return;
             }
           });
@@ -430,13 +320,10 @@ class SimpleTabs extends Component {
         const indicadores = {
           A: "Se adapta a situaciones y contextos complejos.",
           B: "Hace aportaciones a las actividades académicas desarrolladas.",
-          C:
-            "Propone y/o explica soluciones o procedimientos no vistos en clase.",
-          D:
-            "Introduce recursos y/o experiencias que promuevan un pensamiento crítico.",
-          E:
-            "Incorpora conocimientos y actividades interdiciplinarias en su aprendizaje.",
-          F: "Realiza su trabajo de manera autómata y autorregulada.",
+          C: "Propone y/o explica soluciones o procedimientos no vistos en clase.",
+          D: "Introduce recursos y/o experiencias que promuevan un pensamiento crítico.",
+          E: "Incorpora conocimientos y actividades interdiciplinarias en su aprendizaje.",
+          F: "Realiza su trabajo de manera autómata y autorregulada."
         };
         for (let i = 0; i < arreglo.length; i++) {
           arrgInd[i].indicadoresalcance = [];
@@ -459,13 +346,7 @@ class SimpleTabs extends Component {
 
     if (this.state.entrar === true) {
       tabs = this.state.Inicio.map((ins) => {
-        return (
-          <Tab
-            key={ins.unidad}
-            label={"Unidad " + ins.unidad}
-            {...a11yProps(ins.unidad - 1)}
-          />
-        );
+        return <Tab key={ins.unidad} label={"Unidad " + ins.unidad} {...a11yProps(ins.unidad - 1)} />;
       });
       infoTabs = this.state.Inicio.map((ins) => {
         return (
@@ -488,7 +369,7 @@ class SimpleTabs extends Component {
       feedback = (
         <IconButton
           className={classes.expanderFeedback}
-          size="large"
+          size="medium"
           onClick={() => {
             this.abrirModal(true);
           }}
@@ -548,32 +429,15 @@ const mapStateToProps = (state) => {
     estado: state.id.estado,
     comentario: state.id.comentario,
     loading: state.auth.loading,
-    error: state.auth.error,
+    error: state.auth.error
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onIngresar: (
-      id_ins,
-      indicadoresalcance,
-      unidades,
-      evidencias,
-      ponderacion
-    ) =>
-      dispatch(
-        actions.idIngresar(
-          id_ins,
-          indicadoresalcance,
-          unidades,
-          evidencias,
-          ponderacion
-        )
-      ),
+    onIngresar: (id_ins, indicadoresalcance, unidades, evidencias, ponderacion) =>
+      dispatch(actions.idIngresar(id_ins, indicadoresalcance, unidades, evidencias, ponderacion))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(useStyles)(SimpleTabs));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(SimpleTabs));
