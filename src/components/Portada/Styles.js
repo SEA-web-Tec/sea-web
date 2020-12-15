@@ -1,6 +1,6 @@
-import { green } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core";
 
-export const useStyles = (theme) => ({
+export const useStyles = makeStyles((theme) => ({
   card: {
     overflow: "initial",
     [theme.breakpoints.down("xs")]: {
@@ -82,5 +82,11 @@ export const useStyles = (theme) => ({
   },
   hasTabs: {
     padding: 0
+  },
+  spinner: {
+    display: "block",
+    margin: "60px auto",
+    width: "60px !important",
+    height: "60px !important"
   }
-});
+}));
