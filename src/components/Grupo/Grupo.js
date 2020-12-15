@@ -28,6 +28,9 @@ const Grupo = (props) => {
             }
             title={props.materia}
           />
+          <Typography component="h2" variant="h5" noWrap className={classes.letra} style={{ fontWeight: "500" }}>
+            {props.letra}
+          </Typography>
         </div>
         <CardContent className={classes.cardContent}>
           <Avatar className={classes.avatar} alt={props.maestro} src={props.fotoPerfil} />
