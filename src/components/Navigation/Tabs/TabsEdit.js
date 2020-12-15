@@ -14,7 +14,7 @@ import {
   Tabs,
   Tab,
   IconButton,
-  Typography
+  Typography,
   /*IconButton,*/
 } from "@material-ui/core";
 import { Feedback as FeedbackIcon } from "@material-ui/icons";
@@ -34,7 +34,7 @@ import { withRouter } from "react-router-dom";
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -46,7 +46,19 @@ class SimpleTabs extends Component {
     entrar: false,
     num: 0,
     error: { enviar: true, nombre: "", num: "", unidad: 0 },
-    correcto: false
+    correcto: false,
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      intrumentacion: [],
+      Inicio: [],
+      value: 0,
+      entrar: false,
+      num: 0,
+      error: { enviar: true, nombre: "", num: "", unidad: 0 },
+      correcto: false,
+    });
   };
 
   handleChange = (event, newValue) => {
@@ -60,13 +72,17 @@ class SimpleTabs extends Component {
       if (Object.keys(arrg[i].indicadoresalcance).length > 2 && error.enviar) {
         for (var el in arrg[i].indicadoresalcance) {
           if (arrg[i].indicadoresalcance.hasOwnProperty(el)) {
-            if (el.toString() != "id" && el.toString() != "id_ins" && el.toString() != "unidad") {
+            if (
+              el.toString() != "id" &&
+              el.toString() != "id_ins" &&
+              el.toString() != "unidad"
+            ) {
               if (arrg[i].indicadoresalcance[el].replace(" ", "") == "") {
                 error = {
                   enviar: false,
                   nombre: "Indicador de alcance",
                   num: el,
-                  unidad: arrg[i].unidad
+                  unidad: arrg[i].unidad,
                 };
                 this.setState({ error: error }, () => {
                   console.log("error nulo indicador alcance");
@@ -82,7 +98,7 @@ class SimpleTabs extends Component {
             enviar: false,
             nombre: "Indicador de alcance",
             num: i,
-            unidad: arrg[i].unidad
+            unidad: arrg[i].unidad,
           };
           this.setState({ error: error }, () => {
             console.log("error vacio arreglo indicador alcance");
@@ -126,7 +142,7 @@ class SimpleTabs extends Component {
               enviar: false,
               nombre: "Indicador de ponderacion",
               num: i + 1,
-              unidad: arrg[i].unidad
+              unidad: arrg[i].unidad,
             };
             this.setState({ error: error }, () => {
               //break;
@@ -141,7 +157,7 @@ class SimpleTabs extends Component {
             enviar: false,
             nombre: "Indicador de ponderacion",
             num: i + 1,
-            unidad: arrg[i].unidad
+            unidad: arrg[i].unidad,
           };
           this.setState({ error: error }, () => {
             console.log(this.state.error);
@@ -157,7 +173,7 @@ class SimpleTabs extends Component {
             enviar: false,
             nombre: "Indicador de ponderacion",
             num: 0,
-            unidad: 0
+            unidad: 0,
           };
           this.setState({ error: error }, () => {
             console.log(this.state.error);
@@ -176,17 +192,31 @@ class SimpleTabs extends Component {
   arrayToStringAll = async () => {
     const arrg = JSON.parse(JSON.stringify(this.state.intrumentacion));
     for (let i = 0; i < arrg.length; i++) {
-      arrg[i].unidades["actividades_aprendizaje"] = await this.arrayToString(arrg[i], "actividades_aprendizaje", i + 1);
+      arrg[i].unidades["actividades_aprendizaje"] = await this.arrayToString(
+        arrg[i],
+        "actividades_aprendizaje",
+        i + 1
+      );
       if (this.state.error.enviar == false) break;
-      arrg[i].unidades["actividades_enseñanza"] = await this.arrayToString(arrg[i], "actividades_enseñanza", i + 1);
+      arrg[i].unidades["actividades_enseñanza"] = await this.arrayToString(
+        arrg[i],
+        "actividades_enseñanza",
+        i + 1
+      );
       if (this.state.error.enviar == false) break;
-      arrg[i].unidades["desarrollo_competencias_genericas"] = await this.arrayToString(
+      arrg[i].unidades[
+        "desarrollo_competencias_genericas"
+      ] = await this.arrayToString(
         arrg[i],
         "desarrollo_competencias_genericas",
         i + 1
       );
       if (this.state.error.enviar == false) break;
-      arrg[i].unidades["material_apoyo"] = await this.arrayToString(arrg[i], "material_apoyo", i + 1);
+      arrg[i].unidades["material_apoyo"] = await this.arrayToString(
+        arrg[i],
+        "material_apoyo",
+        i + 1
+      );
       if (this.state.error.enviar == false) break;
     }
     if (this.state.error.enviar) {
@@ -204,7 +234,13 @@ class SimpleTabs extends Component {
         });
       });
 
-      await this.props.onIngresar(this.props.id_ins, indicadoresalcance, unidades, evidencias, ponderacion);
+      await this.props.onIngresar(
+        this.props.id_ins,
+        indicadoresalcance,
+        unidades,
+        evidencias,
+        ponderacion
+      );
       this.setState({ correcto: true });
     } else {
       console.log("salio error");
@@ -263,7 +299,7 @@ class SimpleTabs extends Component {
       const fila = {
         label: num,
         actividad: actividad,
-        texto: elemento
+        texto: elemento,
       };
       arreglo.push(fila);
       num++;
@@ -308,7 +344,11 @@ class SimpleTabs extends Component {
   render() {
     //const classes = "useStyles";
     const { classes } = this.props;
-    if (this.state.num === 0 && this.props.id_ins != null && !this.state.entrar) {
+    if (
+      this.state.num === 0 &&
+      this.props.id_ins != null &&
+      !this.state.entrar
+    ) {
       this.setState({ num: 1 });
 
       let i = 0;
@@ -324,11 +364,17 @@ class SimpleTabs extends Component {
             unidad: i + 1,
             actividades_aprendizaje:
               this.props.unidades.length != 0
-                ? this.stringToArray(this.props.unidades[i].actividades_aprendizaje, "actividades_aprendizaje")
+                ? this.stringToArray(
+                    this.props.unidades[i].actividades_aprendizaje,
+                    "actividades_aprendizaje"
+                  )
                 : [],
             actividades_enseñanza:
               this.props.unidades.length != 0
-                ? this.stringToArray(this.props.unidades[i].actividades_enseñanza, "actividades_enseñanza")
+                ? this.stringToArray(
+                    this.props.unidades[i].actividades_enseñanza,
+                    "actividades_enseñanza"
+                  )
                 : [],
             desarrollo_competencias_genericas:
               this.props.unidades.length != 0
@@ -339,12 +385,24 @@ class SimpleTabs extends Component {
                 : [],
             material_apoyo:
               this.props.unidades.length != 0
-                ? this.stringToArray(this.props.unidades[i].material_apoyo, "material_apoyo")
+                ? this.stringToArray(
+                    this.props.unidades[i].material_apoyo,
+                    "material_apoyo"
+                  )
                 : [],
-            semana_clases: this.props.unidades.length != 0 ? this.props.unidades[i].semana_clases : 1,
-            semana_evaluacion: this.props.unidades.length != 0 ? this.props.unidades[i].semana_evaluacion : 1
+            semana_clases:
+              this.props.unidades.length != 0
+                ? this.props.unidades[i].semana_clases
+                : 1,
+            semana_evaluacion:
+              this.props.unidades.length != 0
+                ? this.props.unidades[i].semana_evaluacion
+                : 1,
           },
-          indicadoresalcance: this.props.indicadoresalcance.length != 0 ? this.props.indicadoresalcance[i] : [] //bien
+          indicadoresalcance:
+            this.props.indicadoresalcance.length != 0
+              ? this.props.indicadoresalcance[i]
+              : [], //bien
         });
         i++;
       }
@@ -360,13 +418,15 @@ class SimpleTabs extends Component {
               indicador != "id_ins" &&
               this.props.indicadoresponderacion[i][indicador] != null
             ) {
-              indicadorIngresar[indicador] = this.props.indicadoresponderacion[i][indicador];
+              indicadorIngresar[indicador] = this.props.indicadoresponderacion[
+                i
+              ][indicador];
             }
           });
           arreglo[this.props.evidencias[i].unidad - 1].matriz.push({
             id: arreglo[this.props.evidencias[i].unidad - 1].matriz.length,
             evidencia: this.props.evidencias[i],
-            indicadoresponderacion: { ...indicadorIngresar }
+            indicadoresponderacion: { ...indicadorIngresar },
           });
         }
       }
@@ -390,7 +450,11 @@ class SimpleTabs extends Component {
               newFila["actividad"] = "Indicadores de Alcance";
               newFila["texto"] = arreglo[i]["indicadoresalcance"][valor];
               arrgInd[i].indicadoresalcance.push(newFila);
-            } else if (arreglo[i]["indicadoresalcance"][valor].toString().replace(" ", "") == "") {
+            } else if (
+              arreglo[i]["indicadoresalcance"][valor]
+                .toString()
+                .replace(" ", "") == ""
+            ) {
               return;
             }
           });
@@ -400,10 +464,13 @@ class SimpleTabs extends Component {
         const indicadores = {
           A: "Se adapta a situaciones y contextos complejos.",
           B: "Hace aportaciones a las actividades académicas desarrolladas.",
-          C: "Propone y/o explica soluciones o procedimientos no vistos en clase.",
-          D: "Introduce recursos y/o experiencias que promuevan un pensamiento crítico.",
-          E: "Incorpora conocimientos y actividades interdiciplinarias en su aprendizaje.",
-          F: "Realiza su trabajo de manera autómata y autorregulada."
+          C:
+            "Propone y/o explica soluciones o procedimientos no vistos en clase.",
+          D:
+            "Introduce recursos y/o experiencias que promuevan un pensamiento crítico.",
+          E:
+            "Incorpora conocimientos y actividades interdiciplinarias en su aprendizaje.",
+          F: "Realiza su trabajo de manera autómata y autorregulada.",
         };
         for (let i = 0; i < arreglo.length; i++) {
           arrgInd[i].indicadoresalcance = [];
@@ -417,9 +484,12 @@ class SimpleTabs extends Component {
         }
       }
       //console.log(arrgInd);
-      this.setState({ intrumentacion: JSON.parse(JSON.stringify(arrgInd)) }, () => {
-        this.setState({ entrar: true });
-      });
+      this.setState(
+        { intrumentacion: JSON.parse(JSON.stringify(arrgInd)) },
+        () => {
+          this.setState({ entrar: true });
+        }
+      );
       this.setState({ Inicio: JSON.parse(JSON.stringify(arrgInd)) });
     }
 
@@ -428,7 +498,13 @@ class SimpleTabs extends Component {
 
     if (this.state.entrar === true) {
       tabs = this.state.intrumentacion.map((ins) => {
-        return <Tab key={ins.unidad} label={"Unidad " + ins.unidad} {...a11yProps(ins.unidad - 1)} />;
+        return (
+          <Tab
+            key={ins.unidad}
+            label={"Unidad " + ins.unidad}
+            {...a11yProps(ins.unidad - 1)}
+          />
+        );
       });
       infoTabs = this.state.intrumentacion.map((ins) => {
         return (
@@ -450,7 +526,7 @@ class SimpleTabs extends Component {
       <Snackbar
         anchorOrigin={{
           vertical: "top",
-          horizontal: "right"
+          horizontal: "right",
         }}
         open={!this.state.error.enviar}
         onClose={() => {
@@ -461,7 +537,12 @@ class SimpleTabs extends Component {
         autoHideDuration={3000}
       >
         <Alert variant="filled" severity="error">
-          {"Error en " + this.state.error.nombre + " en " + this.state.error.num + " en la unidad " + this.state.error.unidad}
+          {"Error en " +
+            this.state.error.nombre +
+            " en " +
+            this.state.error.num +
+            " en la unidad " +
+            this.state.error.unidad}
         </Alert>
       </Snackbar>
     );
@@ -470,15 +551,13 @@ class SimpleTabs extends Component {
       <Snackbar
         anchorOrigin={{
           vertical: "top",
-          horizontal: "right"
+          horizontal: "right",
         }}
         open={this.state.correcto}
         onClose={() => {
           this.setState({ correcto: false });
-          const url = "/instrumentacion/" + this.props.grupo; //grupo
-          this.props.history.push(url);
-          // window.location.replace(url);
-          //this.props.onAuthDismissError();
+          const url = "/instrumentacion/" + this.props.grupo;//grupo
+          window.location.href = url; 
         }}
         autoHideDuration={4000}
       >
@@ -565,15 +644,34 @@ const mapStateToProps = (state) => {
     indicadoresponderacion: state.id.ponderacion,
     comentario: state.id.comentario,
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onIngresar: (id_ins, indicadoresalcance, unidades, evidencias, ponderacion) =>
-      dispatch(actions.idIngresar(id_ins, indicadoresalcance, unidades, evidencias, ponderacion))
+    onIngresar: (
+      id_ins,
+      indicadoresalcance,
+      unidades,
+      evidencias,
+      ponderacion
+    ) =>
+      dispatch(
+        actions.idIngresar(
+          id_ins,
+          indicadoresalcance,
+          unidades,
+          evidencias,
+          ponderacion
+        )
+      ),
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(SimpleTabs)));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(useStyles)(SimpleTabs))
+);
