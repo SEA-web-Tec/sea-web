@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import Portada from "../../components/Portada/PortadaEvaluar";
+import Portada from "../../components/Portada/PortadaEva";
 import TabsID from "../../components/Navigation/Tabs/TabsEvaluar";
 
 import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
@@ -94,8 +94,15 @@ class ID extends Component {
         } else {
           let card = null;
           let ninguna = null;
-          /*
-          <Portada
+          
+          if (this.state.intrumentaciones.length !== 0) {
+            card = (
+              <div>
+                <CardEvaluacion
+                  seleccionar={this.cambiarSeleccionado}
+                  intrumentaciones={this.state.intrumentaciones}
+                />
+                <Portada
                   materia={this.state.materiaSeleccionado}
                   carrera="Evaluando"
                   maestro={this.state.nombreMaestroSeleccionado}
@@ -105,20 +112,13 @@ class ID extends Component {
                   isID
                   status={this.props.estado}
                 >
-          */
-          if (this.state.intrumentaciones.length !== 0) {
-            card = (
-              <div>
-                <CardEvaluacion
-                  seleccionar={this.cambiarSeleccionado}
-                  intrumentaciones={this.state.intrumentaciones}
-                />
-                <TabsID
-                  evaluar={true}
-                  cambiar_comentario={this.cambiarComentario}
-                  enviar_evaluacion={this.enviarInstrumentacion}
-                  mostrar={this.state.mostrarIcono}
-                />
+                  <TabsID
+                    evaluar={true}
+                    cambiar_comentario={this.cambiarComentario}
+                    enviar_evaluacion={this.enviarInstrumentacion}
+                    mostrar={this.state.mostrarIcono}
+                  />
+                </Portada>
               </div>
             );
           } else if (this.state.correcto) {

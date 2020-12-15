@@ -44,7 +44,6 @@ class ID extends Component {
       <TabsIDEditar evaluar={true} grupo={this.props.match.params.id} />
     );
 
-
     if (this.state.entrar == null) {
       this.setState({ entrar: "simon" });
       this.buscarIntrumentacion();
@@ -54,10 +53,14 @@ class ID extends Component {
       info = <CircularProgress /*className={classes.spinner}*/ />;
     }
 
-
     return (
       <Fragment>
-          <Portada id={this.props.match.params.id} hasTabs isID status={this.props.estado}>
+        <Portada
+          id={this.props.match.params.id}
+          hasTabs
+          isID
+          status={this.props.estado}
+        >
           {info}
         </Portada>
       </Fragment>
