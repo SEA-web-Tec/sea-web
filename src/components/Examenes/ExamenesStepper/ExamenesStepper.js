@@ -113,7 +113,6 @@ export default function ExamenesStepper() {
         ) : (
           <div>
             <Typography className={classes.instructions}>{getStepContent(activeStep).pregunta}</Typography>
-
             <div>
               {activeStep !== steps.length &&
                 (completed[activeStep] ? (

@@ -54,9 +54,16 @@ export const useStyles = makeStyles((theme) => ({
     },
     horario: {
         padding: theme.spacing(0, 2, 1, 2),
-	},
-	alarma: {
-		marginRight: "18px",
-		marginLeft: "8px"
-	}
+    },
+    alarma: {
+        marginRight: "18px",
+        marginLeft: "8px",
+    },
+    letra: {
+        color: "white",
+        top: "8px",
+        left: "16px",
+        position: "absolute",
+        fontSize: "69px"
+    },
 }));

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import { useStyles } from "./Styles.js";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -11,14 +9,13 @@ import {
   Chip,
   ListItemText,
   Typography,
-  Drawer,
 } from "@material-ui/core";
 
 class CardEvaluacion extends Component {
   render(props) {
     const { classes } = this.props;
     let agregarIntrumentacion = null;
-    if (this.props.intrumentaciones.length != 0) {
+    if (this.props.intrumentaciones.length !== 0) {
       agregarIntrumentacion = this.props.intrumentaciones.map(
         (intrumentacion, index) => {
           return (

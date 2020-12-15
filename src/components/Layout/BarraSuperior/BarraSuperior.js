@@ -21,19 +21,18 @@ import Avatar from "@material-ui/core/Avatar";
 
 import Brightness2Icon from "@material-ui/icons/Brightness2";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import * as actions from "store/actions/index";
-import TituloRuta from "shared/titulosRutas"
+import TituloRuta from "shared/titulosRutas";
 
 const BarraSuperior = (props) => {
     const classes = useStyles();
-    const idUsuario = useSelector((state) => state.auth.user.id);
     const history = useHistory();
     const fotoPerfil = useSelector((state) => state.auth.user.fotoPerfil);
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const location = useLocation();
-    const titulo = TituloRuta(location.pathname)
+    const titulo = TituloRuta(location.pathname);
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -77,7 +76,7 @@ const BarraSuperior = (props) => {
                 ref={anchorRef}
                 aria-controls={open ? "menu-list-grow" : undefined}
                 aria-haspopup="true"
-                onClick={handleToggle}
+                onClick={() => handleToggle()}
             >
                 <MoreVertIcon />
             </IconButton>
@@ -136,13 +135,12 @@ const BarraSuperior = (props) => {
                     {titulo}
                 </Typography>
                 <div className={classes.opciones}>
-                    <IconButton>
-                        <Avatar
-                            src={fotoPerfil}
-                            onClick={() => {
-                                history.push("/perfil");
-                            }}
-                        />
+                    <IconButton
+                        onClick={() => {
+                            history.push("/perfil");
+                        }}
+                    >
+                        <Avatar src={fotoPerfil} />
                     </IconButton>
                     <IconButton color="inherit" onClick={toggleDarkMode}>
                         <Brightness2Icon />
