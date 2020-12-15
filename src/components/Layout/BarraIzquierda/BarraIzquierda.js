@@ -19,6 +19,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import SadIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import SchoolIcon from "@material-ui/icons/School";
+import ListAltIcon from "@material-ui/icons/ListAlt";
 
 import SideItem from "components/SideItem/SideItem";
 import { useStyles } from "./Styles";
@@ -123,6 +124,14 @@ const BarraIzquierda = (props) => {
                     </SideItem>
                     <SideItem text="Notificaciones">
                         <NotificationsIcon />
+                    </SideItem>
+                    <SideItem
+                        text="Instrumentos"
+                        clicked={() => {
+                            history.push("/instrumentos");
+                        }}
+                    >
+                        <ListAltIcon />
                     </SideItem>
                 </List>
                 <Divider />
