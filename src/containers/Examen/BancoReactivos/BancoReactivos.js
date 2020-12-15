@@ -87,7 +87,7 @@ class CrearReactivoAbierto extends Component {
     return (
       <Portada id={this.props.match.params.id} hasTabs>
         <SimpleTabs data={reactivos} reactivos={this.state.reactivos} />
-        <FloatingButton reactivos={true} id={this.props.match.params.materia_id} />
+        <FloatingButton reactivos={true} id={this.props.match.params.id} materia_id={this.props.match.params.materia_id} />
       </Portada>
     );
   }
