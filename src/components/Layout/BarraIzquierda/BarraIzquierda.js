@@ -26,8 +26,13 @@ import { useStyles } from "./Styles";
 const BarraIzquierda = (props) => {
     const classes = useStyles();
 
-    const grupos = useSelector((state) => state.grupos.grupos);
-    const userType = useSelector((state) => state.auth.user.userType);
+    const user = useSelector((state) => state.auth.user);
+    const userType = user.userType;
+
+    let grupos = useSelector((state) => state.grupos.grupos).filter(
+        (grupo) => grupo.usuario_id === user.id
+    );
+
     const history = useHistory();
 
     const nombresColores = Object.keys(Colores);
@@ -37,7 +42,7 @@ const BarraIzquierda = (props) => {
                 const texto = grupo.nombre;
                 const letra = texto.charAt(0).toUpperCase();
                 return (
-                    <SideItem key={texto} text={texto}>
+                    <SideItem key={index + 1} text={texto}>
                         <Avatar
                             style={{
                                 backgroundColor:
@@ -59,25 +64,28 @@ const BarraIzquierda = (props) => {
             </SideItem>
         );
     const opcionesAdmin =
-        userType == 1 ? (
-            <List>
-                <SideItem
-                    text="Agregar Materias"
-                    clicked={() => {
-                        history.push("/admin/materias");
-                    }}
-                >
-                    <MenuBookIcon />
-                </SideItem>
-                <SideItem
-                    text="Instrumentaciones"
-                    clicked={() => {
-                        history.push("/instrumentacion/evaluar");
-                    }}
-                >
-                    <SchoolIcon />
-                </SideItem>
-            </List>
+        userType === 1 ? (
+            <Fragment>
+                <List>
+                    <SideItem
+                        text="Agregar Materias"
+                        clicked={() => {
+                            history.push("/admin/materias");
+                        }}
+                    >
+                        <MenuBookIcon />
+                    </SideItem>
+                    <SideItem
+                        text="Instrumentaciones"
+                        clicked={() => {
+                            history.push("/instrumentacion/evaluar");
+                        }}
+                    >
+                        <SchoolIcon />
+                    </SideItem>
+                </List>
+                <Divider />
+            </Fragment>
         ) : null;
 
     return (
@@ -121,7 +129,6 @@ const BarraIzquierda = (props) => {
                 <List>{despliegueGrupos}</List>
                 <Divider />
                 {opcionesAdmin}
-                <Divider />
                 <List>
                     <SideItem text="Configuración">
                         <SettingsIcon />

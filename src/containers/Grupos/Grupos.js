@@ -21,7 +21,9 @@ class Grupos extends Component {
 
     render() {
         const { classes } = this.props;
-
+        const handleOpen = () => {
+            // No hace nada jeje
+        };
         const esAdmin = this.props.user.userType == 1;
 
         let grupos = <CircularProgress className={classes.spinner} />;
@@ -38,6 +40,7 @@ class Grupos extends Component {
                                 carrera={grupo.carrera}
                                 maestro={`${this.props.user.nombres} ${this.props.user.apellidoPaterno} ${this.props.user.apellidoMaterno}`}
                                 portada={grupo.fotoPortada}
+                                letra={grupo.grupo}
                                 fotoPerfil={this.props.user.fotoPerfil}
                             />
                         );
@@ -76,6 +79,8 @@ class Grupos extends Component {
                         }}
                     >
                         <SpeedDial
+                            open={false}
+                            onOpen={handleOpen}
                             ariaLabel="SpeedDial example"
                             className={classes.speedDial}
                             icon={<SpeedDialIcon />}
