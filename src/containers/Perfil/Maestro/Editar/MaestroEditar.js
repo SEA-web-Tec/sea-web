@@ -48,9 +48,6 @@ class MaestroEditar extends Component {
   submitHandler = (event) => {
     event.preventDefault();
     if (this.state.contrasenia === this.state.repetirContrasenia) {
-      // TODO: Hacer esta wea en redux
-      // this.props.onAuth(this.state.correo, this.state.contrasenia);
-
       http
         .patch(`/usuarios/${this.props.user.id}/editar`, {
           fotoPerfil: this.state.fotoPerfil,
@@ -59,7 +56,7 @@ class MaestroEditar extends Component {
           contrasenia: this.state.contrasenia
         })
         .then((response) => {
-          this.props.history.push(`/usuario/${this.props.user.id}`);
+          this.props.history.push(`/perfil`);
         });
     } else {
       this.setState({ error: true });
