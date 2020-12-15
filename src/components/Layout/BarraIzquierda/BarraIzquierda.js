@@ -18,7 +18,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import HelpIcon from "@material-ui/icons/Help";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import SadIcon from "@material-ui/icons/SentimentVeryDissatisfied";
-import SchoolIcon from '@material-ui/icons/School';
+import SchoolIcon from "@material-ui/icons/School";
 
 import SideItem from "components/SideItem/SideItem";
 import { useStyles } from "./Styles";
@@ -58,6 +58,27 @@ const BarraIzquierda = (props) => {
                 <SadIcon></SadIcon>
             </SideItem>
         );
+    const opcionesAdmin =
+        userType == 1 ? (
+            <List>
+                <SideItem
+                    text="Agregar Materias"
+                    clicked={() => {
+                        history.push("/admin/materias");
+                    }}
+                >
+                    <MenuBookIcon />
+                </SideItem>
+                <SideItem
+                    text="Instrumentaciones"
+                    clicked={() => {
+                        history.push("/instrumentacion/evaluar");
+                    }}
+                >
+                    <SchoolIcon />
+                </SideItem>
+            </List>
+        ) : null;
 
     return (
         <Fragment>
@@ -66,7 +87,6 @@ const BarraIzquierda = (props) => {
                 open={props.open}
                 onClick={props.closed}
             />
-
             <Drawer
                 variant="permanent"
                 className={clsx(classes.drawer, {
@@ -96,45 +116,11 @@ const BarraIzquierda = (props) => {
                     <SideItem text="Notificaciones">
                         <NotificationsIcon />
                     </SideItem>
-                    {userType == 1 ? (
-                        <SideItem
-                            text="Materias"
-                            clicked={() => {
-                                history.push("/admin/materias");
-                            }}
-                        >
-                            <MenuBookIcon />
-                        </SideItem>
-                    ) : null}
-                    {userType == 1 ? (
-                        <SideItem
-                            text="Instrumentaciones"
-                            clicked={() => {
-                                history.push("/instrumentacion/evaluar");
-                            }}
-                        >
-                            <SchoolIcon />
-                        </SideItem>
-                    ) : null}
-                    {/* <SideItem
-                        text="Instrumentos"
-                        clicked={() => {
-                            history.push("/instrumentos");
-                        }}
-                    >
-                        <CalendarIcon />
-                    </SideItem>
-                    <SideItem
-                        text="Rúbrica"
-                        clicked={() => {
-                            history.push("/rubrica");
-                        }}
-                    >
-                        <CalendarIcon />
-                    </SideItem> */}
                 </List>
                 <Divider />
                 <List>{despliegueGrupos}</List>
+                <Divider />
+                {opcionesAdmin}
                 <Divider />
                 <List>
                     <SideItem text="Configuración">
