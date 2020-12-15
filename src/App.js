@@ -175,7 +175,7 @@ class App extends Component {
             {/* EXAMEN */}
             <Route path="/examen/:id" exact component={asyncDashboardExamen} />
             <Route path="/examen/:id/crear" exact component={asyncCrearExamen} />
-            <Route path="/examen/:id/editar/:id_examen" exact component={asyncEditarExamen} />
+            {/* <Route path="/examen/:id/editar/:id_examen" exact component={asyncEditarExamen} /> */}
             <Route path="/examen/:id/asignar" exact component={asyncAsignarExamen} />
             {/* <Route path="/examen/:id/preview" exact component={asyncContenedorExamen} /> */}
             <Route path="/examen/:id/reactivos" exact component={BancoReactivos} />
