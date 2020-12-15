@@ -38,7 +38,7 @@ const tituloColumnaInstrumento = (props) => {
         //fullWidth
         //variant="standard"
         value={props.titulo}
-        onChange={props.cambioTitulo}
+        //onChange={props.cambioTitulo}
       />
     </Box>
   );

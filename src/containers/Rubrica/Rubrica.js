@@ -25,8 +25,8 @@ class Rubrica extends Component {
     errorStatus:0,
     rubrica: [],
     id: 0,
-    nombre: "Este es un nombre",
-    descripcion: "Esta es una descripción de la rúbrica",
+    nombre: "",
+    descripcion: "",
     id_personal: this.props.userId,
     id_carpeta:1,
     /*Las columnas deben de estar ordenas por num_columna */
@@ -45,7 +45,7 @@ class Rubrica extends Component {
     celdas: [
       {
         id: 11,
-        texto: "Cumplió con los requisitos 11",
+        texto: "",
         id_renglon: 1,
         id_columna: 1,
         puntos_max: 50
@@ -66,28 +66,28 @@ class Rubrica extends Component {
       },*/
       {
         id: 12,
-        texto: "Cumplió con los requisitos 12",
+        texto: "",
         id_renglon: 1,
         id_columna: 2,
         puntos_max: 5,
       },
       {
         id: 13,
-        texto: "Cumplió con los requisitos 13",
+        texto: "",
         id_renglon: 1,
         id_columna: 3,
         puntos_max: 50
       },
       {
         id: 14,
-        texto: "Cumplió con los requisitos 14",
+        texto: "",
         id_renglon: 1,
         id_columna: 4,
         puntos_max: 50
       },
       {
         id: 15,
-        texto: "Cumplió con los requisitos 15",
+        texto: "",
         id_renglon: 1,
         id_columna: 5,
         puntos_max: 50,
@@ -154,7 +154,7 @@ class Rubrica extends Component {
   componentDidMount() {
 
     const id = this.getUrlParameter("id");
-    console.log(id);
+    //console.log(id);
 
     if(id){
       this.setState({editando:true})
@@ -177,10 +177,10 @@ class Rubrica extends Component {
             errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
             errorStatus: 500
           });
-          console.log("d")
+          //console.log("d")
         } else {
           this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
-          console.log(error.response.data.message)
+          //console.log(error.response.data.message)
         }
       });
 
@@ -251,8 +251,8 @@ class Rubrica extends Component {
         });
 
         const celdas=[...JSON.parse(JSON.stringify(celdasExcelente)),...JSON.parse(JSON.stringify(celdasBueno)),...JSON.parse(JSON.stringify(celdasRegular)),...JSON.parse(JSON.stringify(celdasSuficiente)),...JSON.parse(JSON.stringify(celdasInsuficiente))];
-        console.log(celdas)
-        this.setState({ celdas:celdas,renglones:renglones },()=>console.log(this.state));
+        //console.log(celdas)
+        this.setState({ celdas:celdas,renglones:renglones });
       })
       .catch((error) => {
         if (error.response === undefined) {
@@ -261,10 +261,10 @@ class Rubrica extends Component {
             errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
             errorStatus: 500
           });
-          console.log("d")
+          //console.log("d")
         } else {
           this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
-          console.log(error.response.data.message)
+          //console.log(error.response.data.message)
         }
       });
     }
@@ -278,70 +278,73 @@ class Rubrica extends Component {
   };
 
   crearRubrica = () => {
-    const rubrica = {
-      nombre:this.state.nombre,
-      descripcion:this.state.descripcion,
-      id_usuario:this.state.id_personal,
-      id_carpeta:this.state.id_carpeta
+    if(this.state.nombre.match(/^[a-zA-Z\ áéíóúÁÉÍÓÚñÑ0-9\s]*$/) && this.state.nombre !== "") {
+      const rubrica = {
+        nombre:this.state.nombre,
+        descripcion:this.state.descripcion,
+        id_usuario:this.state.id_personal,
+        id_carpeta:this.state.id_carpeta
+      }
+  
+      const renglones = this.state.renglones.map(renglon => {
+        const num = renglon.num_renglon;
+        const criterio = renglon.criterio;
+        const excelente = this.state.celdas.filter((celda) => celda.id_columna == 1 && celda.id_renglon == renglon.id)[0].texto;
+        const bueno = this.state.celdas.filter((celda) => celda.id_columna == 2 && celda.id_renglon == renglon.id)[0].texto;
+        const regular = this.state.celdas.filter((celda) => celda.id_columna == 3 && celda.id_renglon == renglon.id)[0].texto;
+        const suficiente = this.state.celdas.filter((celda) => celda.id_columna == 4 && celda.id_renglon == renglon.id)[0].texto;
+        const insuficiente = this.state.celdas.filter((celda) => celda.id_columna == 5 && celda.id_renglon == renglon.id)[0].texto;
+  
+        const puntosexcelente = this.state.celdas.filter((celda) => celda.id_columna == 1 && celda.id_renglon == renglon.id)[0].puntos_max;
+        const puntosbueno = this.state.celdas.filter((celda) => celda.id_columna == 2 && celda.id_renglon == renglon.id)[0].puntos_max;
+        const puntosregular = this.state.celdas.filter((celda) => celda.id_columna == 3 && celda.id_renglon == renglon.id)[0].puntos_max;
+        const puntossuficiente = this.state.celdas.filter((celda) => celda.id_columna == 4 && celda.id_renglon == renglon.id)[0].puntos_max;
+        const puntosinsuficiente = this.state.celdas.filter((celda) => celda.id_columna == 5 && celda.id_renglon == renglon.id)[0].puntos_max;
+  
+        return {
+          numrenglon:num,
+          criterio:criterio,
+          excelente:excelente,
+          bueno:bueno,
+          regular:regular,
+          suficiente:suficiente,
+          insuficiente:insuficiente,
+          puntosexcelente:puntosexcelente,
+          puntosbueno:puntosbueno,
+          puntosregular:puntosregular,
+          puntossuficiente:puntossuficiente,
+          puntosinsuficiente:puntosinsuficiente
+        }
+      })
+      //console.log("Procesando...",rubrica,renglones)
+      const url = this.state.editando ? "rubrica/editar/"+this.state.id : "rubrica/crear";
+      this.setState({ guardando:true });
+      http
+      .post(url, {
+        Rubrica:rubrica,
+        Renglonesrubrica:renglones
+      })
+      .then((response) => {
+        this.setState({ error: true, errorMessage: response.data.message, errorStatus: 201,/*guardando:false */});
+        //console.log(response.data)
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          this.setState({
+            error: true,
+            errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+            errorStatus: 500,
+            guardando:false
+          });
+          //console.log("d")
+        } else {
+          this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status,guardando:false });
+          //console.log(error.response.data.message)
+        }
+      });
+    }else{
+      this.setState({error:true,errorMessage:"Ingrese un nombre valido",errorStatus:0});
     }
-
-    const renglones = this.state.renglones.map(renglon => {
-      console.log(renglon.num_renglon);
-      const num = renglon.num_renglon;
-      const criterio = renglon.criterio;
-      const excelente = this.state.celdas.filter((celda) => celda.id_columna == 1 && celda.id_renglon == renglon.id)[0].texto;
-      const bueno = this.state.celdas.filter((celda) => celda.id_columna == 2 && celda.id_renglon == renglon.id)[0].texto;
-      const regular = this.state.celdas.filter((celda) => celda.id_columna == 3 && celda.id_renglon == renglon.id)[0].texto;
-      const suficiente = this.state.celdas.filter((celda) => celda.id_columna == 4 && celda.id_renglon == renglon.id)[0].texto;
-      const insuficiente = this.state.celdas.filter((celda) => celda.id_columna == 5 && celda.id_renglon == renglon.id)[0].texto;
-
-      const puntosexcelente = this.state.celdas.filter((celda) => celda.id_columna == 1 && celda.id_renglon == renglon.id)[0].puntos_max;
-      const puntosbueno = this.state.celdas.filter((celda) => celda.id_columna == 2 && celda.id_renglon == renglon.id)[0].puntos_max;
-      const puntosregular = this.state.celdas.filter((celda) => celda.id_columna == 3 && celda.id_renglon == renglon.id)[0].puntos_max;
-      const puntossuficiente = this.state.celdas.filter((celda) => celda.id_columna == 4 && celda.id_renglon == renglon.id)[0].puntos_max;
-      const puntosinsuficiente = this.state.celdas.filter((celda) => celda.id_columna == 5 && celda.id_renglon == renglon.id)[0].puntos_max;
-
-      return {
-        numrenglon:num,
-        criterio:criterio,
-        excelente:excelente,
-        bueno:bueno,
-        regular:regular,
-        suficiente:suficiente,
-        insuficiente:insuficiente,
-        puntosexcelente:puntosexcelente,
-        puntosbueno:puntosbueno,
-        puntosregular:puntosregular,
-        puntossuficiente:puntossuficiente,
-        puntosinsuficiente:puntosinsuficiente
-      }
-    })
-    console.log("Procesando...",rubrica,renglones)
-    const url = this.state.editando ? "rubrica/editar/"+this.state.id : "rubrica/crear";
-    this.setState({ guardando:true });
-    http
-    .post(url, {
-      Rubrica:rubrica,
-      Renglonesrubrica:renglones
-    })
-    .then((response) => {
-      this.setState({ error: true, errorMessage: response.data.message, errorStatus: 201,guardando:false });
-      console.log(response.data)
-    })
-    .catch((error) => {
-      if (error.response === undefined) {
-        this.setState({
-          error: true,
-          errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
-          errorStatus: 500,
-          guardando:false
-        });
-        console.log("d")
-      } else {
-        this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status,guardando:false });
-        console.log(error.response.data.message)
-      }
-    });
   }
 
 
@@ -426,7 +429,7 @@ class Rubrica extends Component {
     const cantidadMaxRenglones = this.state.renglones.reduce((max, actual) => {
       return max > actual.num_renglon ? max : actual.num_renglon;
     }, 0);
-    console.log(cantidadMaxRenglones);
+    //console.log(cantidadMaxRenglones);
     if (num_renglon < cantidadMaxRenglones) {
       const renglonSubir = this.state.renglones.findIndex(
         (renglon) => renglon.num_renglon === num_renglon + 1
@@ -673,8 +676,11 @@ class Rubrica extends Component {
           open={this.state.error}
           onClose={() => {
             this.setState({ error: false });
+            if(this.state.guardando&& this.state.editando===false) {
+              this.props.history.push("/instrumentos");
+            }
           }}
-          autoHideDuration={6000}
+          autoHideDuration={500}
         >
           <Alert variant="filled" severity={this.state.errorStatus === 201 ? "success" : "warning"}>
             {this.state.errorMessage !== "" ? this.state.errorMessage : "Favor de realizar el CAPTCHA antes de registrarte!"}

@@ -19,6 +19,15 @@ const rutasTitulos = {
     "/examen//resultados/respuestas":"Respuestas del alumno",
     "/examen//editar":"Editar examen",
     "/examen//id":"Examen por ID",
+    // PENDIENTES
+
+    // PENDIENTES
+
+    //INSTRUMENTOS
+    "/instrumentos":"Instrumentos de Evaluación",
+    "/rubrica":"Rubrica",
+    "/listacotejo":"Lista de Cotejo",
+    "/listaobservacion":"Lista de Observacion",
     //Admin
     "/admin/materias": "Agregar materias",
     "/admin/grupos": "Agregar grupos",
