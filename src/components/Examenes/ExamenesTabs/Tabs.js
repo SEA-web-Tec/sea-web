@@ -1,5 +1,4 @@
-import React from "react";
-import useStyles from "./styles";
+import React, { Component } from "react";
 import TabPanel from "./TabPanel";
 import { AppBar, Tabs, Tab } from "@material-ui/core";
 
@@ -10,33 +9,47 @@ function a11yProps(index) {
   };
 }
 
-const SimpleTabs = (props) => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+class SimpleTabs extends Component {
+  state = {
+    value: 0,
+    entrar: true,
+    reactivos: []
+  }
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  handleChange = (event, newValue) => {
+    this.setState({value: newValue});
     console.log('value:'+newValue);
   };
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} variant="scrollable" scrollButtons="auto">
-          {props.data.map((i) => {
-            return (<Tab label={"Unidad "+i.unidad} {...a11yProps(i.unidad-1)} />);
-          })}
-        </Tabs>
-      </AppBar>
-      {props.data.map((i) => {
-        return (
-          <TabPanel value={value} index={(i.unidad-1)} data={props.data}>
-            {props.children}
-          </TabPanel>
-        );
-      })}
-    </div>
-  );
+  render () {
+    let constDatos = null;
+    let tabs = null;
+      if(this.state.entrar && this.props.reactivos != 0) {
+        this.setState({entrar:false,reactivos:this.props.reactivos});
+      } else if(this.props.reactivos.length != 0) {
+        tabs = this.state.reactivos.map((reac) => {
+          return (<Tab key={(reac[0].unidad - 1)} label={"Unidad "+(reac[0].unidad)} {...a11yProps(reac[0].unidad - 1)} />);
+        })
+        constDatos = this.state.reactivos.map((reac,indice) => {
+          return (
+            <TabPanel key={(reac[0].unidad - 1)} value={this.state.value} index={(reac[0].unidad - 1)} 
+            data={this.props.data} reactivos={this.state.reactivos[indice]}>
+              {this.props.children}
+            </TabPanel>
+          );
+        })
+      }
+    return (
+      <div >
+        <AppBar position="static">
+          <Tabs value={this.state.value} onChange={this.handleChange} variant="scrollable" scrollButtons="auto">
+            { tabs }
+          </Tabs>
+        </AppBar>
+        { constDatos }
+      </div>
+    );
+  }
 }
 
 export default SimpleTabs;

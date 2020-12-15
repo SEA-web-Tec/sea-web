@@ -13,7 +13,7 @@ import { FirstPage as FirstPageIcon,
         AssignmentTurnedIn as AssignmentTurnedInIcon } from '@material-ui/icons';
 
 const useStyles1 = makeStyles((theme) => ({
-    root: {
+    root: { 
         flexShrink: 0,
         marginLeft: theme.spacing(2.5),
     }

@@ -1,9 +1,39 @@
 import React, { Component } from "react";
+import { http } from "shared/http";
 import Portada from "../../../components/Portada/Portada";
 import SimpleTabs from "../../../components/Examenes/ExamenesTabs/Tabs";
 import FloatingButton from "../../../components/Examenes/ExamFloatingButton/FloatingButton";
 
 class CrearReactivoAbierto extends Component {
+    state = {
+        reactivos: []
+    }
+    componentDidMount() {
+        let url = "/reactivos/todo/" + 1/*id_materia*/;
+        const idData = {
+    };
+    http.get(url, idData)
+        .then((response) => {
+            let arreglo = [];
+            for (let i = 0; i < response.data.unidades; i++) {
+                arreglo.push([]);
+            }
+            response.data.reactivos.map((reac) => {
+                if (reac.unidad <= response.data.unidades) {
+                    arreglo[reac.unidad-1].push(reac);
+                }
+            })
+            console.log(response.data);
+            this.setState({
+                reactivos: arreglo
+            }, () => {
+                console.log(this.state.reactivos);
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     render() {
         const reactivos = [ //eliminar y editar: agregar id por reactivo
             {
@@ -35,7 +65,6 @@ class CrearReactivoAbierto extends Component {
             }
         ];
         return (
-            <>
             <Portada
                 materia="Programación de Dispositivos Móviles"
                 carrera="Ing. Sistemas Computacionales"
@@ -43,10 +72,9 @@ class CrearReactivoAbierto extends Component {
                 grupo="F"
                 periodo="Enero - Junio 2020"
                 hasTabs>
-                <SimpleTabs data={reactivos}/>
-            </Portada>
+                <SimpleTabs data={reactivos} reactivos={this.state.reactivos}/>
             <FloatingButton reactivos={true}/>
-            </>
+            </Portada>
         );
     }
 }
