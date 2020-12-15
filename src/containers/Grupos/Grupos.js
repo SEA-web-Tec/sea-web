@@ -36,6 +36,7 @@ class Grupos extends Component {
                             <Grupo
                                 key={grupo.id}
                                 id={grupo.id}
+                                //materia_id={}
                                 materia={grupo.nombre}
                                 carrera={grupo.carrera}
                                 maestro={`${this.props.user.nombres} ${this.props.user.apellidoPaterno} ${this.props.user.apellidoMaterno}`}

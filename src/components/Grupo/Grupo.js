@@ -77,7 +77,7 @@ const Grupo = (props) => {
                 <Divider />
                 <CardActions className={classes.cardActions} disableSpacing>
                     <BigTooltip title="Calificaciones">
-                        <IconButton style={{ color: blue[600] }}>
+                        <IconButton style={{ color: blue[600] }} component={RouterLink} to={`/examen/${props.materia_id}`}>
                             <CalificacionesIcon />
                         </IconButton>
                     </BigTooltip>
