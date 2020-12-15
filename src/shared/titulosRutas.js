@@ -7,9 +7,18 @@ const rutasTitulos = {
     "/instrumentacion/": "Instrumentación didáctica", // la diagonal al final es necesaria. Omitir id al final,
     "/instrumentacion/evaluar": "Evaluar instrumentación didáctica",
     "/instrumentacion//editar": "Editar instrumentación didáctica", // aquí omite la id, pero la diagonal persiste.
-    // PENDIENTES
-
-    // PENDIENTES
+    //Examenes
+    "/examen":"Exámenes",
+    "/examen/crear":"Crear examen",
+    "/examen/asignar":"Asignar examen",
+    "/examen/reactivos":"Banco de reactivos",
+    "/examen/reactivo/abierto":"Crear reactivo abierto",
+    "/examen/reactivo/fv":"Crear reactivo falso/verdadero",
+    "/examen/reactivo/multiple":"Crear reactivo de opción múltiple",
+    "/examen/resultados":"Resultados del examen",
+    "/examen/resultados/respuestas":"Respuestas del alumno",
+    "/examen/editar":"Editar examen",
+    "/examen/id":"Examen por ID",
     //Admin
     "/admin/materias": "Agregar materias",
     "/admin/grupos": "Agregar grupos",
