@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import Portada from "../../components/Portada/Portada";
+import Portada from "../../components/Portada/PortadaEvaluar";
 import TabsID from "../../components/Navigation/Tabs/TabsEvaluar";
 
 import CardEvaluacion from "../../components/CardEvaluacionID/CardEvaluacion";
