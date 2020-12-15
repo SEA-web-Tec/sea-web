@@ -122,7 +122,6 @@ class App extends Component {
           <Route path="/rubrica" exact component={asyncRubrica} />
           <Route path="/listacotejo" exact component={asyncListaCotejo} />
           <Route path="/listaobservacion" component={asyncListaObservacion} />
-          <Route path="/rubricaPDF" component={asyncRubricaPDF} />
 
           {/* EXAMEN */}
           <Route path="/examen" exact component={asyncDashboardExamen} />

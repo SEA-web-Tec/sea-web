@@ -27,8 +27,8 @@ class ListaCotejo extends Component {
     errorMessage:"",
     errorStatus:0,
     id: 1,
-    nombre: "Lista para exposición",
-    descripcion: "Esta es una descripción de la lista",
+    nombre: "",
+    descripcion: "",
     id_personal: this.props.userId,
     id_carpeta:1,
     rengloneslc: [
@@ -36,10 +36,10 @@ class ListaCotejo extends Component {
         id: 1,
         numrenglon: 1,
         id_cotejo: 1,
-        criterio: "Este es un criterio 1",
+        criterio: "Agrega criterio",
         puntos: 10,
       },
-      {
+     /* {
         id: 2,
         numrenglon: 2,
         id_cotejo: 1,
@@ -52,14 +52,14 @@ class ListaCotejo extends Component {
         id_cotejo: 1,
         criterio: "Este es un criterio 3",
         puntos: 10,
-      },
+      },*/
     ],
   };
 
 
   componentDidMount() {
     const id = this.getUrlParameter("id");
-    console.log(id);
+    //console.log(id);
     if(id) {
       this.setState({editando:true})
       http
@@ -81,10 +81,9 @@ class ListaCotejo extends Component {
               errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
               errorStatus: 500
             });
-            console.log("d")
           } else {
             this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
-            console.log(error.response.data.message)
+            //console.log(error.response.data.message)
           }
         });
 
@@ -92,7 +91,7 @@ class ListaCotejo extends Component {
         .get("listacotejo/consultarenglones/"+id)
         .then((response) => {
           this.setState({ rengloneslc:response.data.Listasdecotejo });
-          console.log(response.data.Listasdecotejo )
+          //console.log(response.data.Listasdecotejo )
         })
         .catch((error) => {
           if (error.response === undefined) {
@@ -101,10 +100,9 @@ class ListaCotejo extends Component {
               errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
               errorStatus: 500
             });
-            console.log("d")
           } else {
             this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
-            console.log(error.response.data.message)
+            //console.log(error.response.data.message)
           }
         });
 
@@ -112,45 +110,49 @@ class ListaCotejo extends Component {
   }
 
   crearListaDeCotejo = () => {
-    const cotejo = {
-      nombre:this.state.nombre,
-      descripcion:this.state.descripcion,
-      id_usuario:this.state.id_personal,
-      id_carpeta:this.state.id_carpeta
+    if(this.state.nombre !== "") {
+      const cotejo = {
+        nombre:this.state.nombre,
+        descripcion:this.state.descripcion,
+        id_usuario:this.state.id_personal,
+        id_carpeta:this.state.id_carpeta
+      }
+      const renglones = this.state.rengloneslc.map((cotejo)=>{
+        return {
+          numrenglon: cotejo.numrenglon,
+          criterio: cotejo.criterio,
+          puntos: cotejo.puntos
+        }
+      });
+     // console.log("Procesando...",cotejo,renglones,this.state.rengloneslc);
+      const url = this.state.editando ? "listacotejo/editar/"+this.state.id : "listacojeto/crear";
+      this.setState({ guardando:true });
+      http
+      .post(url, {
+        Listasdecotejo:cotejo,
+        Renglones_lc:renglones
+      })
+      .then((response) => {
+        this.setState({ error: true, errorMessage: response.data.message, errorStatus: 201,/*guardando:false*/ });
+        //console.log(response.data)
+      })
+      .catch((error) => {
+        if (error.response === undefined) {
+          this.setState({
+            error: true,
+            errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+            errorStatus: 500,
+            guardando:false
+          });
+        } else {
+          this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status,guardando:false });
+          //console.log(error.response.data.message)
+        }
+      });
+    }else{
+      this.setState({error:true,errorMessage:"Ingrese un nombre"});
     }
-    const renglones = this.state.rengloneslc.map((cotejo)=>{
-      return {
-        numrenglon: cotejo.numrenglon,
-        criterio: cotejo.criterio,
-        puntos: cotejo.puntos
-      }
-    });
-    console.log("Procesando...",cotejo,renglones,this.state.rengloneslc);
-    const url = this.state.editando ? "listacotejo/editar/"+this.state.id : "listacojeto/crear";
-    this.setState({ guardando:true });
-    http
-    .post(url, {
-      Listasdecotejo:cotejo,
-      Renglones_lc:renglones
-    })
-    .then((response) => {
-      this.setState({ error: true, errorMessage: response.data.message, errorStatus: 201,guardando:false });
-      console.log(response.data)
-    })
-    .catch((error) => {
-      if (error.response === undefined) {
-        this.setState({
-          error: true,
-          errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
-          errorStatus: 500,
-          guardando:false
-        });
-        console.log("d")
-      } else {
-        this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status,guardando:false });
-        console.log(error.response.data.message)
-      }
-    });
+
   }
   getUrlParameter = (name) => {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -199,7 +201,7 @@ class ListaCotejo extends Component {
       };
 
       
-      this.setState({ rengloneslc: renglonesActualizados },()=>{console.log(this.state.rengloneslc)});
+      this.setState({ rengloneslc: renglonesActualizados });
     }
   };
   bajarRenglon = (event, numrenglon) => {
@@ -314,7 +316,6 @@ class ListaCotejo extends Component {
       b.push("NO cumple");
       return b;
     });
-    console.log(body);
     const rubrica = jsPDF();
     const finalY = rubrica.lastAutoTable.finalY || 10;
     rubrica.setFontSize(12);
@@ -411,8 +412,11 @@ class ListaCotejo extends Component {
         open={this.state.error}
         onClose={() => {
           this.setState({ error: false });
+          if(this.state.guardando&& this.state.editando===false) {
+            this.props.history.push("/instrumentos");
+          }
         }}
-        autoHideDuration={6000}
+        autoHideDuration={500}
       >
         <Alert variant="filled" severity={this.state.errorStatus === 201 ? "success" : "warning"}>
           {this.state.errorMessage !== "" ? this.state.errorMessage : "Favor de realizar el CAPTCHA antes de registrarte!"}

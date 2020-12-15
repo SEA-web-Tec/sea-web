@@ -15,7 +15,7 @@ class MenuInstrumentos extends Component {
     errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
     errorStatus: 0,
     instrumentos: [
-      {
+      /*{
         id:1,
         nombre: "Rubrica",
         descripcion: "Para exposicion",
@@ -35,7 +35,7 @@ class MenuInstrumentos extends Component {
         descripcion: "Para resumen",
         fecha: "08 de septiembre de 2019",
         tipo: "Lista de Observacion",
-      },
+      },*/
     ],
     filtros: {
       rubrica: true,
@@ -91,7 +91,7 @@ class MenuInstrumentos extends Component {
     http
     .delete(url+id)
     .then((response) => {
-      console.log(response.data.message);
+      //console.log(response.data.message);
       const instrumentosActualizados = this.state.instrumentos.filter((instrumento) => (instrumento.tipo!=tipo)||(instrumento.id!=id&&instrumento.tipo===tipo));
       this.setState({instrumentos:instrumentosActualizados,error: true, errorMessage: response.data.message, errorStatus: 201});
     })
@@ -104,7 +104,7 @@ class MenuInstrumentos extends Component {
         });
       } else {
         this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
-        console.log(error)
+        //console.log(error)
       }
     });
   }
@@ -113,7 +113,7 @@ class MenuInstrumentos extends Component {
     http
     .get("rubrica/consultarubrica/"+this.props.userId)
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       const rubricas = response.data.Rubrica.map(rubrica => {
         return {
           id:rubrica.id,
@@ -138,14 +138,14 @@ class MenuInstrumentos extends Component {
         });
       } else {
         this.setState({ error: true, errorMessage: error.response.data.message, errorStatus: error.response.status });
-        console.log(error.response.data.message)
+        //console.log(error.response.data.message)
       }
     });
 
     http
     .get("listacotejo/consultalistacotejo/"+this.props.userId)
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       const listacotejo = response.data.Listasdecotejo.map(cotejo => {
         return {
           id:cotejo.id,
@@ -177,7 +177,7 @@ class MenuInstrumentos extends Component {
     http
     .get("listasobservacion/consultalistasobservacion/"+this.props.userId)
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       const listaobservacion = response.data.Listasdeobservacion.map(observacion => {
         return {
           id:observacion.id,
@@ -217,7 +217,7 @@ class MenuInstrumentos extends Component {
         onClose={() => {
           this.setState({ error: false });
         }}
-        autoHideDuration={6000}
+        autoHideDuration={700}
       >
         <Alert variant="filled" severity={this.state.errorStatus === 201 ? "success" : "warning"}>
           {this.state.errorMessage !== "" ? this.state.errorMessage : "Favor de realizar el CAPTCHA antes de registrarte!"}

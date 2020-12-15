@@ -80,7 +80,7 @@ export default function Instrumento(props) {
           <MenuOpciones>
             {" "}
             <MenuItem onClick={props.modificar}>Modificar</MenuItem>
-            <MenuItem>Descargar</MenuItem>
+            {/*<MenuItem>Descargar</MenuItem>*/}
             <Divider />
             <MenuItem onClick={props.eliminar}>Eliminar</MenuItem>
           </MenuOpciones>

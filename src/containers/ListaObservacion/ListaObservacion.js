@@ -27,8 +27,8 @@ class ListaObservacion extends Component {
     errorMessage: "",
     errorStatus: 0,
     id: 1,
-    nombre: "Lista para exposición",
-    descripcion: "Esta es una descripción de la lista de observacion",
+    nombre: "",
+    descripcion: "",
     id_personal: this.props.userId,
     id_carpeta:1,
     rengloneslo: [
@@ -36,10 +36,10 @@ class ListaObservacion extends Component {
         id: 1,
         numrenglon: 1,
         id_observacion: 1,
-        criterio: "Este es un criterio 1",
+        criterio: "Agrega criterio",
         puntos: 10,
       },
-      {
+      /*{
         id: 2,
         numrenglon: 2,
         id_observacion: 1,
@@ -52,13 +52,13 @@ class ListaObservacion extends Component {
         id_observacion: 1,
         criterio: "Este es un criterio 3",
         puntos: 10,
-      },
+      },*/
     ],
   };
 
   componentDidMount() {
     const id = this.getUrlParameter("id");
-    console.log(id);
+    //console.log(id);
     if (id) {
       this.setState({editando:true})
       http
@@ -81,14 +81,13 @@ class ListaObservacion extends Component {
                 "Ha ocurrido un error, favor de intentarlo más tarde",
               errorStatus: 500,
             });
-            console.log("d");
           } else {
             this.setState({
               error: true,
               errorMessage: error.response.data.message,
               errorStatus: error.response.status,
             });
-            console.log(error.response.data.message);
+            //console.log(error.response.data.message);
           }
         });
 
@@ -96,7 +95,7 @@ class ListaObservacion extends Component {
         .get("listasobservacion/consultarenglones/" + id)
         .then((response) => {
           this.setState({ rengloneslo: response.data.Listasdeobservacion });
-          console.log(response.data.Listasdeobservacion);
+          //console.log(response.data.Listasdeobservacion);
         })
         .catch((error) => {
           if (error.response === undefined) {
@@ -106,73 +105,75 @@ class ListaObservacion extends Component {
                 "Ha ocurrido un error, favor de intentarlo más tarde",
               errorStatus: 500,
             });
-            console.log("d");
           } else {
             this.setState({
               error: true,
               errorMessage: error.response.data.message,
               errorStatus: error.response.status,
             });
-            console.log(error.response.data.message);
+            //console.log(error.response.data.message);
           }
         });
     }
   }
   crearListaDeObservacion = () => {
-    const observacion = {
-      nombre: this.state.nombre,
-      descripcion: this.state.descripcion,
-      id_usuario: this.state.id_personal,
-      id_carpeta: this.state.id_carpeta,
-    };
-    const renglones = this.state.rengloneslo.map((observacion) => {
-      return {
-        numrenglon: observacion.numrenglon,
-        criterio: observacion.criterio,
-        puntos: observacion.puntos,
+    if(this.state.nombre !== "") {
+      const observacion = {
+        nombre: this.state.nombre,
+        descripcion: this.state.descripcion,
+        id_usuario: this.state.id_personal,
+        id_carpeta: this.state.id_carpeta,
       };
-    });
-    console.log(
-      "Procesando...",
-      observacion,
-      renglones,
-      this.state.rengloneslc
-    );
-    const url = this.state.editando ? "listasobservacion/editar/"+this.state.id : "listasobservacion/crear";
-    this.setState({ guardando: true });
-    http
-      .post(url, {
-        Listasdeobservacion: observacion,
-        Renglones_lo: renglones,
-      })
-      .then((response) => {
-        this.setState({
-          error: true,
-          errorMessage: response.data.message,
-          errorStatus: 201,
-          guardando: false,
-        });
-        console.log(response.data);
-      })
-      .catch((error) => {
-        if (error.response === undefined) {
-          this.setState({
-            error: true,
-            errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
-            errorStatus: 500,
-            guardando: false,
-          });
-          console.log("d");
-        } else {
-          this.setState({
-            error: true,
-            errorMessage: error.response.data.message,
-            errorStatus: error.response.status,
-            guardando: false,
-          });
-          console.log(error.response.data.message);
-        }
+      const renglones = this.state.rengloneslo.map((observacion) => {
+        return {
+          numrenglon: observacion.numrenglon,
+          criterio: observacion.criterio,
+          puntos: observacion.puntos,
+        };
       });
+     /* console.log(
+        "Procesando...",
+        observacion,
+        renglones,
+        this.state.rengloneslc
+      );*/
+      const url = this.state.editando ? "listasobservacion/editar/"+this.state.id : "listasobservacion/crear";
+      this.setState({ guardando: true });
+      http
+        .post(url, {
+          Listasdeobservacion: observacion,
+          Renglones_lo: renglones,
+        })
+        .then((response) => {
+          this.setState({
+            error: true,
+            errorMessage: response.data.message,
+            errorStatus: 201,
+            //guardando: false,
+          });
+          //console.log(response.data);
+        })
+        .catch((error) => {
+          if (error.response === undefined) {
+            this.setState({
+              error: true,
+              errorMessage: "Ha ocurrido un error, favor de intentarlo más tarde",
+              errorStatus: 500,
+              guardando: false,
+            });
+          } else {
+            this.setState({
+              error: true,
+              errorMessage: error.response.data.message,
+              errorStatus: error.response.status,
+              guardando: false,
+            });
+            //console.log(error.response.data.message);
+          }
+        });
+    }else{
+      this.setState({error:true,errorMessage:"Ingrese un nombre"});
+    }
   };
 
   getUrlParameter = (name) => {
@@ -339,7 +340,6 @@ class ListaObservacion extends Component {
       b.push("");
       return b;
     });
-    console.log(body);
     const rubrica = jsPDF();
     const finalY = rubrica.lastAutoTable.finalY || 10;
     rubrica.setFontSize(12);
@@ -421,8 +421,11 @@ class ListaObservacion extends Component {
         open={this.state.error}
         onClose={() => {
           this.setState({ error: false });
+          if(this.state.guardando&&!this.state.editando) {
+            this.props.history.push("/instrumentos");
+          }
         }}
-        autoHideDuration={6000}
+        autoHideDuration={500}
       >
         <Alert variant="filled" severity={this.state.errorStatus === 201 ? "success" : "warning"}>
           {this.state.errorMessage !== "" ? this.state.errorMessage : "Favor de realizar el CAPTCHA antes de registrarte!"}
