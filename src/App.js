@@ -104,6 +104,7 @@ class App extends Component {
     //
     //  RECUERDEN AGREGAR LAS RUTAS EN AMBAS PARTES, DONDE
     //  DICE *this.props.isAuthenticated* Y *this.props.isAdmin*
+    //  PD: Ponganle un parametro de :id para que jale la portada(Si usa)
     //
     //
     ///////////
@@ -174,7 +175,7 @@ class App extends Component {
             {/* EXAMEN */}
             <Route path="/examen/:id" exact component={asyncDashboardExamen} />
             <Route path="/examen/:id/crear" exact component={asyncCrearExamen} />
-            {/* <Route path="/examen/:id/editar" exact component={asyncEditarExamen} /> */}
+            <Route path="/examen/:id/editar/:id_examen" exact component={asyncEditarExamen} />
             <Route path="/examen/:id/asignar" exact component={asyncAsignarExamen} />
             {/* <Route path="/examen/:id/preview" exact component={asyncContenedorExamen} /> */}
             <Route path="/examen/:id/reactivos" exact component={BancoReactivos} />
