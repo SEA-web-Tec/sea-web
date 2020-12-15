@@ -17,7 +17,7 @@ import {
   List,
   ListItem,
   ListItemText,
-  Divider
+  Divider,
 } from "@material-ui/core";
 
 class Materia extends Component {
@@ -28,17 +28,18 @@ class Materia extends Component {
     semestre: 1,
     id_temario: 0,
     unidades: 1,
-    carrera: "ARQUITECTURA"
+    carrera: "ARQUITECTURA",
   };
 
   componentDidMount() {
     this.props.onFetchTemarios(this.props.token);
     this.props.onFetchMaterias(this.props.token);
+    console.log(this.props.temarios);
   }
 
   inputChangedHandler = (prop) => (event) => {
     const updatedObject = updateObject(this.state, {
-      [prop]: event.target.value
+      [prop]: event.target.value,
     });
     this.setState(updatedObject);
   };
@@ -54,12 +55,12 @@ class Materia extends Component {
           abreviatura: this.state.abreviatura,
           departamento_academico: this.state.departamento_academico,
           semestre: this.state.semestre,
-          id_temario: this.props.temarios[this.state.id_temario + 1],
+          id_temario: this.state.id_temario,
           unidades: this.state.unidades,
-          carrera: this.state.carrera
+          carrera: this.state.carrera,
         },
         {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         }
       )
       .then((response) => {
@@ -99,7 +100,9 @@ class Materia extends Component {
               onChange={this.inputChangedHandler("abreviatura")}
             />
             <FormControl required fullWidth margin="normal" variant="outlined">
-              <InputLabel id="departamento_academicoLabel">Departamento Académico</InputLabel>
+              <InputLabel id="departamento_academicoLabel">
+                Departamento Académico
+              </InputLabel>
               <Select
                 id="departamento_academico"
                 name="departamento_academico"
@@ -108,14 +111,26 @@ class Materia extends Component {
                 labelId="departamento_academicoLabel"
                 label="Departamento Académico"
               >
-                <MenuItem value={"DEPARTAMENTO DE CIENCIAS BASICAS"}>Departamento de Ciencias Básicas</MenuItem>
-                <MenuItem value={"DEPARTAMENTO DE CIENCIAS ECONOMICO ADMINISTRATIVAS"}>
+                <MenuItem value={"DEPARTAMENTO DE CIENCIAS BASICAS"}>
+                  Departamento de Ciencias Básicas
+                </MenuItem>
+                <MenuItem
+                  value={"DEPARTAMENTO DE CIENCIAS ECONOMICO ADMINISTRATIVAS"}
+                >
                   Departamento de Ciencias Económico Administrativas
                 </MenuItem>
-                <MenuItem value={"DEPARTAMENTO DE CIENCIAS DE LA TIERRA"}>Departamento de Ciencias de la Tierra</MenuItem>
-                <MenuItem value={"DEPARTAMENTO DE INGENIERIAS"}>Departamento de Ingenierías</MenuItem>
-                <MenuItem value={"DEPARTAMENTO DE METAL-MECANICA"}>Departamento de Metal-Mecánica</MenuItem>
-                <MenuItem value={"DEPARTAMENTO DE SISTEMAS Y COMPUTACION"}>Departamento de Sistemas y Computación</MenuItem>
+                <MenuItem value={"DEPARTAMENTO DE CIENCIAS DE LA TIERRA"}>
+                  Departamento de Ciencias de la Tierra
+                </MenuItem>
+                <MenuItem value={"DEPARTAMENTO DE INGENIERIAS"}>
+                  Departamento de Ingenierías
+                </MenuItem>
+                <MenuItem value={"DEPARTAMENTO DE METAL-MECANICA"}>
+                  Departamento de Metal-Mecánica
+                </MenuItem>
+                <MenuItem value={"DEPARTAMENTO DE SISTEMAS Y COMPUTACION"}>
+                  Departamento de Sistemas y Computación
+                </MenuItem>
               </Select>
             </FormControl>
             <FormControl required fullWidth margin="normal" variant="outlined">
@@ -154,7 +169,7 @@ class Materia extends Component {
               >
                 {this.props.temarios.map((temario) => (
                   <MenuItem key={temario.id} value={temario.id}>
-                    {temario.descripcion}
+                    {temario.id}
                   </MenuItem>
                 ))}
               </Select>
@@ -170,28 +185,58 @@ class Materia extends Component {
                 label="Carrera"
               >
                 <MenuItem value={"ARQUITECTURA"}>Arquitectura</MenuItem>
-                <MenuItem value={"INGENIERÍA EN GESTIÓN EMPRESARIAL"}>Ingeniería en Gestión Empresarial</MenuItem>
-                <MenuItem value={"INGENIERÍA BIOQUÍMICA"}>Ingeniería Bioquímica</MenuItem>
+                <MenuItem value={"INGENIERÍA EN GESTIÓN EMPRESARIAL"}>
+                  Ingeniería en Gestión Empresarial
+                </MenuItem>
+                <MenuItem value={"INGENIERÍA BIOQUÍMICA"}>
+                  Ingeniería Bioquímica
+                </MenuItem>
                 <MenuItem value={"INGENIERÍA CIVIL"}>Ingeniería Civil</MenuItem>
-                <MenuItem value={"INGENIERÍA ELECTROMECÁNICA"}>Ingeniería Electromecánica</MenuItem>
-                <MenuItem value={"INGENIERÍA EN SISTEMAS COMPUTACIONALES"}>Ingeniería en Sistemas Computacionales</MenuItem>
-                <MenuItem value={"INGENIERÍA INDUSTRIAL"}>Ingeniería Industrial</MenuItem>
-                <MenuItem value={"LICENCIATURA EN ADMINISTRACIÓN"}>Licenciatura en Administración</MenuItem>
+                <MenuItem value={"INGENIERÍA ELECTROMECÁNICA"}>
+                  Ingeniería Electromecánica
+                </MenuItem>
+                <MenuItem value={"INGENIERÍA EN SISTEMAS COMPUTACIONALES"}>
+                  Ingeniería en Sistemas Computacionales
+                </MenuItem>
+                <MenuItem value={"INGENIERÍA INDUSTRIAL"}>
+                  Ingeniería Industrial
+                </MenuItem>
+                <MenuItem value={"LICENCIATURA EN ADMINISTRACIÓN"}>
+                  Licenciatura en Administración
+                </MenuItem>
                 <MenuItem value={"CONTADOR PÚBLICO"}>Contador Público</MenuItem>
               </Select>
             </FormControl>
-            <Box display="flex" justifyContent="center" width="100%" marginTop={1}></Box>
-            <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} size="large">
+            <Box
+              display="flex"
+              justifyContent="center"
+              width="100%"
+              marginTop={1}
+            ></Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              size="large"
+            >
               Crear materia
             </Button>
           </form>
-          <Divider style={{ width: "100%", margin: "16px 0" }} variant="middle" />
+          <Divider
+            style={{ width: "100%", margin: "16px 0" }}
+            variant="middle"
+          />
           <Box width="100%">
             <h2 style={{ textAlign: "center" }}>Materias</h2>
             <List>
               {this.props.materias.map((materia) => (
                 <ListItem key={materia.id}>
-                  <ListItemText primary={materia.nombre} secondary={materia.carrera} />
+                  <ListItemText
+                    primary={materia.nombre}
+                    secondary={materia.carrera}
+                  />
                 </ListItem>
               ))}
             </List>
@@ -203,14 +248,21 @@ class Materia extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { token: state.auth.token, temarios: state.temarios.temarios, materias: state.materias.materias };
+  return {
+    token: state.auth.token,
+    temarios: state.temarios.temarios,
+    materias: state.materias.materias,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchTemarios: (token) => dispatch(actions.fetchTemarios(token)),
-    onFetchMaterias: (token) => dispatch(actions.fetchMaterias(token))
+    onFetchMaterias: (token) => dispatch(actions.fetchMaterias(token)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(Materia));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(Materia));

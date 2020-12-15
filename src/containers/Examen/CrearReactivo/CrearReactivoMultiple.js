@@ -35,18 +35,20 @@ class CrearReactivoMultiple extends Component {
       .post(
         "/reactivos/crear",
         {
-          id_materia: this.props.match.params.id,
+          id_materia: this.props.match.params.materia_id,
           unidad: this.state.unidad,
           tipo: this.state.tipo,
           texto_reactivo: this.state.texto_reactivo,
-          respuesta_correcta: `${this.state.opcion1 ? this.state.opcion1 + ", " : ""}${
-            this.state.opcion2 ? this.state.opcion2 + ", " : ""
-          }${this.state.opcion3 ? this.state.opcion3 + ", " : ""}${this.state.opcion4 ? this.state.opcion4 + ", " : ""}${
+          respuesta_correcta: `${
+            this.state.opcion1 ? this.state.opcion1 + ", " : ""
+          }${this.state.opcion2 ? this.state.opcion2 + ", " : ""}${
+            this.state.opcion3 ? this.state.opcion3 + ", " : ""
+          }${this.state.opcion4 ? this.state.opcion4 + ", " : ""}${
             this.state.opcion5 ? this.state.opcion5 + ", " : ""
-          } # ${this.state.respuesta_correcta}`
+          } # ${this.state.respuesta_correcta}`,
         },
         {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         }
       )
       .then((response) => {

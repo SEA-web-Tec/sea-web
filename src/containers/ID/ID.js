@@ -9,25 +9,6 @@ import { CircularProgress } from "@material-ui/core";
 class ID extends Component {
   state = {
     entrar: null,
-    materia: "",
-    carrera: "",
-    maestro: "",
-    grupo: "",
-    periodo: "",
-    foto: "",
-    entrar: false
-  };
-
-  UNSAFE_componentWillMount = async () => {
-    this.setState({
-      entrar: null,
-      materia: "",
-      carrera: "",
-      maestro: "",
-      grupo: "",
-      periodo: "",
-      foto: ""
-    });
   };
 
   buscarIntrumentacion = async () => {
