@@ -15,19 +15,6 @@ class ID extends Component {
     periodo: "",
     foto: "",
   };
-
-  componentDidMount = async () => {
-    this.setState({
-      entrar: null,
-      materia: "",
-      carrera: "",
-      maestro: "",
-      grupo: "",
-      periodo: "",
-      foto: "",
-    });
-  };
-
   buscarIntrumentacion = async () => {
     await this.props.onBusqueda(this.props.id_user, this.props.match.params.id);
     await this.props.onFetchGrupos(this.props.token, this.props.id_user);
@@ -57,6 +44,7 @@ class ID extends Component {
       <TabsIDEditar evaluar={true} grupo={this.props.match.params.id} />
     );
 
+
     if (this.state.entrar == null) {
       this.setState({ entrar: "simon" });
       this.buscarIntrumentacion();
@@ -66,9 +54,20 @@ class ID extends Component {
       info = <CircularProgress /*className={classes.spinner}*/ />;
     }
 
+
     return (
       <Fragment>
-        <Portada id={this.props.match.params.id} hasTabs isID status={this.props.estado}>
+        <Portada
+          materia={this.state.materia}
+          carrera={this.state.carrera}
+          maestro={this.state.maestro}
+          grupo={this.state.grupo}
+          periodo={this.state.periodo}
+          fotoPortada={this.state.foto}
+          hasTabs
+          isID
+          status={this.props.estado}
+        >
           {info}
         </Portada>
       </Fragment>

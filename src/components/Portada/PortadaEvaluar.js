@@ -1,9 +1,22 @@
 import React, { Component } from "react";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
-import { useStyles } from "./Styles";
-import { Typography, CardMedia, Card, Grid, Box, Chip, CardContent } from "@material-ui/core";
-import { Cancel, CheckCircle as CheckCircleIcon, RemoveCircle, WatchLater } from "@material-ui/icons";
+import { useStyles } from "./Styles2";
+import {
+  Typography,
+  CardMedia,
+  Card,
+  Grid,
+  Box,
+  Chip,
+  CardContent,
+} from "@material-ui/core";
+import {
+  Cancel,
+  CheckCircle as CheckCircleIcon,
+  RemoveCircle,
+  WatchLater,
+} from "@material-ui/icons";
 
 class Portada extends Component {
   render(props) {
@@ -28,21 +41,40 @@ class Portada extends Component {
               <Typography component="p" variant="subtitle1" gutterBottom>
                 {this.props.carrera}
               </Typography>
-              <Typography component="p" variant="body2" gutterBottom style={{ marginTop: "12px" }}>
+              <Typography
+                component="p"
+                variant="body2"
+                gutterBottom
+                style={{ marginTop: "12px" }}
+              >
                 {this.props.maestro}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={4} md={4} lg={4}>
               <Grid container className={classes.cardHeaderDetails}>
                 <Grid item xs={8} sm={12} md={12} lg={12}>
-                  <Box className={clsx(classes.box, classes.grupoPeriodoMobileBox)}>
-                    <Box className={clsx(classes.box, classes.grupoPeriodoBox, classes.grupoPeriodoMobileItemBox)}>
+                  <Box
+                    className={clsx(classes.box, classes.grupoPeriodoMobileBox)}
+                  >
+                    <Box
+                      className={clsx(
+                        classes.box,
+                        classes.grupoPeriodoBox,
+                        classes.grupoPeriodoMobileItemBox
+                      )}
+                    >
                       <Typography component="p" variant="caption">
                         Grupo
                       </Typography>
                       <Chip label={this.props.grupo} />
                     </Box>
-                    <Box className={clsx(classes.box, classes.grupoPeriodoBox, classes.grupoPeriodoMobileItemBox)}>
+                    <Box
+                      className={clsx(
+                        classes.box,
+                        classes.grupoPeriodoBox,
+                        classes.grupoPeriodoMobileItemBox
+                      )}
+                    >
                       <Typography component="p" variant="caption">
                         Periodo
                       </Typography>
@@ -57,13 +89,25 @@ class Portada extends Component {
                         {this.props.status}
                       </Typography>
                       {this.props.status === "Entregada" ? (
-                        <WatchLater className={classes.entregadaIcon} fontSize="small" />
+                        <WatchLater
+                          className={classes.entregadaIcon}
+                          fontSize="small"
+                        />
                       ) : this.props.status === "Aprobada" ? (
-                        <CheckCircleIcon className={classes.aprobadaIcon} fontSize="small" />
+                        <CheckCircleIcon
+                          className={classes.aprobadaIcon}
+                          fontSize="small"
+                        />
                       ) : this.props.status === "Rechazada" ? (
-                        <Cancel className={classes.rechazadaIcon} fontSize="small" />
+                        <Cancel
+                          className={classes.rechazadaIcon}
+                          fontSize="small"
+                        />
                       ) : (
-                        <RemoveCircle className={classes.abiertaIcon} fontSize="small" />
+                        <RemoveCircle
+                          className={classes.abiertaIcon}
+                          fontSize="small"
+                        />
                       )}
                     </Box>
                   </Grid>
@@ -72,7 +116,9 @@ class Portada extends Component {
             </Grid>
           </Grid>
         </div>
-        <CardContent className={clsx(this.props.hasTabs && classes.hasTabs)}>{this.props.children}</CardContent>
+        <CardContent className={clsx(this.props.hasTabs && classes.hasTabs)}>
+          {this.props.children}
+        </CardContent>
       </Card>
     );
   }
