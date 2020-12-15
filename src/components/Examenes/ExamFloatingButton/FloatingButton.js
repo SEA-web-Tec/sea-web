@@ -10,16 +10,23 @@ import { Add as AddIcon,
     LibraryBooksSharp as LibraryBooksSharpIcon
 } from '@material-ui/icons';
 import { ExamenesVF } from 'assets/icons/Index';
+import { width as right } from "components/Layout/BarraUtilidades/Styles";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     mainIcon: {
         position: "fixed",
-        top: "calc(100% - 80px)",
-        left: "calc(100% - 80px)"
+        bottom: theme.spacing(3),
+        right: right + theme.spacing(4),
+        [theme.breakpoints.down("sm")]: {
+            right: theme.spacing(4),
+        },
     },
     extendedIcon: {
         position: "fixed",
-        left: "calc(100% - 72px)"
+        right: right + theme.spacing(5),
+        [theme.breakpoints.down("sm")]: {
+            right: theme.spacing(5),
+        },
     }
 }));
 

@@ -70,13 +70,13 @@ class DashboardExamen extends Component {
                   </Typography>
                 </Box>
                 <Box component="div">
-                  <IconButton color="secondary">
+                  <IconButton className={classes.icons}>
                     <CreateIcon />
                   </IconButton>
-                  <IconButton color="secondary">
+                  <IconButton className={classes.icons}>
                     <GroupAddIcon />
                   </IconButton>
-                  <IconButton color="secondary">
+                  <IconButton className={classes.icons}>
                     <DeleteIcon />
                   </IconButton>
                 </Box>

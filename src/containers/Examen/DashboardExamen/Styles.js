@@ -14,5 +14,6 @@ export const useStyles = (theme) => ({
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column"
     }
-  }
+  },
+  icons: { color: theme.palette.info.main },
 });

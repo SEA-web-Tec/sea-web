@@ -8,7 +8,7 @@ export const useStyles = (theme) => ({
         height: "60px !important",
     },
     speedDial: {
-        position: "absolute",
+        position: "fixed",
         "&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft": {
             bottom: theme.spacing(4),
             right: right + theme.spacing(4),

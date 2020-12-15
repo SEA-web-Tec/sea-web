@@ -10,11 +10,11 @@ export default function TabPanel(props) {
   let x = 0;
 
   const handleDelete = () => {
-    console.info('You clicked the Chip to delete it.');
+    //console.info('You clicked the Chip to delete it.');
   };
 
   const handleClick = () => { // según el tipo de reactivo: abierto - f/v - múltiple
-    console.info('You clicked the Chip to edit it.');
+    //console.info('You clicked the Chip to edit it.');
   };
 
   return (
@@ -27,14 +27,14 @@ export default function TabPanel(props) {
               <Chip className={classes.chip} classes={{label:classes.fullWidth}} key={x++} label={ 
                 <div className={classes.contentIcons}>
                   <p className={classes.text}>{reactivo.texto_reactivo}</p>
-                  <div>
-                    <IconButton>
-                      <EditIcon className={classes.iconEdit} onClick={handleClick}/> 
-                    </IconButton>
-                    <IconButton>
-                      <CloseIcon className={classes.iconDelete} onClick={handleDelete}/>
-                    </IconButton>
-                  </div>
+                  {/*<div>
+                      <IconButton>
+                        <EditIcon className={classes.iconEdit} onClick={handleClick}/> 
+                      </IconButton>
+                      <IconButton>
+                        <CloseIcon className={classes.iconDelete} onClick={handleDelete}/>
+                      </IconButton>
+                    </div>*/}
                 </div> }/>
             </FormControl>
           </Grid>
