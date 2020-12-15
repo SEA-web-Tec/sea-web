@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
 import { useStyles } from "./Styles";
 import { Typography, CardMedia, Card, Grid, Box, Chip, CardContent } from "@material-ui/core";
-import { CheckCircle as CheckCircleIcon } from "@material-ui/icons";
+import { Cancel, CheckCircle as CheckCircleIcon, RemoveCircle, WatchLater } from "@material-ui/icons";
 
 class Portada extends Component {
   render(props) {
@@ -56,7 +56,15 @@ class Portada extends Component {
                       <Typography component="p" variant="subtitle2">
                         {this.props.status}
                       </Typography>
-                      <CheckCircleIcon className={classes.checkIcon} fontSize="small" />
+                      {this.props.status === "Entregada" ? (
+                        <WatchLater className={classes.entregadaIcon} fontSize="small" />
+                      ) : this.props.status === "Aprobada" ? (
+                        <CheckCircleIcon className={classes.aprobadaIcon} fontSize="small" />
+                      ) : this.props.status === "Rechazada" ? (
+                        <Cancel className={classes.rechazadaIcon} fontSize="small" />
+                      ) : (
+                        <RemoveCircle className={classes.abiertaIcon} fontSize="small" />
+                      )}
                     </Box>
                   </Grid>
                 ) : null}
