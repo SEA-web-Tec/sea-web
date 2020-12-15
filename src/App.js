@@ -148,7 +148,7 @@ class App extends Component {
           <Route path="/examen/id" exact component={asyncContenedorExamen} />
 
           {/* LO DEL CARLOS */}
-          <Route path="/trabajo-individual" exact component={asyncExposiciones} />
+          <Route path="/trabajo-individual" exact component={asyncTrabajo} />
 
           {/* NOT FOUND */}
           <Route component={asyncNotFound} />
@@ -191,7 +191,7 @@ class App extends Component {
             <Route path="/examen/id" exact component={asyncContenedorExamen} />
 
             {/* LO DEL CARLOS */}
-            <Route path="/trabajo-individual" exact component={asyncExposiciones} />
+            <Route path="/trabajo-individual" exact component={asyncTrabajo} />
 
             {/* ADMIN */}
             <Route path="/admin" exact component={asyncAdmin} />
