@@ -117,7 +117,7 @@ class ListaObservacion extends Component {
     }
   }
   crearListaDeObservacion = () => {
-    if(this.state.nombre !== "") {
+    if(this.state.nombre.match(/^[a-zA-Z\ áéíóúÁÉÍÓÚñÑ0-9\s]*$/) && this.state.nombre !== "") {
       const observacion = {
         nombre: this.state.nombre,
         descripcion: this.state.descripcion,
@@ -172,7 +172,7 @@ class ListaObservacion extends Component {
           }
         });
     }else{
-      this.setState({error:true,errorMessage:"Ingrese un nombre"});
+      this.setState({error:true,errorMessage:"Ingrese un nombre valido",errorStatus:0});
     }
   };
 
