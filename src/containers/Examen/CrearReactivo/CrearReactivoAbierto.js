@@ -41,6 +41,7 @@ class CrearReactivoAbierto extends Component {
         }
       )
       .then((response) => {
+        this.props.history.goBack();
         console.log(response);
       });
   };

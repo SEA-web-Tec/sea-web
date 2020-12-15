@@ -47,14 +47,18 @@ const Grupo = (props) => {
             </IconButton>
           </BigTooltip>
           <BigTooltip title="Lista">
-            <IconButton disabled>
-              <FormatListBulleted />
-            </IconButton>
+            <span>
+              <IconButton disabled>
+                <FormatListBulleted />
+              </IconButton>
+            </span>
           </BigTooltip>
           <BigTooltip title="Temario">
-            <IconButton disabled>
-              <TemarioIcon />
-            </IconButton>
+            <span>
+              <IconButton disabled>
+                <TemarioIcon />
+              </IconButton>
+            </span>
           </BigTooltip>
           <BigTooltip title="Instrumentación Didáctica">
             <IconButton style={{ color: amber[600] }} component={RouterLink} to={`/instrumentacion/${props.id}`}>

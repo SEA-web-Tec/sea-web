@@ -40,6 +40,7 @@ class Grupos extends Component {
                 carrera={grupo.carrera}
                 maestro={`${this.props.user.nombres} ${this.props.user.apellidoPaterno} ${this.props.user.apellidoMaterno}`}
                 portada={grupo.fotoPortada}
+                letra={grupo.grupo}
                 fotoPerfil={this.props.user.fotoPerfil}
               />
             );
@@ -75,7 +76,13 @@ class Grupos extends Component {
               pathname: "/admin/grupos"
             }}
           >
-            <SpeedDial ariaLabel="SpeedDial example" className={classes.speedDial} icon={<SpeedDialIcon />}></SpeedDial>
+            <SpeedDial
+              open={false}
+              onOpen={handleOpen}
+              ariaLabel="SpeedDial example"
+              className={classes.speedDial}
+              icon={<SpeedDialIcon />}
+            ></SpeedDial>
           </Link>
         ) : null}
       </Grid>
