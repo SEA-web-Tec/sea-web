@@ -9,6 +9,7 @@ import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 
 import { CircularProgress } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
 
 class ID extends Component {
   state = {
@@ -21,7 +22,7 @@ class ID extends Component {
     materiaSeleccionado: "",
     mostrarIcono: false,
     correcto: true,
-    cambio: false,
+    cambio: false
   };
 
   //Buscar todas las intrumentaciones
@@ -45,7 +46,7 @@ class ID extends Component {
     this.setState({
       nombreMaestroSeleccionado: nombreM,
       grupoSeleccionado: this.state.intrumentaciones[index].grupo,
-      materiaSeleccionado: this.state.intrumentaciones[index].materiaNombre,
+      materiaSeleccionado: this.state.intrumentaciones[index].materiaNombre
     });
 
     await this.props.onBusquedaInd(dato);
@@ -71,23 +72,16 @@ class ID extends Component {
       this.buscarIntrumentaciones();
     } else {
       if (this.props.intrumentaciones !== null)
-        if (
-          this.state.intrumentaciones.length === 0 &&
-          this.props.intrumentaciones.length !== 0 &&
-          !this.state.cambio
-        ) {
+        if (this.state.intrumentaciones.length === 0 && this.props.intrumentaciones.length !== 0 && !this.state.cambio) {
           if (this.props.intrumentaciones.length !== 0) {
-            this.setState(
-              { intrumentaciones: this.props.intrumentaciones },
-              () => {
-                if (this.props.intrumentaciones.length != 0) {
-                  this.setState({
-                    seleccionado: this.props.intrumentaciones[0].id,
-                    comentario: "",
-                  });
-                }
+            this.setState({ intrumentaciones: this.props.intrumentaciones }, () => {
+              if (this.props.intrumentaciones.length != 0) {
+                this.setState({
+                  seleccionado: this.props.intrumentaciones[0].id,
+                  comentario: ""
+                });
               }
-            );
+            });
           } else {
             this.setState({ cambio: true });
           }
@@ -97,10 +91,7 @@ class ID extends Component {
           if (this.state.intrumentaciones.length !== 0) {
             card = (
               <div>
-                <CardEvaluacion
-                  seleccionar={this.cambiarSeleccionado}
-                  intrumentaciones={this.state.intrumentaciones}
-                />
+                <CardEvaluacion seleccionar={this.cambiarSeleccionado} intrumentaciones={this.state.intrumentaciones} />
                 <Portada
                   materia={this.state.materiaSeleccionado}
                   carrera="Evaluando"
@@ -125,13 +116,14 @@ class ID extends Component {
               <Snackbar
                 anchorOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "right"
                 }}
                 open={this.state.correcto}
                 onClose={() => {
                   this.setState({ correcto: false });
                   const url = "/grupos/";
-                  window.location.replace(url);
+                  this.props.history.push(url);
+                  // window.location.replace(url);
                   //this.props.onAuthDismissError();
                 }}
                 autoHideDuration={2500}
@@ -167,19 +159,18 @@ const mapStateToProps = (state) => {
     estado: state.id.estado,
     comentario: state.id.comentario,
     loading: state.auth.loading,
-    error: state.auth.error,
+    error: state.auth.error
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onBusquedaInd: (id_ins) => dispatch(actions.idBusquedaIndividual(id_ins)),
-    onEvaluar: (id_ins, comentario) =>
-      dispatch(actions.idEvaluar(id_ins, comentario)),
+    onEvaluar: (id_ins, comentario) => dispatch(actions.idEvaluar(id_ins, comentario)),
     onIntrumentacion: () => {
       dispatch(actions.idBusquedaAll());
-    },
+    }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ID);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ID));
