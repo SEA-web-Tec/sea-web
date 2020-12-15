@@ -29,13 +29,7 @@ class Examenes extends Component {
     const { classes } = this.props;
 
     return (
-      <Portada
-        materia="Programación de Dispositivos Móviles"
-        carrera="Ing. Sistemas Computacionales"
-        maestro="José Tadeo Rodriguez Solano"
-        grupo="F"
-        periodo="Enero - Junio 2020"
-      >
+      <Portada id={this.props.match.params.id}>
         <Typography className={classes.title} variant="h6" component="h6" gutterBottom>
           {/* // Cambiarse a futuro por prop */}
           Examen U1 PDM

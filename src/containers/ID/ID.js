@@ -41,17 +41,7 @@ class ID extends Component {
   render(props) {
     let info = (
       <div>
-        <Portada
-          materia={this.state.materia}
-          carrera={this.state.carrera}
-          maestro={this.state.maestro}
-          grupo={this.state.grupo}
-          periodo={this.state.periodo}
-          portada={this.state.foto}
-          hasTabs
-          isID
-          status={this.props.estado}
-        >
+        <Portada id={this.props.match.params.id} hasTabs isID status={this.props.estado}>
           <TabsID evaluar={true} id_grupo={this.props.match.params.id} />
         </Portada>
       </div>
